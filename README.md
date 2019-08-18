@@ -1,6 +1,6 @@
 # Angular
 
-Es una plataforma y un framework para crear aplicaciones cliente en HTML y TypeScript. Angular está escrito en TypeScript. Implementa funciones básicas y opcionales como un conjunto de librerías TypeScript que se importan en las aplicaciones. Angular aprovecha la tecnología de los componentes web o _'web components'_ y el _'Shadow DOM'_ para apoyar el desarrollo impulsado por componentes.
+Es una plataforma y un framework para crear aplicaciones cliente en HTML y TypeScript. Angular está escrito en TypeScript. Implementa funciones básicas y opcionales como un conjunto de bibliotecas TypeScript que se importan en las aplicaciones. Angular aprovecha la tecnología de los componentes web o _'web components'_ y el _'Shadow DOM'_ para apoyar el desarrollo impulsado por componentes.
 
 Los elementos más básicos de construcción de una aplicación Angular son los *NgModules*, que proporcionan un contexto de compilación para los componentes. Los *NgModules* agrupan el código relacionado en conjuntos funcionales; una aplicación Angular se define por un conjunto de *NgModules*. Una aplicación siempre tiene al menos un módulo raíz que permite el bootstrapping, y normalmente tiene muchos más módulos de características.
 
@@ -65,7 +65,7 @@ ng generate --help            // Ayuda de un comando en concreto
 
 ### Crear un _'workspace'_ y una aplicación inicial
 
-Las aplicaciones Angular se desarrollan en el contexto de una espacio de trabajo o ['workspace'](https://angular.io/guide/glossary#workspace). Un espacio de trabajo puede contener múltiples aplicaciones y bibliotecas. La aplicación inicial creada con el comando `ng new` está en el nivel top del espacio de trabajo. Cuando generamos aplicaciones o librerías adicionales, éstas se crean dentro de la subcarpeta `projects/`.
+Las aplicaciones Angular se desarrollan en el contexto de una espacio de trabajo o ['workspace'](https://angular.io/guide/glossary#workspace). Un espacio de trabajo puede contener múltiples aplicaciones y bibliotecas. La aplicación inicial creada con el comando `ng new` está en el nivel top del espacio de trabajo. Cuando generamos aplicaciones o bibliotecas adicionales, éstas se crean dentro de la subcarpeta `projects/`.
 
 Para crear un nuevo espacio de trabajo y una aplicación inicial dentro de este nuevo espacio de trabajo, abrimos un terminal y escribimos:
 
@@ -75,7 +75,7 @@ ng new my-app  // Cambiando 'my-app' por el nombre de nuestra nueva aplicación
 
 El comando `ng new` nos solicitará información para configurar la aplicación inicial. Lo más habitual es usar la configuración que viene por defecto. Para más información podemos consultar la documentación del comando [`ng new`](https://angular.io/cli/new).
 
-'Angular CLI' instalará todas las librerías y dependencias necesarias, lo que se podrá demorar varios minutos.
+'Angular CLI' instalará todas las bibliotecas y dependencias necesarias, lo que se podrá demorar varios minutos.
 
 Finalmente tendremos una aplicación inicial completamente funcional y las configuraciones necesarias para su depuración, pruebas y ejecución.
 
@@ -98,7 +98,7 @@ El comando `ng serve` inicia el servidor, observa el código fuente, reconstruye
 
 <https://angular.io/guide/file-structure>
 
-Cuando ejecutamos el comando `ng new` se instalan las librerías y dependencias necesarias en el nuevo _workspace_ además del esqueleto funcional de una aplicación dentro de la carpeta `src/`. Esta aplicación se considera la aplicación principal o aplicación raíz. El directorio raíz del espacio de trabajo contiene todos los ficheros de configuración, etc.. necesarios para construir y servir la aplicación Angular.
+Cuando ejecutamos el comando `ng new` se instalan las bibliotecas y dependencias necesarias en el nuevo _workspace_ además del esqueleto funcional de una aplicación dentro de la carpeta `src/`. Esta aplicación se considera la aplicación principal o aplicación raíz. El directorio raíz del espacio de trabajo contiene todos los ficheros de configuración, etc.. necesarios para construir y servir la aplicación Angular.
 
 La aplicación inicial creada es la apliación por defecto para todos los comandos lanzados a través de la CLI.
 
@@ -112,7 +112,7 @@ Todos los proyectos dentro del mismo espacio de trabajo o _'workspace'_ comparte
 
 Los archivos de configuración que están en la raíz del espacio de trabajo son los ficheros de configuración de la aplicación raíz. Para un espacio de trabajo de múltiples proyectos, los archivos de configuración específicos de cada proyecto estarán en la carpeta raíz de cada proyecto, dentro de `projects/project-name`.
 
-El fichero `'package.json'` es el fichero estándar de *npm* donde se almacenan las dependencias de terceros que se utilizará para todos los proyectos del espacio de trabajo. Contiene las librerías que necesita la aplicación para ejecutarse tanto en desarrollo como producción.
+El fichero `'package.json'` es el fichero estándar de *npm* donde se almacenan las dependencias de terceros que se utilizará para todos los proyectos del espacio de trabajo. Contiene las bibliotecas que necesita la aplicación para ejecutarse tanto en desarrollo como producción.
 
 ```json
 {
@@ -481,7 +481,7 @@ export class CalculatorService {
 <https://angular.io/guide/router#summary>
 <https://academia-binaria.com/paginas-y-rutas-angular-spa/>
 
-El _'Router'_ es el componente en Angular que gestiona la navegación de una vista a otra. Para ello se configura un ['Router'](https://angular.io/api/router/Router) en la aplicación.
+El enrutador o _'Router'_ es el componente en Angular que gestiona la navegación de una vista a otra. Para ello se configura un ['Router'](https://angular.io/api/router/Router) en la aplicación.
 
 ### `<base href>`
 
@@ -505,10 +505,10 @@ Si la carpeta `app/` es la carpeta raíz de la aplicación, es decir, se ha mant
 
 <https://angular.io/guide/router#router-imports>
 
-El _'Router'_ o enrutador en Angular es un servicio opcional, lo que significa que no forma parte del core de Angular. Está en su propio paquete de librería, el `@angular/router`. Tendremos que importar aquellas partes que se necesiten, tal y como se haría con cualquier otro paquete de Angular:
+El _'Router'_ o enrutador en Angular es un servicio opcional, lo que significa que no forma parte del core de Angular. Está en su propio paquete de biblioteca, el `@angular/router`. Tendremos que importar aquellas partes que se necesiten, tal y como se haría con cualquier otro paquete de Angular:
 
 ```typescript
-// Por ejemplo importamos 'RouterModule' y 'Routes' de la librería
+// Por ejemplo importamos 'RouterModule' y 'Routes' de la biblioteca
 import { RouterModule, Routes } from '@angular/router';
 ```
 
@@ -775,11 +775,43 @@ En el ejemplo, si la expresión es `true` Angular añade la etiqueta `<p>` al DO
 
 Con esta directiva Angular no se limita a mostrar u ocultar la etiqueta o su contenido (es decir, no es un simple `display: none;` en CSS). Lo que hace es añadir o eliminar el elemento y todos sus descendientes del DOM, lo que mejora la eficiencia.
 
+### Component Styles
+
+<https://angular.io/guide/component-styles#component-styles>
+
+En las aplicaciones en Angular se aplica CSS estándar con excepción de algunos selectores especiales.
+
+#### Ámbito de los estilos CSS
+
+**Los estilos especificados en los metadatos del `@Component()` sólo se aplican a ese componente**. Los estilos **tampoco son heredados** por ningún componente anidado dentro de la plantilla.
+
+Esta modularidad de los estilos permite:
+
+* Se puede usar los nombres y selectores de clase CSS que tengan más sentido en el contexto de cada componente.
+* Los nombres y selectores de clase son locales para el componente y no colisionan con las clases y selectores utilizados en otras partes de la aplicación.
+* Los cambios en los estilos en otras partes de la aplicación no afectan los estilos del componente.
+* Puede cambiar o eliminar el código CSS del componente sin buscar en toda la aplicación para encontrar dónde más se usa el código.
+
+#### Selectores especiales
+
+##### :host
+
+El selector de pseudo-clase `:host` se utiliza para seleccionar estilos en el elemento que aloja el componente. Este selector es la única forma de apuntar al elemento que aloja el componente.
+
+```css
+/* hero-details.component.css */
+:host {
+  display: block;
+  border: 1px solid black;
+}
+```
+
+
 ## Formularios, tablas y modelos de datos en Angular
 
 <https://academia-binaria.com/formularios-tablas-y-modelos-de-datos-en-angular/>
 
-Vamos a ver cómo la librería `@angular/forms` enlaza **las vistas, los controladores y los modelos;** y cómo se hace la presentación de datos en **listas y tablas**.
+Vamos a ver cómo la biblioteca `@angular/forms` enlaza **las vistas, los controladores y los modelos;** y cómo se hace la presentación de datos en **listas y tablas**.
 
 ### Binding
 
@@ -1129,7 +1161,7 @@ public ngOnInit() {
 
 Los desarrollos profesionales son complicados pero con Angular tenemos soluciones de comunicación simples para pantallas complejas. Mediante el desarrollo de componentes atómicos y reutilizables Angular favorece la implementación de buenas prácticas.
 
-Crear y comunicar muchos componentes puede llevarnos a código difícil de seguir. La librería `@angular/forms` ofrece tuberías de comunicación para mantener el flujo de datos bajo control.
+Crear y comunicar muchos componentes puede llevarnos a código difícil de seguir. La biblioteca `@angular/forms` ofrece tuberías de comunicación para mantener el flujo de datos bajo control.
 
 ### Comunicación entre componentes
 
@@ -1373,7 +1405,7 @@ La solución en ambos casos pasa por permitir que algunos componentes presentado
 
 <https://academia-binaria.com/comunicaciones-http-en-Angular>
 
-En la versión Angular 7 y posteriores consumir un servicio REST puede ser cosa de niños si aprendes a jugar con los observables y los servicios de la librería `@angular/common/http`. Conseguirás realizar *comunicaciones http asíncronas en Angular*.
+En la versión Angular 7 y posteriores consumir un servicio REST puede ser cosa de niños si aprendes a jugar con los observables y los servicios de la biblioteca `@angular/common/http`. Conseguirás realizar *comunicaciones http asíncronas en Angular*.
 
 ### El servicio 'HttpClient'
 
@@ -1386,7 +1418,7 @@ ng generate component 6-http/rates/rates
 
 #### Importación y declaración de servicios
 
-La librería `@angular/common/http` trae el módulo `HttpClientModule` con el servicio inyectable `HttpClient`. Lo primero es importar dicho módulo:
+La biblioteca `@angular/common/http` trae el módulo `HttpClientModule` con el servicio inyectable `HttpClient`. Lo primero es importar dicho módulo:
 
 ```typescript
 import { HttpClientModule } from '@angular/common/http';
@@ -1542,7 +1574,7 @@ Las comunicaciones entre navegadores y servidores son varios órdenes de magnitu
 
 Esta experiencia no siempre fue tan buena para el programador. Sobre todo con las primeras comunicaciones *AJAX* basadas en el paso de funciones *callback*. La aparición de las *promises* mejoró la claridad del código, y ahora con los **Observables** tenemos además una gran potencia para manipular la información asíncrona.
 
-> El patrón Observable fue implementado por Microsoft en la librería *Reactive Extensions* más conocida como **RxJs**. El equipo de Angular decidió utilizarla para el desarrollo de las comunicaciones asíncronas.
+> El patrón Observable fue implementado por Microsoft en la biblioteca *Reactive Extensions* más conocida como **RxJs**. El equipo de Angular decidió utilizarla para el desarrollo de las comunicaciones asíncronas.
 
 Lo primero es importar el código, de forma similar a cualquier otra clase o función. Por ejemplo para empezar basta con `import { Observable } from "rxjs/Observable";`. Tendremos la clase usada por Angular para observar el respuesta http.
 
@@ -1784,11 +1816,11 @@ Por último un enlace en el menú principal header.component.html y ya estamos l
 
 #### Productores de observables
 
-La librería RxJS es enorme y Angular hace un uso extenso de ella. El tutorial anterior se ha visto desde el punto de vista del consumidor. Es decir, nos hemos suscrito a fuentes observables. Para avanzar tendremos que poder emitir, o mejor dicho producir, información.
+La biblioteca RxJS es enorme y Angular hace un uso extenso de ella. El tutorial anterior se ha visto desde el punto de vista del consumidor. Es decir, nos hemos suscrito a fuentes observables. Para avanzar tendremos que poder emitir, o mejor dicho producir, información.
 
 ##### 'Of' y 'from'
 
-Los constructores más sencillos de la librería son **funciones que emiten valores estáticos o secuencias a intervalos regulares**. Para familiarizarte con ellos te propongo que juegues con código como este:
+Los constructores más sencillos de la biblioteca son **funciones que emiten valores estáticos o secuencias a intervalos regulares**. Para familiarizarte con ellos te propongo que juegues con código como este:
 
 ```typescript
 value$ = of(new Date().getMilliseconds());
@@ -2062,7 +2094,7 @@ Tenemos ahora a nuestro usuario puntualmente informado de todo lo que sucede. He
 
 El **doble enlace automático** entre elementos html y propiedades de objetos fue el primer gran éxito de Angular. Ese **doble-binding** facilita mucho el desarrollo de formularios. Pero esa magia tienen un coste en escalabilidad; impacta en el tiempo de ejecución y además dificulta la validación y el mantenimiento de formularios complejos.
 
-La solución en Angular 7 pasa por desacoplar el modelo y la vista, introduciendo una capa que gestione ese doble enlace. Los servicios y directivas del módulo `ReactiveFormsModule` que viene en la librería `@angular/forms` permiten programar formularios reactivos conducidos por el código.
+La solución en Angular 7 pasa por desacoplar el modelo y la vista, introduciendo una capa que gestione ese doble enlace. Los servicios y directivas del módulo `ReactiveFormsModule` que viene en la biblioteca `@angular/forms` permiten programar formularios reactivos conducidos por el código.
 
 ### Desacople entre vista y modelo
 
