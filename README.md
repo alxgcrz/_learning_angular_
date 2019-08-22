@@ -22,6 +22,9 @@ Más información:
 * <https://angular.io/guide/architecture>
 * <https://academia-binaria.com/cursos/angular-basic>
 
+[StackBlitz](https://medium.com/stackblitz-blog/stackblitz-online-vs-code-ide-for-angular-react-7d09348497f4)
+[StackBlitz — Online IDE for Angular & React powered by Visual Studio Code](https://stackblitz.com)
+
 ## Primeros pasos
 
 <https://angular.io/guide/setup-local>
@@ -315,7 +318,7 @@ Angular admite el enlace de datos bidireccional o _'two-way data binding'_, un m
 |                         |          Markup             |       Nombre          |
 | :---------------------- | :-------------------------: | :-------------------: |
 |  DOM <------- Component |          {{value}}          |  _'interpolation'_    |
-|  DOM <------- Component |     [property] = "value"    |  _'propery binding'_  |
+|  DOM <------- Component |     [property] = "value"    |  _'property binding'_ |
 |  DOM -------> Component |     (event) = "handler"     |  _'event binding'_    |
 |  DOM <------> Component |  [(ng-model)] = "property"  |  _'two-way binding'_  |
 
@@ -806,6 +809,202 @@ El selector de pseudo-clase `:host` se utiliza para seleccionar estilos en el el
 }
 ```
 
+### Sintaxis de las plantillas
+
+<https://angular.io/guide/template-syntax#template-syntax>
+
+Las aplicaciones en Angular gestionan lo que el usuario ve y puede hacer, logrando esto mediante la interacción de una instancia de la clase `Component` (el componente) y su plantilla orientada al usuario.
+
+Siguiendo los patrones _Model-View-Controller (MVC)_ o _Model-View-ViewModel (MVVM)_, en Angular el componente hace el papel de controlador/viewModel y la plantilla hace el papel de vista.
+
+#### HTML en las plantillas
+
+<https://angular.io/guide/template-syntax#html-in-templates>
+
+HTML es el lenguaje utilizado en las plantillas de Angular. Casi toda la sintaxis HTML es una sintaxis de plantilla válida. La etiqueta `<script>` es una notable excepción. Evitando su uso se evita problemas de seguridad y el riesgo de ataques por inyección de comandos.
+
+Otras etiquetas que no tienen sentido en Angular son `<html>`, `<body>` o `<base>`.
+
+#### Interpolation and Template Expressions
+
+<https://angular.io/guide/template-syntax#interpolation-and-template-expressions>
+
+La interpolación le permite incorporar cadenas calculadas en el texto entre etiquetas de elementos HTML y dentro de las asignaciones de atributos. Las expresiones de plantilla son lo que se usa para calcular esas cadenas.
+
+##### Interpolation {{...}}
+
+<https://angular.io/guide/template-syntax#interpolation->
+
+La interpolación se refiere a la capacidad de poder incrustar expresiones dentro de etiquetas HTML. Por defecto, la interpolación utiliza como delimitador las llaves dobles, _{{ y }}_.
+
+```html
+<h3>Current customer: {{ currentCustomer }}</h3>
+```
+
+El texto entre llaves suele ser el nombre de una propiedad del componente. Angular reemplaza ese nombre con el valor de la propiedad del componente correspondiente.
+
+```html
+<p>{{title}}</p>
+<div><img src="{{itemImageUrl}}"></div>
+```
+
+En términos más generales, el texto entre llaves es una expresión de plantilla que Angular primero evalúa y luego convierte en una cadena:
+
+```html
+<p>The sum of 1 + 1 is {{1 + 1}}.</p>
+```
+
+La expresión puede invocar métodos del componente host como `getVal()`:
+
+```html
+<p>The sum of 1 + 1 is not {{1 + 1 + getVal()}}.</p>
+```
+
+##### Template Expressions
+
+<https://angular.io/guide/template-syntax#template-expressions>
+
+Una expresión de plantilla produce un valor y aparece dentro de las llaves dobles, _{{}}_. Angular ejecuta la expresión y la asigna a una propiedad de un objetivo vinculante; el objetivo podría ser un elemento HTML, un componente o una directiva.
+
+En una interpolación como `{{1 + 1}}` las llaves rodean una expresión. En un _property binding_, la expresión de plantilla aparece entre comillas y tiene la forma `[property]="expression"`.
+
+En términos de sintaxis, las expresiones de plantilla son muy parecidas a Javascript. Muchas expresiones en Javascript son expresiones de plantilla legales con algunas excepciones:
+
+* Asignaciones (=, +=, -=, ...)
+* Operadores como `new`, `typeof`, `instanceof`, ...
+* _Chaining expresions_ con ; o ,
+* Los operadores de incremento o decremento (++ y --)
+* Algunos operadores de ES2015
+* No hay soporte para operadores a nivel de bits como | y &.
+
+El contexto de la expresión normalmente es el **componente**, de forma que en la expresión se hace referencia a propiedades del componente:
+
+```html
+<h4>{{recommended}}</h4>
+<img [src]="itemImageUrl2">
+```
+
+El contexto de la expresión también puede ser una variable dentro del template, como por ejemplo hacer referencia a un `input`:
+
+```html
+<label>Type something:
+  <input #customerInput>{{customerInput.value}}
+</label>
+```
+
+Por último el contexto de la expresión puede ser una variable dentro de la plantilla como una variable dentro de una directiva `*ngFor`:
+
+```html
+<ul>
+  <li *ngFor="let customer of customers">{{customer.name}}</li>
+</ul>
+```
+
+#### Template statements
+
+<https://angular.io/guide/template-syntax#template-statements>
+
+Un _template statements_ responde a un evento lanzado por un elemento, componente o directiva y tienen la forma _(event)="statement"_.
+
+Al igual que en las expresiones, normalmente el contexto de una declaración es una instancia del componente:
+
+```html
+<button (click)="deleteHero()">Delete hero</button>
+```
+
+El nombre _deleteHero_ en `(click)="deleteHero()"` es un método del componente.
+
+El contexto también puede hacer referencia a propiedades del propio contexto de la plantilla, variables que hacen referencia a elementos de la plantilla (`#heroForm`) o variables creadas por una directiva como `*ngFor`:
+
+```html
+<button (click)="onSave($event)">Save</button>
+<button *ngFor="let hero of heroes" (click)="deleteHero(hero)">{{hero.name}}</button>
+<form #heroForm (ngSubmit)="onSubmit(heroForm)"> ... </form>
+```
+
+#### Data-Binding
+
+_Data-binding_ es un mecanismo para coordinar lo que ven los usuarios, específicamente con los valores de datos de la aplicación. Si bien se pueden extraer e insertar valores dentro del HTML, una aplicación es más fácil de escribir, leer y mantener si un framework específico se encarga de estas tareas.
+
+Angular proporciona varios tipos de _data-binding_ que se pueden agrupar según la dirección del flujo:
+
+|                         |           Markup             |       Nombre          |
+| :---------------------- | :--------------------------: | :-------------------: |
+|  DOM <------- Component |       {{expression}}         |  _'interpolation'_    |
+|  DOM <------- Component |   [target] = "expression"    |  _'property binding'_ |
+|  DOM <------- Component |  bind-target = "expression"  |                       |
+|  ---------------------- |  --------------------------  |  -------------------- |
+|  DOM -------> Component |    (target) = "statement"    |  _'event binding'_    |
+|  DOM -------> Component |    on-target = "statement"   |                       |
+|  ---------------------- |  --------------------------  |  -------------------- |
+|  DOM <------> Component |  [(target)] = "expression"   |  _'two-way binding'_  |
+|  DOM <------> Component | bindon-target = "expression" |  _'two-way binding'_  |
+
+El _data-binding_ trabaja con las**propiedades de los elementos del DOM, componentes y directivas** y no con los atributos HTML.
+
+La diferencia entre una propiedad DOM y un atributo HTML es que los atributos están definidos por el HTML y las propiedades son accesibles por el DOM. Una regla para distinguir un atributo de una propiedad es que los atributos inicializar las propiedades del DOM y luego terminan. **Los valores de las propiedades pueden cambiar, el valor del atributo no cambia**.
+
+El atributo HTML y la propiedad DOM no son lo mismo, incluso cuando tienen el mismo nombre.
+
+```html
+<input type="text" value="Sarah">
+```
+
+Cuando el navegador renderiza esta etiqueta, crea el correspondiente DOM con la propiedad `value` inicializada con "Sarah". Cuando el usuario introduce la palabra "Sally" en el `<input>` la propiedad `value` cambia a "Sally".
+
+Sin embargo, si miramos el atributo HTML `value` con la función `input.getAttribute('value')` vemos que su valor sigue siendo "Sarah".
+
+En definitiva, en Angular el único papel de los atributos es inicializar el elemento y el estado de la directiva. Cuando se crea un _data-binding_ se trata exclusivamente de propiedades y eventos del objeto de destino.
+
+#### Binding targets
+
+<https://angular.io/guide/template-syntax#binding-targets>
+
+El objetivo de un enlace de datos es algo en el DOM. Depende del tipo, el objetivo puede ser una propiedad (de un elemento, componente o directiva), un evento (de un elemento, componente o directiva) y de forma excepcional con algunos atributos:
+
+* **Propiedad** (elemento, componente o directiva)
+
+```html
+<img [src]="heroImageUrl">
+<app-hero-detail [hero]="currentHero"></app-hero-detail>
+<div [ngClass]="{'special': isSpecial}"></div>
+```
+
+* **Evento** (elemento, componente o directiva)
+
+```html
+<button (click)="onSave()">Save</button>
+<app-hero-detail (deleteRequest)="deleteHero()"></app-hero-detail>
+<div (myClick)="clicked=$event" clickable>click me</div>
+```
+
+* **Two-way** (eventos y propiedades)
+
+```html
+<input [(ngModel)]="name">
+```
+
+* **Atributos** (de forma excepcional)
+
+```html
+<button [attr.aria-label]="help">help</button>
+```
+
+* **Clases**
+
+```html
+<div [class.special]="isSpecial">Special</div>
+```
+
+* **Style**
+
+```html
+<button [style.color]="isSpecial ? 'red' : 'green'">
+```
+
+##### Propiedades
+
+<https://angular.io/guide/template-syntax#property-binding-property>
 
 ## Formularios, tablas y modelos de datos en Angular
 
