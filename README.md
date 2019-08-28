@@ -782,13 +782,13 @@ Con esta directiva Angular no se limita a mostrar u ocultar la etiqueta o su con
 
 <https://angular.io/guide/component-styles#component-styles>
 
-En las aplicaciones en Angular se aplica CSS estándar con excepción de algunos selectores especiales.
+En las aplicaciones en Angular se aplica el estilo con CSS estándar a excepción de algunos selectores especiales.
 
 #### Ámbito de los estilos CSS
 
 **Los estilos especificados en los metadatos del `@Component()` sólo se aplican a ese componente**. Los estilos **tampoco son heredados** por ningún componente anidado dentro de la plantilla.
 
-Esta modularidad de los estilos permite:
+Esta modularidad de los estilos ofrece ciertas ventajas:
 
 * Se puede usar los nombres y selectores de clase CSS que tengan más sentido en el contexto de cada componente.
 * Los nombres y selectores de clase son locales para el componente y no colisionan con las clases y selectores utilizados en otras partes de la aplicación.
@@ -799,7 +799,7 @@ Esta modularidad de los estilos permite:
 
 ##### :host
 
-El selector de pseudo-clase `:host` se utiliza para seleccionar estilos en el elemento que aloja el componente. Este selector es la única forma de apuntar al elemento que aloja el componente.
+El selector de pseudo-clase [`:host`](https://angular.io/api/core/Directive#host) se utiliza para seleccionar estilos en el elemento que aloja el componente. Este selector es la única forma de apuntar al elemento que aloja el componente ya que el elemento `:host` está dentro de la plantilla del componente padre.
 
 ```css
 /* hero-details.component.css */
@@ -808,6 +808,36 @@ El selector de pseudo-clase `:host` se utiliza para seleccionar estilos en el el
   border: 1px solid black;
 }
 ```
+
+Podemos usar la forma funcional para aplicar estilos de forma condicional:
+
+```css
+/* El estilo se aplica al elemento 'host' pero sólo cuando tiene la clase '.active' */
+:host(.active) {
+  border-width: 3px;
+}
+```
+
+##### :host-context
+
+A veces es útil aplicar estilos basados ​​en alguna condición fuera de la vista de un componente. El selector `:host-context()` busca una clase CSS en cualquier ancestro del elemento host del componente, hasta la raíz del documento. El selector `:host-context()` es útil cuando se combina con otro selector.
+
+```css
+/* Se aplica el estilo `background-color` a todas las etiquetas '<h2>' dentro del componente solo si algún elemento del ancestro tiene la clase CSS '.theme-light' */
+:host-context(.theme-light) h2 {
+  background-color: #eef;
+}
+```
+
+#### Loading component styles
+
+Hay varias formas de añadir estilo a un componente:
+
+* Configurando `styles` o `stylesurls` en los metadatos del componente
+* Dentro de la plantilla HTML
+* Importando las hojas de estilo con `import`
+
+(TODO)
 
 ### Sintaxis de las plantillas
 
