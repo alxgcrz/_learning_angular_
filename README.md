@@ -831,13 +831,139 @@ A veces es útil aplicar estilos basados ​​en alguna condición fuera de la 
 
 #### Loading component styles
 
+<https://angular.io/guide/component-styles#loading-component-styles>
+
 Hay varias formas de añadir estilo a un componente:
 
 * Configurando `styles` o `stylesurls` en los metadatos del componente
 * Dentro de la plantilla HTML
 * Importando las hojas de estilo con `import`
 
-(TODO)
+##### Estilo en los metados del componente
+
+Podemos añadir los estilos en los metadatos del componente. La forma más habitual es utilizar la propiedad `styleUrls` y cargar un fichero externo que contenga los estilos CSS:
+
+```typescript
+// CSS in file
+@Component({
+  selector: 'app-root',
+  template: `
+    <h1>Tour of Heroes</h1>
+    <app-hero-main [hero]="hero"></app-hero-main>
+  `,
+  styleUrls: ['./hero-app.component.css']
+})
+export class HeroAppComponent {
+/* . . . */
+}
+```
+
+Para componentes sencillos podemos incluir los estilos directamente en la propiedad `styles`:
+
+```typescript
+// CSS inline
+@Component({
+  selector: 'app-root',
+  template: `
+    <h1>Tour of Heroes</h1>
+    <app-hero-main [hero]="hero"></app-hero-main>
+  `,
+  styles: ['h1 { font-weight: normal; }']
+})
+export class HeroAppComponent {
+/* . . . */
+}
+```
+
+Las dos propiedades no son excluyentes, de forma que podemos utilizar ambas en un mismo componente.
+
+Como ya hemos comentado, tanto los estilos en el fichero CSS externo como los estilos aplicados directamente **sólo** aplican al componente donde se definen. No son heredados por otro componente que esté dentro de la plantilla ni son visibles por otro componente del proyecto.
+
+##### Template inline styles
+
+Podemos incrustar estilos CSS directamente en la plantilla HTML colocándolos dentro de las etiquetas `<style>`:
+
+```typescript
+@Component({
+  selector: 'app-hero-controls',
+  template: `
+    <style>
+      button {
+        background-color: white;
+        border: 1px solid #777;
+      }
+    </style>
+    <h3>Controls</h3>
+    <button (click)="activate()">Activate</button>
+  `
+})
+```
+
+##### Template link tags
+
+También podemos escribir etiquetas `<link>` en la plantilla HTML del componente para hacer referencia a un fichero CSS. En este caso habrá que incluir el fichero en la carpeta `assets` de forma que la CLI lo incluya al compilar el proyecto:
+
+```typescript
+@Component({
+  selector: 'app-hero-team',
+  template: `
+    <!-- We must use a relative URL so that the AOT compiler can find the stylesheet -->
+    <link rel="stylesheet" href="../assets/hero-team.component.css">
+    <h3>Team</h3>
+    <ul>
+      <li *ngFor="let member of hero.team">
+        {{member}}
+      </li>
+    </ul>`
+})
+```
+
+##### CSS @imports
+
+También podemos importar archivos CSS en los archivos CSS utilizando la regla estándar CSS [`@import`](https://developer.mozilla.org/en-US/docs/Web/CSS/@import). En este caso, la URL es relativa al archivo CSS en el que está importando.
+
+```CSS
+/* The AOT compiler needs the `./` to show that this is local */
+@import './hero-details-box.css';
+```
+
+##### External and global style files
+
+Al compilar con la CLI, debemos configurar el fichero `angular.json` para incluir todos los assets externos, incluidos los archivos de estilo externos.
+
+Los archivos de estilo globales se registran en la propiedad `styles` que de forma predeterminada está configurada con el archivo global `styles.css`:
+
+```json
+"architect": {
+  "build": {
+    "builder": "@angular-devkit/build-angular:browser",
+    "options": {
+      "styles": [
+        "src/styles.css",
+        "src/more-styles.css",
+      ],
+       // ...
+    }
+  }
+}
+```
+
+### Non-CSS style files
+
+Si estamos utilizando la herramienta CLI para compilar y construir el proyecto, podemos usar preprocesadores como **SASS**, **LESS** o **STYLUS**. Podemos especificar el fichero en la propiedad `@Component.styleUrls` con la extensión apropiada:
+
+```typescript
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+// ...
+```
+
+Al compilar el proyecto con la herramienta CLI, ejecutará el preprocesador correspondiente.
+
+Sólo podemos usar preprocesadores en ficheros externos. Los estilos en la propiedad `@Component.styles` tiene que ser escritos en CSS.
 
 ### Sintaxis de las plantillas
 
