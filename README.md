@@ -1,5 +1,9 @@
 # Angular
 
+**Proyecto archivado.** Nueva localización en [apuntes-general](https://github.com/alxgcrz/apuntes-general).
+
+----
+
 Es una plataforma y un framework para crear aplicaciones cliente en HTML y TypeScript. Angular está escrito en TypeScript. Implementa funciones básicas y opcionales como un conjunto de bibliotecas TypeScript que se importan en las aplicaciones. Angular aprovecha la tecnología de los componentes web o _'web components'_ y el _'Shadow DOM'_ para apoyar el desarrollo impulsado por componentes.
 
 Los elementos más básicos de construcción de una aplicación Angular son los *NgModules*, que proporcionan un contexto de compilación para los componentes. Los *NgModules* agrupan el código relacionado en conjuntos funcionales; una aplicación Angular se define por un conjunto de *NgModules*. Una aplicación siempre tiene al menos un módulo raíz que permite el bootstrapping, y normalmente tiene muchos más módulos de características.
