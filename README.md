@@ -1,12 +1,8 @@
 # Angular
 
-**Proyecto archivado.** Nueva localización en [apuntes-general](https://github.com/alxgcrz/apuntes-general).
-
-----
-
 Es una plataforma y un framework para crear aplicaciones cliente en HTML y TypeScript. Angular está escrito en TypeScript. Implementa funciones básicas y opcionales como un conjunto de bibliotecas TypeScript que se importan en las aplicaciones. Angular aprovecha la tecnología de los componentes web o _'web components'_ y el _'Shadow DOM'_ para apoyar el desarrollo impulsado por componentes.
 
-Los elementos más básicos de construcción de una aplicación Angular son los *NgModules*, que proporcionan un contexto de compilación para los componentes. Los *NgModules* agrupan el código relacionado en conjuntos funcionales; una aplicación Angular se define por un conjunto de *NgModules*. Una aplicación siempre tiene al menos un módulo raíz que permite el bootstrapping, y normalmente tiene muchos más módulos de características.
+Los elementos más básicos de construcción de una aplicación Angular son los _NgModules_, que proporcionan un contexto de compilación para los componentes. Los _NgModules_ agrupan el código relacionado en conjuntos funcionales; una aplicación Angular se define por un conjunto de _NgModules_. Una aplicación siempre tiene al menos un módulo raíz que permite el bootstrapping, y normalmente tiene muchos más módulos de características.
 
 Los componentes definen **vistas**, que son conjuntos de elementos de pantalla entre los que Angular puede elegir y modificar según la lógica y los datos de su programa.
 
@@ -20,20 +16,7 @@ Los metadatos para una clase de servicio proporcionan la información que Angula
 
 Los componentes de una aplicación suelen definir muchas vistas, ordenadas jerárquicamente. Angular proporciona el servicio de enrutado para ayudarle a definir rutas de navegación entre las vistas. El enrutador proporciona sofisticadas capacidades de navegación dentro del navegador.
 
-Más información:
-
-* <https://angular.io/docs>
-* <https://angular.io/guide/architecture>
-* <https://academia-binaria.com/cursos/angular-basic>
-
-[StackBlitz](https://medium.com/stackblitz-blog/stackblitz-online-vs-code-ide-for-angular-react-7d09348497f4)
-[StackBlitz — Online IDE for Angular & React powered by Visual Studio Code](https://stackblitz.com)
-
 ## Primeros pasos
-
-<https://angular.io/guide/setup-local>
-<https://angular.io/cli>
-<https://academia-binaria.com/hola-angular-cli/>
 
 ### Prerequisitos
 
@@ -43,7 +26,7 @@ Cuando tengamos instalado _node.js_ o si ya lo teníamos instalado podemos compr
 
 Cuando se instala _node.js_ también se instala _NPM_. Para comprobar si está correctamente instalado escribimos en el terminal `npm -v` lo que nos mostrará la versión instalada.
 
-Para desarrollar en Angular podemos usar simplemente Javascript, pero se recomienda usar TypeScript, dado que Angular está desarrollado con TypeScript y todos los ejemplos y código que se encuentra en la web estará escrito en TypeScript. Para instalar Typescript se utiliza también la herramienta *npm*. Abrimos un terminal/consola y ejecutamos `npm install -g typescript`.
+Para desarrollar en Angular podemos usar simplemente Javascript, pero se recomienda usar TypeScript, dado que Angular está desarrollado con TypeScript y todos los ejemplos y código que se encuentra en la web estará escrito en TypeScript. Para instalar Typescript se utiliza también la herramienta _npm_. Abrimos un terminal/consola y ejecutamos `npm install -g typescript`.
 
 ```bash
 //Summary
@@ -59,7 +42,7 @@ _'Angular CLI'_ o simplemente _CLI_ es la herramienta de línea de comandos est�
 
 Para instalar 'Angular CLI' abrimos un terminal/consola y ejecutamos el comando `npm install -g @angular/cli` lo que instala 'Angular CLI' de forma global lo que nos permitirá usar la herramienta desde cualquier directorio.
 
-La sintaxis para instalar Angular (@angular/paquete) es una nueva característica de *npm* llamada **'scoped packages'**. Permite agrupar los paquetes en una misma carpeta.
+La sintaxis para instalar Angular (@angular/paquete) es una nueva característica de _npm_ llamada **'scoped packages'**. Permite agrupar los paquetes en una misma carpeta.
 
 Comprobamos la versión instalada ejecutando en un terminal/consola `ng version`. La ayuda está disponible tanto de modo general (`ng help`) como para cada comando de la herramiento (`ng new --help` o por ejemplo `ng generate --help`).
 
@@ -119,7 +102,7 @@ Todos los proyectos dentro del mismo espacio de trabajo o _'workspace'_ comparte
 
 Los archivos de configuración que están en la raíz del espacio de trabajo son los ficheros de configuración de la aplicación raíz. Para un espacio de trabajo de múltiples proyectos, los archivos de configuración específicos de cada proyecto estarán en la carpeta raíz de cada proyecto, dentro de `projects/project-name`.
 
-El fichero `'package.json'` es el fichero estándar de *npm* donde se almacenan las dependencias de terceros que se utilizará para todos los proyectos del espacio de trabajo. Contiene las bibliotecas que necesita la aplicación para ejecutarse tanto en desarrollo como producción.
+El fichero `'package.json'` es el fichero estándar de _npm_ donde se almacenan las dependencias de terceros que se utilizará para todos los proyectos del espacio de trabajo. Contiene las bibliotecas que necesita la aplicación para ejecutarse tanto en desarrollo como producción.
 
 ```json
 {
@@ -164,27 +147,27 @@ El fichero `angular.json` contiene los valores predeterminados de configuración
 
 Dentro de la carpeta `/src` tenemos:
 
-* La carpeta `app/` contiene los componentes Angular que componen la aplicación.
+- La carpeta `app/` contiene los componentes Angular que componen la aplicación.
 
-* La carpeta `environments/` contiene dos ficheros, y puede contener más, para cada entorno de distribución necesario. En código siempre importaremos el fichero base, pero durante la compilación el CLI lo sustituirá por el adecuado como por ejemplo `title = environment.appName + 'hello world ;-)';`
+- La carpeta `environments/` contiene dos ficheros, y puede contener más, para cada entorno de distribución necesario. En código siempre importaremos el fichero base, pero durante la compilación el CLI lo sustituirá por el adecuado como por ejemplo `title = environment.appName + 'hello world ;-)';`
 
-* La carpeta `assets/` contiene imágenes y otros archivos de activos que se copiarán tal cual cuando cree su aplicación.
+- La carpeta `assets/` contiene imágenes y otros archivos de activos que se copiarán tal cual cuando cree su aplicación.
 
-* `index.html`: La página HTML principal que se sirve cuando alguien visita el sitio. La CLI agrega automáticamente todos los archivos JavaScript y CSS al crear su aplicación, por lo que normalmente no necesita agregar ninguna etiqueta `<script>` o `<link>` manualmente.
+- `index.html`: La página HTML principal que se sirve cuando alguien visita el sitio. La CLI agrega automáticamente todos los archivos JavaScript y CSS al crear su aplicación, por lo que normalmente no necesita agregar ninguna etiqueta `<script>` o `<link>` manualmente.
 
-* `main.ts`: El principal punto de entrada para su aplicación. Compila la aplicación con el compilador JIT y arranca el módulo raíz de la aplicación (`AppModule`) para ejecutarse en el navegador. También puede usar el compilador AOT sin cambiar ningún código agregando el indicador --aot a los comandos de compilación y servicio de la CLI.
+- `main.ts`: El principal punto de entrada para su aplicación. Compila la aplicación con el compilador JIT y arranca el módulo raíz de la aplicación (`AppModule`) para ejecutarse en el navegador. También puede usar el compilador AOT sin cambiar ningún código agregando el indicador --aot a los comandos de compilación y servicio de la CLI.
 
 Dentro tenemos la carpeta `/src/app/`:
   
-* `app.module.ts`: Define el módulo raíz, llamado `AppModule`, que le dice a Angular cómo ensamblar la aplicación. Inicialmente declara solo el `AppComponent`. A medida que agregue más componentes a la aplicación, deberá declararlos aquí.
+- `app.module.ts`: Define el módulo raíz, llamado `AppModule`, que le dice a Angular cómo ensamblar la aplicación. Inicialmente declara solo el `AppComponent`. A medida que agregue más componentes a la aplicación, deberá declararlos aquí.
 
 Una aplicación Angular es un árbol de componentes cuyo componente raíz es llamado `AppComponent`:
 
-* `app.component.ts`: Define la lógica para el componente raíz de la aplicación. La vista asociada con este componente raíz se convierte en la raíz de la jerarquía de vistas a medida que agrega componentes y servicios a su aplicación.
+- `app.component.ts`: Define la lógica para el componente raíz de la aplicación. La vista asociada con este componente raíz se convierte en la raíz de la jerarquía de vistas a medida que agrega componentes y servicios a su aplicación.
 
-* `app.component.html`: Define la plantilla HTML asociada con el componente raíz `AppComponent`
+- `app.component.html`: Define la plantilla HTML asociada con el componente raíz `AppComponent`
 
-* `app.component.css`: Define la hoja de estilo CSS básica para el componente raíz `AppComponent`
+- `app.component.css`: Define la hoja de estilo CSS básica para el componente raíz `AppComponent`
 
 ## Arquitectura de una aplicación Angular
 
@@ -196,7 +179,7 @@ Una aplicación Angular es un árbol de componentes cuyo componente raíz es lla
 <https://angular.io/guide/architecture-modules#introduction-to-modules>
 <https://angular.io/guide/ngmodules>
 
-Las aplicaciones en Angular son modulares y Angular tiene su propio sistema de módulos llamado *'NgModules'*.
+Las aplicaciones en Angular son modulares y Angular tiene su propio sistema de módulos llamado _'NgModules'_.
 
 Los módulos son **contenedores para almacenar los componentes y servicios** de una aplicación. En Angular toda aplicación se puede ver como un árbol de módulos jerárquico y por tanto como mínimo tendrá un módulo raíz, que por convención se llama **'AppModule'** y reside en el fichero `app.module.ts`. A partir de ese módulo raíz se enlazan el resto de módulos, si los hubiera.
 
@@ -262,10 +245,10 @@ ng generate component <name>
 
 El componente raíz que se genera en el módulo raíz es el `AppComponent`. Según la configuración del CLI este componente puede haber sido creado en un sólo fichero o en hasta cuatro:
 
-* el controlador en `app.component.ts`
-* la vista en `app.component.html`
-* el estilo en `app.component.css`
-* las pruebas unitarias en `app.component.spec.ts`
+- el controlador en `app.component.ts`
+- la vista en `app.component.html`
+- el estilo en `app.component.css`
+- las pruebas unitarias en `app.component.spec.ts`
 
 Angular crea, actualiza y destruye componentes a medida que el usuario se mueve a través de la aplicación. La aplicación puede realizar acciones en cada momento de este ciclo de vida a través de los ['lifecycle hooks'](https://angular.io/guide/lifecycle-hooks) como `ngOnInit()` al estilo de Android y los métodos `onCreate()`, `onStart()`, etc...
 
@@ -284,7 +267,7 @@ export class AppComponent {}
 
 Los metadatos de un componente le indican a Angular dónde obtener los bloques de construcción principales que necesita para crear y presentar el componente y su vista. En particular, asocia una plantilla con el componente, ya sea directamente con código en línea o por referencia. Juntos, el componente y su plantilla describen una vista.
 
-**Los componentes definen nuevas etiquetas HTML** para ser usados dentro de otros componentes. Excepcionalmente, el componente raíz se utiliza en la página `'index.html'`. El nombre de la nueva etiqueta se conoce como *selector*. En el caso del componente raíz la propiedad `selector: "app-root"` permite el uso de este componente con esta invocación `<app-root></app-root>`. Otros componentes definirán sus etiquetas HTML dentro de la propiedad `selector` y Angular creará e insertará una instancia del componente donde encuentre esa etiqueta incluido dentro de otros componentes creando una jerarquía.
+**Los componentes definen nuevas etiquetas HTML** para ser usados dentro de otros componentes. Excepcionalmente, el componente raíz se utiliza en la página `'index.html'`. El nombre de la nueva etiqueta se conoce como _selector_. En el caso del componente raíz la propiedad `selector: "app-root"` permite el uso de este componente con esta invocación `<app-root></app-root>`. Otros componentes definirán sus etiquetas HTML dentro de la propiedad `selector` y Angular creará e insertará una instancia del componente donde encuentre esa etiqueta incluido dentro de otros componentes creando una jerarquía.
 
 ```html
 // index.html
@@ -441,7 +424,7 @@ Por defecto, cuando creamos un servicio con el comando `ng generate service` de 
 })
 ```
 
-Cuando se registra un servicio a nivel de módulo, la misma instancia del servicio está disponible para todos los componentes de ese módulo. Esto es, se crea un *singleton* por cada módulo en el que se provea un servicio. Si el mismo servicio se registra en dos módulos, cada módulo recibirá su propia instancia. Para registrar un servicio a nivel de módulo se utiliza la propiedad `providers:[]` de la función decoradora `@NgModule()`:
+Cuando se registra un servicio a nivel de módulo, la misma instancia del servicio está disponible para todos los componentes de ese módulo. Esto es, se crea un _singleton_ por cada módulo en el que se provea un servicio. Si el mismo servicio se registra en dos módulos, cada módulo recibirá su propia instancia. Para registrar un servicio a nivel de módulo se utiliza la propiedad `providers:[]` de la función decoradora `@NgModule()`:
 
 ```typescript
 @NgModule({
@@ -647,14 +630,14 @@ Cada `ActivatedRoute` en el `RouterState` proporciona métodos para recorrer hac
 
 La ruta y los parámetros están disponibles a través de un servicio de enrutador inyectado llamado [`ActivatedRoute`](https://angular.io/api/router/ActivatedRoute). Tiene una gran cantidad de información útil que incluye:
 
-* _'URL'_ -> un observable del path o paths de la ruta, representado por un array de strings por cada parte del path.
-* _'data'_ -> un observable que contiene el objeto 'data' suministrado a la ruta.
-* _'paramMap'_ -> un observable que contiene un 'map' con los parámetros requeridos y opcionales especificados para la ruta.
-* _'outlet'_ -> el nombre del 'RouterOutlet' usado para renderizar la ruta.
-* _'routeConfig'_ -> la configuración usada para la ruta que contiene el path original
-* _'parent'_ -> el 'ActivatedRoute' padre cuando es una ruta hijo.
-* _'firstChild'_ -> contiene el primer 'ActivatedRoute' de la lista de rutas hijo.
-* _'children'_ -> contiene todas las rutas hijo.
+- _'URL'_ -> un observable del path o paths de la ruta, representado por un array de strings por cada parte del path.
+- _'data'_ -> un observable que contiene el objeto 'data' suministrado a la ruta.
+- _'paramMap'_ -> un observable que contiene un 'map' con los parámetros requeridos y opcionales especificados para la ruta.
+- _'outlet'_ -> el nombre del 'RouterOutlet' usado para renderizar la ruta.
+- _'routeConfig'_ -> la configuración usada para la ruta que contiene el path original
+- _'parent'_ -> el 'ActivatedRoute' padre cuando es una ruta hijo.
+- _'firstChild'_ -> contiene el primer 'ActivatedRoute' de la lista de rutas hijo.
+- _'children'_ -> contiene todas las rutas hijo.
 
 ```typescript
 ngOnInit() {
@@ -794,10 +777,10 @@ En las aplicaciones en Angular se aplica el estilo con CSS estándar a excepció
 
 Esta modularidad de los estilos ofrece ciertas ventajas:
 
-* Se puede usar los nombres y selectores de clase CSS que tengan más sentido en el contexto de cada componente.
-* Los nombres y selectores de clase son locales para el componente y no colisionan con las clases y selectores utilizados en otras partes de la aplicación.
-* Los cambios en los estilos en otras partes de la aplicación no afectan los estilos del componente.
-* Puede cambiar o eliminar el código CSS del componente sin buscar en toda la aplicación para encontrar dónde más se usa el código.
+- Se puede usar los nombres y selectores de clase CSS que tengan más sentido en el contexto de cada componente.
+- Los nombres y selectores de clase son locales para el componente y no colisionan con las clases y selectores utilizados en otras partes de la aplicación.
+- Los cambios en los estilos en otras partes de la aplicación no afectan los estilos del componente.
+- Puede cambiar o eliminar el código CSS del componente sin buscar en toda la aplicación para encontrar dónde más se usa el código.
 
 #### Selectores especiales
 
@@ -839,9 +822,9 @@ A veces es útil aplicar estilos basados ​​en alguna condición fuera de la 
 
 Hay varias formas de añadir estilo a un componente:
 
-* Configurando `styles` o `stylesurls` en los metadatos del componente
-* Dentro de la plantilla HTML
-* Importando las hojas de estilo con `import`
+- Configurando `styles` o `stylesurls` en los metadatos del componente
+- Dentro de la plantilla HTML
+- Importando las hojas de estilo con `import`
 
 ##### Estilo en los metados del componente
 
@@ -1012,9 +995,9 @@ export class KeyUpComponent_v1 {
 
 Las propiedades del objeto `$event` varían dependiendo del tipo de evento DOM. Por ejemplo un evento del ratón incluye información diferente de eventos producidos por pulsaciones de teclas.
 
-Todos los [objetos de eventos DOM estándar](https://developer.mozilla.org/en-US/docs/Web/API/Event) tienen la propiedad *'target'*, que es una referencia al objeto que lanzó el evento.
+Todos los [objetos de eventos DOM estándar](https://developer.mozilla.org/en-US/docs/Web/API/Event) tienen la propiedad _'target'_, que es una referencia al objeto que lanzó el evento.
 
-En el ejemplo *'target'* se refiere al elemento `<input>` y `event.target.value` devuelve el contenido actual de ese elemento. Mediante la interpolación mostramos el valor de la variable en `{{values}}`.
+En el ejemplo _'target'_ se refiere al elemento `<input>` y `event.target.value` devuelve el contenido actual de ese elemento. Mediante la interpolación mostramos el valor de la variable en `{{values}}`.
 
 El problema de usar esta forma es que en el ejemplo se indica `any` como el tipo de la variable `$event`, lo que simplifica el código pero no tenemos información que nos revele las propiedades del objeto. Podemos indicar el tipo, como por ejemplo `onKey(event: KeyboardEvent) { }`, lo que significa que ahora el componente tiene demasiada información de la plantilla lo que rompe la separación de responsabilidades.
 
@@ -1023,7 +1006,7 @@ El problema de usar esta forma es que en el ejemplo se indica `any` como el tipo
 <https://angular.io/guide/user-input#get-user-input-from-a-template-reference-variable>
 <https://angular.io/guide/template-syntax#template-reference-variables-var>
 
-Para mantener la separación de responsabilidades podemos usar *variables de referencia*. Estas variables proveen un acceso directo al elemento dentro de la plantilla que lanza el evento DOM. Para declarar una variable de referencia usamos la almohadilla (`#`):
+Para mantener la separación de responsabilidades podemos usar _variables de referencia_. Estas variables proveen un acceso directo al elemento dentro de la plantilla que lanza el evento DOM. Para declarar una variable de referencia usamos la almohadilla (`#`):
 
 ```typescript
 @Component({
@@ -1045,7 +1028,7 @@ La variable de referencia `#box` declarada en el elemento `<input>` se refiere a
 
 #### Key event filtering (with 'key.event')
 
-El manejador de evento `(keyup)` se activa por una pulsación de *cualquier* tecla. Podemos filtrar y reducir el 'ruido' si se lanza el evento cuando se pulse una tecla concreta. En el ejemplo sólo se lanza el evento cuando se pulse la tecla 'ENTER' al utilizar el pseudoevento `keyup.enter`:
+El manejador de evento `(keyup)` se activa por una pulsación de cualquier tecla. Podemos filtrar y reducir el 'ruido' si se lanza el evento cuando se pulse una tecla concreta. En el ejemplo sólo se lanza el evento cuando se pulse la tecla 'ENTER' al utilizar el pseudoevento `keyup.enter`:
 
 ```typescript
 @Component({
@@ -1122,12 +1105,12 @@ En una interpolación como `{{1 + 1}}` las llaves rodean una expresión aunque n
 
 En términos de sintaxis, las expresiones de plantilla son muy parecidas a Javascript. Muchas expresiones en Javascript son expresiones de plantilla legales con algunas excepciones:
 
-* Asignaciones (=, +=, -=, ...)
-* Operadores como `new`, `typeof`, `instanceof`, ...
-* _Chaining expresions_ con ; o ,
-* Los operadores de incremento o decremento (++ y --)
-* Algunos operadores de ES2015
-* No hay soporte para operadores a nivel de bits como | y &.
+- Asignaciones (=, +=, -=, ...)
+- Operadores como `new`, `typeof`, `instanceof`, ...
+- _Chaining expresions_ con ; o ,
+- Los operadores de incremento o decremento (++ y --)
+- Algunos operadores de ES2015
+- No hay soporte para operadores a nivel de bits como | y &.
 
 El contexto de la expresión normalmente es el **componente**, de forma que en la expresión se hace referencia a propiedades del componente. En el ejemplo 'recommended' y 'itemImageUrl2' se refieren a propiedades del componente:
 
@@ -1216,7 +1199,7 @@ En definitiva, en Angular el único papel de los atributos es inicializar el ele
 
 El objetivo de un enlace de datos es algo en el DOM. Depende del tipo, el objetivo puede ser una propiedad (de un elemento, componente o directiva), un evento (de un elemento, componente o directiva) y de forma excepcional con algunos atributos:
 
-* **Evento** (elemento, componente o directiva)
+- **Evento** (elemento, componente o directiva)
 
 ```html
 <button (click)="onSave()">Save</button>
@@ -1224,25 +1207,25 @@ El objetivo de un enlace de datos es algo en el DOM. Depende del tipo, el objeti
 <div (myClick)="clicked=$event" clickable>click me</div>
 ```
 
-* **Two-way** (eventos y propiedades)
+- **Two-way** (eventos y propiedades)
 
 ```html
 <input [(ngModel)]="name">
 ```
 
-* **Atributos** (de forma excepcional)
+- **Atributos** (de forma excepcional)
 
 ```html
 <button [attr.aria-label]="help">help</button>
 ```
 
-* **Clases**
+- **Clases**
 
 ```html
 <div [class.special]="isSpecial">Special</div>
 ```
 
-* **Style**
+- **Style**
 
 ```html
 <button [style.color]="isSpecial ? 'red' : 'green'">
@@ -1307,7 +1290,15 @@ Por seguridad, Angular no permite que se utilicen etiquetas HTML con `<script>` 
 
 (TODO)
 
-## License
+---
+
+## Enlaces de interés
+
+- <https://angular.io/docs>
+- <https://angular.io/guide/architecture>
+- <https://academia-binaria.com/cursos/angular-basic>
+
+## Licencia
 
 [![Licencia de Creative Commons](https://i.creativecommons.org/l/by-sa/4.0/80x15.png)](http://creativecommons.org/licenses/by-sa/4.0/)
 Esta obra está bajo una [licencia de Creative Commons Reconocimiento-Compartir Igual 4.0 Internacional](http://creativecommons.org/licenses/by-sa/4.0/).
