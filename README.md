@@ -1,108 +1,136 @@
 # Angular
 
-Es una plataforma y un framework para crear aplicaciones cliente en HTML y TypeScript. Angular está escrito en TypeScript. Implementa funciones básicas y opcionales como un conjunto de bibliotecas TypeScript que se importan en las aplicaciones. Angular aprovecha la tecnología de los componentes web o _'web components'_ y el _'Shadow DOM'_ para apoyar el desarrollo impulsado por componentes.
+## Introducción
 
-Los elementos más básicos de construcción de una aplicación Angular son los _NgModules_, que proporcionan un contexto de compilación para los componentes. Los _NgModules_ agrupan el código relacionado en conjuntos funcionales; una aplicación Angular se define por un conjunto de _NgModules_. Una aplicación siempre tiene al menos un módulo raíz que permite el bootstrapping, y normalmente tiene muchos más módulos de características.
+**Angular es un framework** de desarrollo de aplicaciones web desarrollado y mantenido por Google. Angular está basado en el lenguaje de programación **TypeScript** y sigue el patrón de diseño de arquitectura MVC (Modelo-Vista-Controlador), específicamente la variante MVVM (Modelo-Vista-VistaModelo).
 
-Los componentes definen **vistas**, que son conjuntos de elementos de pantalla entre los que Angular puede elegir y modificar según la lógica y los datos de su programa.
+**AngularJS** fue desarrollado en 2009 por Misko Hevery y Adams Abrons. Posteriormente fue liberado el proyecto como una biblioteca de código abierto. Adams Abrons abandonó el proyecto pero Misko Hevery, como empleado de Google, continuó con el desarrollo y mantenimiento del proyecto.
 
-Los componentes utilizan **servicios** que proporcionan funciones específicas que no están directamente relacionadas con las vistas. Los proveedores de servicios pueden ser inyectados en los componentes como dependencias, haciendo que su código sea modular, reutilizable y eficiente.
+A partir de la versión **2.0**, anunciada en Septiembre de 2014, AngularJS fue reescrito utilizando el lenguaje TypeScript y se rediseñó por completo todo el framework. Esta nueva versión pasó a llamarse únicamente **Angular**. Ambas versiones conviven, aunque AngularJS ha quedado acotada en versiones 1.X.Y mientras que Angular continúa su evolución. Ambos proyectos tiene ciclos de vida independientes.
 
-Tanto los componentes como los servicios son simplemente clases, con decoradores que marcan su tipo y proporcionan metadatos que indican a Angular cómo utilizarlos.
+**Angular** se utiliza para construir aplicaciones web de una sola página (SPA) y facilita la creación de interfaces de usuario dinámicas y interactivas.
 
-Los metadatos para una clase de componente la asocian con una plantilla o _'template'_ que define una vista. Una plantilla combina HTML ordinario con directivas de Angular y _'binding markup'_ que permiten a Angular modificar el HTML antes de renderizarlo para mostrarlo.
+Las aplicaciones de una sola página, conocidas como **SPAs** (_Single Page Applications_), representan un enfoque revolucionario en el desarrollo web al ofrecer una experiencia de usuario más fluida y dinámica. A diferencia de las aplicaciones tradicionales, donde la navegación implica cargar páginas completas, las SPAs cargan una única página HTML inicial y actualizan dinámicamente el contenido según las interacciones del usuario.
 
-Los metadatos para una clase de servicio proporcionan la información que Angular necesita para ponerla a disposición de los componentes a través de la inyección de dependencia (DI).
+Las principales **características** de Angular incluyen la vinculación bidireccional de datos, que permite la sincronización automática entre la vista y el modelo de datos; inyección de dependencias, que promueve la modularidad y la reutilización de código; y un conjunto de herramientas y bibliotecas que simplifican tareas comunes como la manipulación del DOM, la gestión de eventos y la realización de peticiones HTTP.
 
-Los componentes de una aplicación suelen definir muchas vistas, ordenadas jerárquicamente. Angular proporciona el servicio de enrutado para ayudarle a definir rutas de navegación entre las vistas. El enrutador proporciona sofisticadas capacidades de navegación dentro del navegador.
+Angular aprovecha la tecnología de los componentes web o _'web components'_ y el _'Shadow DOM'_ para apoyar el desarrollo impulsado por componentes. La **arquitectura** de Angular puede resumirse en:
+
+- **Módulos**: Angular organiza la aplicación en módulos, que son conjuntos lógicos de componentes, servicios, directivas y otros artefactos relacionados. Los módulos ayudan a estructurar y organizar la aplicación, facilitando la carga y gestión de diferentes partes de la misma.
+
+- **Componentes**: son los bloques de construcción fundamentales de una aplicación Angular. Cada componente está asociado a una vista y un controlador (o en términos de Angular, un ViewModel). La vista define la interfaz de usuario, mientras que el controlador maneja la lógica y los datos relacionados con esa vista.
+
+- **Templates**: son archivos que definen la estructura y el diseño de las vistas en Angular. Utilizan una sintaxis especial, que combina HTML con extensiones específicas de Angular para la vinculación de datos y la manipulación de la interfaz de usuario.
+
+- **Directivas**: son atributos especiales en el HTML que permiten extender o modificar el comportamiento de los elementos DOM. Angular incluye directivas integradas, como `*ngIf` para controlar la visibilidad de elementos, o `*ngFor` para realizar bucles sobre conjuntos de datos.
+
+- **Servicios**: los servicios en Angular son objetos singleton que realizan funciones específicas y que pueden ser compartidos entre componentes. Se utilizan para encapsular la lógica de negocio, la manipulación de datos, o para realizar operaciones asíncronas, como llamadas HTTP.
+
+- **Inyección de dependencias**: Angular utiliza un sistema de inyección de dependencias para proporcionar a los componentes y servicios las dependencias que necesitan. Esto facilita la modularidad y la reutilización de código al tiempo que mejora la testabilidad.
+
+- **Vinculación de datos (_Data Binding_)**: Angular ofrece una potente vinculación de datos bidireccional, lo que significa que los cambios en el modelo de datos se reflejan automáticamente en la vista y viceversa. Esto simplifica la actualización de la interfaz de usuario en respuesta a eventos o cambios en los datos de la aplicación.
+
+- **Enrutamiento**: Angular proporciona un módulo de enrutamiento que permite la navegación entre las distintas vistas de la aplicación sin necesidad de recargar la página. Esto es esencial para construir aplicaciones de una sola página (SPA).
 
 ## Primeros pasos
 
 ### Prerequisitos
 
-Angular requiere Node.js versión 10.0.9 o superior. Podemos instalar Node.js descargándolo de su [página oficial](https://nodejs.org/).
+Angular requiere **Node.js** que se instala descargándolo de su [página oficial](https://nodejs.org/).
 
-Cuando tengamos instalado _node.js_ o si ya lo teníamos instalado podemos comprobar si está correctamente configurado escribiendo en el terminal `node -v`. Si está todo correcto nos mostrará la versión de _node.js_.
+Cuando se instala **Node.js** también se instala **_NPM_** (_Node Package Manager_) que nos permite, entre otras cosas, gestionar las dependencias de un proyecto.
 
-Cuando se instala _node.js_ también se instala _NPM_. Para comprobar si está correctamente instalado escribimos en el terminal `npm -v` lo que nos mostrará la versión instalada.
+Para desarrollar en Angular se puede utilizar como lenguaje de programación tanto Javascript como **TypeScript**, pero dado que **Angular está implementado con TypeScript**, se recomienda usar este lenguaje.
 
-Para desarrollar en Angular podemos usar simplemente Javascript, pero se recomienda usar TypeScript, dado que Angular está desarrollado con TypeScript y todos los ejemplos y código que se encuentra en la web estará escrito en TypeScript. Para instalar Typescript se utiliza también la herramienta _npm_. Abrimos un terminal/consola y ejecutamos `npm install -g typescript`.
+Para instalar Typescript se utiliza la herramienta **_NPM_** ya que también está publicado como paquete.
 
-```bash
-//Summary
-node -v
-npm -v
-npm install -g typescript
-tsc --version
+[Más información sobre las versiones de Angular](https://angular.dev/reference/versions)
+
+```sh
+// Comprobar la versión de Node.js
+$ node -v
+
+// Comprobar la versión de NPM
+$ npm -v
+
+// Instalar TypeScript
+$ npm install -g typescript
+
+// Comprobar la versión de TypeScript
+$ tsc --version
 ```
 
-### Instalación de _'Angular CLI'_
+### Angular CLI
 
-_'Angular CLI'_ o simplemente _CLI_ es la herramienta de línea de comandos estándar para crear, depurar y publicar aplicaciones Angular.
+**_'Angular CLI'_** es la herramienta de línea de comandos estándar para crear, depurar construir y publicar aplicaciones Angular.
 
-Para instalar 'Angular CLI' abrimos un terminal/consola y ejecutamos el comando `npm install -g @angular/cli` lo que instala 'Angular CLI' de forma global lo que nos permitirá usar la herramienta desde cualquier directorio.
+Esta herramienta está publicada en **_NPM_** como el paquete `@angular/cli` e incluye el binario `ng`:
 
-La sintaxis para instalar Angular (@angular/paquete) es una nueva característica de _npm_ llamada **'scoped packages'**. Permite agrupar los paquetes en una misma carpeta.
+```sh
+// Instalación de 'Angular CLI' de forma global
+$ npm install -g @angular/cli
 
-Comprobamos la versión instalada ejecutando en un terminal/consola `ng version`. La ayuda está disponible tanto de modo general (`ng help`) como para cada comando de la herramiento (`ng new --help` o por ejemplo `ng generate --help`).
+// Comprobar la versión de 'Angular CLI'
+$ ng version
 
-```terminal
-npm install -g @angular/cli   // Instalar Angular CLI
-ng version
-ng help                       // Ver ayuda general
-ng generate --help            // Ayuda de un comando en concreto
+// Ver la ayuda general
+$ ng help
+
+// Ver la ayuda de un comando en concreto como 'ng serve'
+$ ng serve --help
 ```
 
-### Crear un _'workspace'_ y una aplicación inicial
+[Más información sobre CLI](https://angular.dev/tools/cli)
 
-Las aplicaciones Angular se desarrollan en el contexto de una espacio de trabajo o ['workspace'](https://angular.io/guide/glossary#workspace). Un espacio de trabajo puede contener múltiples aplicaciones y bibliotecas. La aplicación inicial creada con el comando `ng new` está en el nivel top del espacio de trabajo. Cuando generamos aplicaciones o bibliotecas adicionales, éstas se crean dentro de la subcarpeta `projects/`.
+#### El espacio de trabajo de una aplicación Angular
+
+Las aplicaciones Angular se desarrollan en el contexto de una espacio de trabajo o _'workspace'_. Un espacio de trabajo puede contener múltiples aplicaciones y bibliotecas.
 
 Para crear un nuevo espacio de trabajo y una aplicación inicial dentro de este nuevo espacio de trabajo, abrimos un terminal y escribimos:
 
-```terminal
-ng new my-app  // Cambiando 'my-app' por el nombre de nuestra nueva aplicación
+```sh
+ng new my-app  // Cambiando 'my-app' por el nombre de la nueva aplicación
 ```
 
-El comando `ng new` nos solicitará información para configurar la aplicación inicial. Lo más habitual es usar la configuración que viene por defecto. Para más información podemos consultar la documentación del comando [`ng new`](https://angular.io/cli/new).
+Este comando nos solicitará información para configurar la aplicación inicial. Lo más habitual es usar la configuración que viene por defecto.
 
-'Angular CLI' instalará todas las bibliotecas y dependencias necesarias, lo que se podrá demorar varios minutos.
+A continuación se instalarán todas las bibliotecas y dependencias necesarias. Finalmente tendremos una aplicación inicial completamente funcional y las configuraciones necesarias para su depuración, pruebas y ejecución.
 
-Finalmente tendremos una aplicación inicial completamente funcional y las configuraciones necesarias para su depuración, pruebas y ejecución.
+Por defecto la aplicación se crea con el prefijo `app` que se usará en todos los componentes pero puede personalizarse usando el modificador `--prefix`.
 
-Por defecto la aplicación se crea con el prefijo `app` que se usará en todos los componentes. Puede personalizarse usando el modificador `--prefix`, como por ejmplo `ng new --prefix sigma`.
+[Más información](https://angular.dev/reference/configs/workspace-config)
 
-### Ejecutar la aplicación
+#### Ejecutar la aplicación
 
-'Angular CLI' incluye un servidor, para que pueda crear y servir su aplicación fácilmente a nivel local.
+**'Angular CLI'** incluye un servidor lo que permite servir la aplicación fácilmente a nivel local.
 
-Entramos en el directorio de la apliación y lanzamos el servidor con `ng serve --open`. Con el parámetro `--open` le indicamos que abra el navegador y cargue la página <http://localhost:4200>:
+El comando `ng serve` inicia el servidor, observa el código fuente, reconstruye automáticamente la aplicación cuando detecta algún cambio en el código y recarga la página en el navegador:
 
-```terminal
+```sh
+// Navegar dentro del espacio de trabajo
 cd my-app
-ng serve --open // Abre el navegador directamente
+
+// Arranca el servidor y abre el navegador en 'http://localhost:4200'
+ng serve --open
 ```
 
-El comando `ng serve` inicia el servidor, observa el código fuente, reconstruye automáticamente la aplicación cuando detecta algún cambio en el código y recarga la página en el navegador.
+#### Estructura de una aplicación Angular
 
-### Estructura de una aplicación Angular
+Cuando se ejecuta el comando `ng new` se instalan las bibliotecas y dependencias necesarias en el nuevo espacio de trabajo, además del **esqueleto funcional** de una aplicación dentro de la carpeta `src/`. Esta aplicación se considera la **aplicación principal** o **aplicación raíz**. El directorio raíz del espacio de trabajo contiene todos los ficheros de configuración, etc.. necesarios para construir y servir la aplicación Angular.
 
-<https://angular.io/guide/file-structure>
+La aplicación inicial creada es la aplicación **por defecto** para todos los comandos lanzados a través de `ng`.
 
-Cuando ejecutamos el comando `ng new` se instalan las bibliotecas y dependencias necesarias en el nuevo _workspace_ además del esqueleto funcional de una aplicación dentro de la carpeta `src/`. Esta aplicación se considera la aplicación principal o aplicación raíz. El directorio raíz del espacio de trabajo contiene todos los ficheros de configuración, etc.. necesarios para construir y servir la aplicación Angular.
+Para un espacio de trabajo que contendrá una sóla aplicación, la subcarpeta `src/` del espacio de trabajo contendrá los ficheros de código (lógica de la aplicación, datos y assets) de la aplicación raíz.
 
-La aplicación inicial creada es la apliación por defecto para todos los comandos lanzados a través de la CLI.
-
-Para un espacio de trabajo que contendrá una sóla aplicación, la subcarpeta `src/` del espacio de trabajo contendrá los ficheros de código (lógica de la aplicación, datos y assets) de la aplicación raíz. Para espacios de trabajo de tipo _'multi-project'_ cada proyecto estará en su propia carpeta dentro de la carpeta `projects/`.
+Para espacios de trabajo de tipo _'multi-project'_ cada proyecto estará en su propia carpeta dentro de la carpeta `projects/`.
 
 #### Ficheros de configuración
-
-<https://angular.io/guide/file-structure#workspace-configuration-files>
 
 Todos los proyectos dentro del mismo espacio de trabajo o _'workspace'_ comparten los ficheros de configuración que están en la raíz del espacio de trabajo. Estos ficheros de configuración tienen ámbito del espacio de trabajo y por tanto su configuración afecta a todos los proyectos.
 
 Los archivos de configuración que están en la raíz del espacio de trabajo son los ficheros de configuración de la aplicación raíz. Para un espacio de trabajo de múltiples proyectos, los archivos de configuración específicos de cada proyecto estarán en la carpeta raíz de cada proyecto, dentro de `projects/project-name`.
 
-El fichero `'package.json'` es el fichero estándar de _npm_ donde se almacenan las dependencias de terceros que se utilizará para todos los proyectos del espacio de trabajo. Contiene las bibliotecas que necesita la aplicación para ejecutarse tanto en desarrollo como producción.
+El fichero `'package.json'` es el fichero estándar de **_NPM_** donde se almacenan las dependencias de terceros que se utilizará para todos los proyectos del espacio de trabajo. Contiene las bibliotecas que necesita la aplicación para ejecutarse tanto en desarrollo como producción:
 
 ```json
 {
@@ -137,9 +165,11 @@ Además de las dependencias el fichero `'package.json'` sirve para indicar infor
 
 El fichero `'tsconfig.json'` contiene los parámetros de configuración por defecto de [TypeScript](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
 
-El fichero `angular.json` contiene los valores predeterminados de configuración de la CLI para todos los proyectos en el área de trabajo, incluidas las opciones de configuración para compilar, servir y probar las herramientas que utiliza la CLI
+El fichero `angular.json` contiene los valores predeterminados de configuración para todos los proyectos en el área de trabajo, incluidas las opciones de configuración para compilar, servir y probar la aplicación.
 
 **Los cambios en los ficheros de configuración no se recargan automáticamente**. Hay que parar la servidor y volver a lanzarlo para que se carguen.
+
+[Más información](https://angular.dev/reference/configs/workspace-config)
 
 #### Carpetas y ficheros de la aplicación
 
@@ -169,10 +199,11 @@ Una aplicación Angular es un árbol de componentes cuyo componente raíz es lla
 
 - `app.component.css`: Define la hoja de estilo CSS básica para el componente raíz `AppComponent`
 
+[Más información](https://angular.dev/reference/configs/file-structure)
+
 ## Arquitectura de una aplicación Angular
 
 <https://angular.io/guide/architecture>
-<https://academia-binaria.com/base-aplicacion-angular/>
 
 ### Introducción a los Módulos
 
@@ -374,7 +405,6 @@ La directiva `ngModel`, que implementa el enlace de datos bidireccional, es un e
 
 <https://angular.io/guide/architecture-services>
 <https://angular.io/guide/dependency-injection>
-<https://academia-binaria.com/servicios-inyectables-en-Angular>
 
 Un servicio es típicamente una clase con un propósito estrecho y bien definido. Debe hacer algo específico y hacerlo bien. Su propósito puede ser contenter lógica de negocio, obtener datos de servidores externos, etc...
 
@@ -469,7 +499,6 @@ export class CalculatorService {
 
 <https://angular.io/guide/router>
 <https://angular.io/guide/router#summary>
-<https://academia-binaria.com/paginas-y-rutas-angular-spa/>
 
 El enrutador o _'Router'_ es el componente en Angular que gestiona la navegación de una vista a otra. Para ello se configura un ['Router'](https://angular.io/api/router/Router) en la aplicación.
 
@@ -1295,8 +1324,11 @@ Por seguridad, Angular no permite que se utilicen etiquetas HTML con `<script>` 
 ## Enlaces de interés
 
 - <https://angular.io/docs>
-- <https://angular.io/guide/architecture>
-- <https://academia-binaria.com/cursos/angular-basic>
+- <https://angular.dev/>
+- <https://material.angular.io/>
+- <https://github.com/PatrickJS/awesome-angular>
+- <https://goalkicker.com/Angular2Book/>
+- <https://www.typescriptlang.org/>
 
 ## Licencia
 
