@@ -313,9 +313,11 @@ El DOM representado por un componente, correspondiente a la plantilla o _'templa
 
 ### Pasar datos entre componentes
 
-En Angular, `@Input` es un decorador que se utiliza para pasar datos desde un componente "padre" a un componente "hijo", lo que facilita la comunicación entre componentes.
+#### Descendente con `@Input`
 
-Para ello se aplica el decorador a la propiedad en la clase "hijo":
+En Angular, `@Input` es un decorador que se utiliza para pasar datos desde un componente "padre" a un componente "hijo", lo que facilita la comunicación descendente entre componentes.
+
+Para ello se aplica el decorador a la propiedad en la clase "hijo". Se puede aplicar a propiedades de tipo `number`, `string`, `boolean` or `object`:
 
 ```typescript
 import { Component, Input } from '@angular/core';
@@ -344,6 +346,50 @@ export class PadreComponent {
 ```
 
 [Más información](https://angular.dev/guide/components/inputs)
+
+#### Ascendente con `@Output`
+
+Con el decorador `@Output` se pasan datos desde el componente "hijo" hacia el componente "padre".
+
+En el componente hijo, se utiliza la decoración `@Output` para crear un `EventEmitter`. Este `EventEmitter` es esencialmente un objeto que puede emitir eventos personalizados.
+
+```typescript
+import { Component, EventEmitter, Output } from '@angular/core';
+
+@Component({
+  selector: 'app-hijo',
+  template: '<button (click)="emitirEvento()">Emitir Evento</button>'
+})
+export class HijoComponent {
+  @Output() miEvento = new EventEmitter<string>();
+
+  emitirEvento() {
+    this.miEvento.emit('Hola desde el componente hijo');
+  }
+}
+```
+
+En el componente padre, se maneja este evento utilizando la sintaxis de enlace de eventos en el marcado del componente.
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-padre',
+  template: '<app-hijo (miEvento)="manejarEvento($event)"></app-hijo>'
+})
+export class PadreComponent {
+  manejarEvento(mensaje: string) {
+    console.log(`Evento capturado en el componente padre: ${mensaje}`);
+  }
+}
+```
+
+### Generar componentes
+
+Para generar componentes disponemos del comando `ng generate component [name]` con algunas opciones de configuración.
+
+[Más información](https://angular.io/cli/generate)
 
 ## Template Syntax
 
