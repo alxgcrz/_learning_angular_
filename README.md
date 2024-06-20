@@ -272,13 +272,17 @@ Los metadatos `templateUrl` y `styleUrl` son relativos al directorio donde resid
 
 El objeto que se pasa al decorador `@Component` son los **metadatos** del componente.
 
+Angular crea una instancia del componente para cada elemento HTML coincidente que encuentra. El elemento DOM que coincide con el selector de un componente se denomina elemento **anfitrión o host** de ese componente. El contenido de la plantilla de un componente se representa dentro de su elemento anfitrión.
+
+El DOM representado por un componente, correspondiente a la plantilla de ese componente, se denomina **vista o _view_** de ese componente.
+
 [Más información](https://angular.dev/guide/components)
 
 ### Importar y usar componentes
 
-Angular dispone de dos formas de hacer disponible los componentes:
+Angular dispone de **dos formas** de hacer disponible los componentes:
 
-- Mediante los componentes **_'standalone'_**, siendo esta la forma recomendada
+- Mediante los componentes **_'standalone'_**, siendo la forma recomendada
 
 - Mediante `@NgModule`
 
@@ -305,114 +309,144 @@ export class ProfilePhoto { }
 export class UserProfile { }
 ```
 
-Angular crea una instancia del componente para cada elemento HTML coincidente que encuentra. El elemento DOM que coincide con el selector de un componente se denomina **elemento anfitrión** de ese componente. El contenido de la plantilla de un componente se representa dentro de su elemento anfitrión.
+[Más información](https://angular.dev/guide/components/importing)
 
-El DOM representado por un componente, correspondiente a la plantilla o _'template'_ de ese componente, se denomina **vista** de ese componente.
+### Selectores
+
+Los selectores se utilizan para identificar los componentes en el DOM y son esenciales para el mecanismo de plantillas de Angular.
+
+Un selector en Angular es una **cadena** que especifica el nombre que se usará para insertar un componente en una plantilla. Los selectores son **_case-sensitive_**.
+
+Además, un único componente puede coincidir exactamente con un selector. Si varios componentes coinciden con un selector, Angular devuelve un error.
+
+Angular realiza esta asociación entre selectores y componentes en **tiempo de compilación**.
+
+Angular dispone de varios tipos de selectores:
+
+1. **Selectores de etiqueta**. Este es el tipo más común. Utiliza el nombre del selector como una etiqueta HTML.
+
+```typescript
+@Component({
+  selector: 'app-mi-componente',
+  templateUrl: './mi-componente.component.html',
+  styleUrls: ['./mi-componente.component.css']
+})
+export class MiComponenteComponent { }
+```
+
+```html
+<!-- ... -->
+<app-mi-componente></app-mi-componente>
+<!-- ... -->
+```
+
+1. **Selectores de Atributo**. Empareja elementos basándose en la presencia de un atributo HTML y, opcionalmente, un valor exacto para ese atributo.
+
+```typescript
+@Component({
+  selector: '[app-mi-componente]',
+  templateUrl: './mi-componente.component.html',
+  styleUrls: ['./mi-componente.component.css']
+})
+export class MiComponenteComponent { }
+```
+
+```html
+<!-- ... -->
+<div app-mi-componente></div>
+<!-- ... -->
+```
+
+1. **Selectores de clase**. Coincide con elementos según la presencia de una clase CSS.
+
+```typescript
+@Component({
+  selector: '.app-mi-componente',
+  templateUrl: './mi-componente.component.html',
+  styleUrls: ['./mi-componente.component.css']
+})
+export class MiComponenteComponent { }
+```
+
+```html
+<!-- ... -->
+<div class="app-mi-componente"></div>
+<!-- ... -->
+```
+
+Los selectores se pueden **combinar** como por ejemplo un selector que seleccione todos los `<button>` de un tipo `type="reset"`:
+
+```typescript
+@Component({
+  selector: 'button[type="reset"]',
+  ...
+})
+export class ResetButton { }
+```
+
+También se pueden definir selectores múltiples separados por comas:
+
+```typescript
+@Component({
+  selector: 'drop-zone, [dropzone]',
+  ...
+})
+export class DropZone { }
+```
+
+Hay que evitar prefijos como `app-` que pueden generar confusión. También hay que evitar el prefijo `ng` ya que es utilizado por Angular.
 
 [Más información](https://angular.dev/guide/components/importing)
 
-### Pasar datos entre componentes
+### Styling
 
-#### Descendente con `@Input`
-
-En Angular, `@Input` es un decorador que se utiliza para pasar datos desde un componente "padre" a un componente "hijo", lo que facilita la comunicación descendente entre componentes.
-
-Para ello se aplica el decorador a la propiedad en la clase "hijo". Se puede aplicar a propiedades de tipo `number`, `string`, `boolean` or `object`:
+Los componentes pueden incluir estilos CSS que se aplicarán a todos los elementos que pueda tener el _template_ del componente:
 
 ```typescript
-import { Component, Input } from '@angular/core';
-
 @Component({
-  selector: 'app-hijo',
-  template: '<p>{{ valor }}</p>'
+  selector: 'profile-photo',
+  template: `<img src="profile-photo.jpg" alt="Your profile photo">`,
+  styles: ` img { border-radius: 50%; } `,
 })
-export class HijoComponent {
-  @Input() valor: string;
-}
+export class ProfilePhoto { }
 ```
 
-Cuando se utiliza el componente hijo en el componente padre, se pasan los datos al componente hijo utilizando la propiedad que haya sido decorada con `@Input`:
+Otro modo es escribir los estilos CSS en un fichero separado y referenciado en el decorador:
 
 ```typescript
-import { Component } from '@angular/core';
-
 @Component({
-  selector: 'app-padre',
-  template: '<app-hijo [valor]="datoDelPadre"></app-hijo>'
+  selector: 'profile-photo',
+  templateUrl: 'profile-photo.html',
+  styleUrl: 'profile-photo.css',
 })
-export class PadreComponent {
-  datoDelPadre: string = 'Hola desde el padre';
-}
+export class ProfilePhoto { }
 ```
+
+Cada componente se puede configurar como el framework aplica los estilos al componente:
+
+- **_ViewEncapsulation.Emulated_**. Este es el modo por defecto. Los estilos sólo aplican al _template_
+
+- **_ViewEncapsulation.ShadowDom_**
+
+- **_ViewEncapsulation.None_**. Desactiva la encapsulación de estilos y se vuelve globales.
+
+En el _template_ del componente se puede usar `<link>` para referenciar un fichero CSS externo. Además, dentro del CSS se puede utilizar la regla `@import` para referenciar un fichero CSS externo.
+
+Estos ficheros externos son tratados por Angular como **estilos externos**, por lo que no se ven afectos por el ámbito de aplicación de los estilos.
+
+[Más información](https://angular.dev/guide/components/styling)
+
+### Accepting data with input properties
 
 [Más información](https://angular.dev/guide/components/inputs)
-
-#### Ascendente con `@Output`
-
-Con el decorador `@Output` se pasan datos desde el componente "hijo" hacia el componente "padre".
-
-En el componente hijo, se utiliza la decoración `@Output` para crear un `EventEmitter`. Este `EventEmitter` es esencialmente un objeto que puede emitir eventos personalizados.
-
-```typescript
-import { Component, EventEmitter, Output } from '@angular/core';
-
-@Component({
-  selector: 'app-hijo',
-  template: '<button (click)="emitirEvento()">Emitir Evento</button>'
-})
-export class HijoComponent {
-  @Output() miEvento = new EventEmitter<string>();
-
-  emitirEvento() {
-    this.miEvento.emit('Hola desde el componente hijo');
-  }
-}
-```
-
-En el componente padre, se maneja este evento utilizando la sintaxis de enlace de eventos en el marcado del componente.
-
-```typescript
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-padre',
-  template: '<app-hijo (miEvento)="manejarEvento($event)"></app-hijo>'
-})
-export class PadreComponent {
-  manejarEvento(mensaje: string) {
-    console.log(`Evento capturado en el componente padre: ${mensaje}`);
-  }
-}
-```
-
-### Generar componentes
-
-Para generar componentes disponemos del comando `ng generate component [name]` con algunas opciones de configuración.
-
-[Más información](https://angular.io/cli/generate)
-
-## Template Syntax
-
-TODO
-
-[Más información](https://angular.dev/guide/templates)
-
-## Directivas
-
-TODO
-
-[Más información](https://angular.dev/guide/directives)
 
 ---
 
 ## Enlaces de interés
 
-- <https://angular.io/docs>
 - <https://angular.dev/>
-- <https://material.angular.io/>
-- <https://github.com/PatrickJS/awesome-angular>
-- <https://goalkicker.com/Angular2Book/>
 - <https://www.typescriptlang.org/>
+- <https://www.youtube.com/@Angular>
 
 ## Licencia
 
