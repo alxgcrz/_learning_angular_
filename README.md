@@ -438,6 +438,134 @@ Estos ficheros externos son tratados por Angular como **estilos externos**, por 
 
 ### Accepting data with input properties
 
+Al crear un componente, puede marcar propiedades de clase específicas como **vinculables** agregando el decorador `@Input` en la propiedad:
+
+```typescript
+import { Component, Input } from '@angular/core';
+@Component({
+  selector: 'app-card',
+  standalone: true,
+  template: `
+    <div class="card">
+      <h2>{{ title }}</h2>
+      <p>{{ description }}</p>
+    </div>
+  `,
+  styleUrl: ['./card.component.css']
+})
+export class CardComponent {
+  @Input() title: string = '';
+  @Input() description: string = '';
+}
+```
+
+Esto le permite vincularse a la propiedad en una plantilla, permitiendo pasar datos entre componentes:
+
+```typescript
+import { Component } from '@angular/core';
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  template: `
+    <h1>My Card Example</h1>
+    <app-card [title]="cardTitle" [description]="cardDescription"></app-card>
+  `,
+  styleUrl: './card.component.css'
+})
+export class AppComponent {
+  cardTitle = 'Card Title';
+  cardDescription = 'This is a description of the card.';
+}
+```
+
+Angular registra los _'input'_ estáticamente en tiempo de compilación. Los _'input'_ no se pueden agregar ni eliminar en tiempo de ejecución.
+
+Al extender una clase de componente, los _'input'_ son heredados por la clase secundaria.
+
+Los nombres utilizados son _'case-sensitive'_. Por tanto, el nombre de la propiedad en el componente debe coincidir con el nombre de la propiedad en la plantilla.
+
+#### Customizing inputs
+
+El decorador `@Input` acepta un objeto de configuración que permite modificar su comportamiento.
+
+Se puede especificar la opción `'required'` para exigir que una entrada determinada siempre deba tener un valor. Si no se especifica un _'input'_ requerido, Angular reporta un error en tiempo de compilación:
+
+```typescript
+@Component({...})
+export class CustomSlider {
+  @Input({required: true}) value = 0;
+}
+```
+
+Otra forma de personalización de los _'input'_ es mediante **funciones transformadoras** que modifiquen el valor de la propiedad cuando sean asignados por Angular. Este ejemplo, se pone en mayúsculas el título de la tarjeta llamando automáticamente a la función `upperCaseString(...)`:
+
+```typescript
+import { Component, Input } from '@angular/core';
+@Component({
+  selector: 'app-card',
+  standalone: true,
+  template: `
+    <div class="card">
+      <h2>{{ title }}</h2>
+      <p>{{ description }}</p>
+    </div>
+  `,
+  styleUrl: ['./card.component.css']
+})
+export class CardComponent {
+  @Input({transform: upperCaseString}) title: string = '';
+  @Input() description: string = '';
+}
+
+function upperCaseString(value: string | undefined) {
+  return value?.toUpperCase() ?? '';
+}
+```
+
+#### Type checking
+
+Cuando se especifica una transformación, el tipo de parámetro de la función de transformación determina los tipos de valores que se pueden establecer para la entrada en una plantilla.
+
+Por ejemplo, el _'input'_ acepta un `number` mientras que la propiedad de la clase es un `string`:
+
+```typescript
+@Component({...})
+export class CustomSlider {
+  @Input({transform: appendPx}) widthPx: string = '';
+}
+function appendPx(value: number) {
+  return `${value}px`;
+}
+```
+
+#### Built-in transformations
+
+Angular incluye dos funciones de transformación integradas para los dos escenarios más comunes: convertir valores a booleanos y números:
+
+```typescript
+import {Component, Input, booleanAttribute, numberAttribute} from '@angular/core';
+@Component({...})
+export class CustomSlider {
+  @Input({transform: booleanAttribute}) disabled = false;
+  @Input({transform: numberAttribute}) number = 0;
+}
+```
+
+#### Inputs aliases
+
+Se puede especificar un alias opcional para cambiar el nombre de una entrada en las plantillas:
+
+```typescript
+@Component({...})
+export class CustomSlider {
+  @Input({alias: 'sliderValue'}) value = 0;
+}
+```
+
+```html
+<custom-slider [sliderValue]="50" />
+```
+
 [Más información](https://angular.dev/guide/components/inputs)
 
 ---
