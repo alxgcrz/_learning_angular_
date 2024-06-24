@@ -484,6 +484,8 @@ Al extender una clase de componente, los _'input'_ son heredados por la clase se
 
 Los nombres utilizados son _'case-sensitive'_. Por tanto, el nombre de la propiedad en el componente debe coincidir con el nombre de la propiedad en la plantilla.
 
+[Más información](https://angular.dev/guide/components/inputs)
+
 #### Customizing inputs
 
 El decorador `@Input` acepta un objeto de configuración que permite modificar su comportamiento.
@@ -566,7 +568,158 @@ export class CustomSlider {
 <custom-slider [sliderValue]="50" />
 ```
 
-[Más información](https://angular.dev/guide/components/inputs)
+## Template syntax
+
+En Angular, una _'plantilla'_ es un fragmento de HTML. Se utiliza una **sintaxis especial** dentro de una plantilla para aprovechar muchas de las funciones de Angular.
+
+Cada plantilla de Angular es una sección de HTML que se incluye como parte de la página que muestra el navegador. Una plantilla HTML en Angular representa una vista o interfaz de usuario en el navegador, como HTML normal, pero con mucha más funcionalidad.
+
+Casi toda la sintaxis HTML es sintaxis de plantilla válida. Sin embargo, debido a que una plantilla de Angular es parte de una página web general y no de la página completa, no es necesario incluir elementos como `<html>`, `<body>` o `<base>`.
+
+:warning: NOTA IMPORTANTE: para eliminar el riesgo de ataques de tipo _'script injection'_, Angular **no soporta** la etiqueta `<script>` en las plantillas.
+
+Cuando se genera una aplicación Angular con la herramienta de Angular CLI, el archivo `app.component.html` es la plantilla **predeterminada** que contiene HTML general.
+
+[Más información](https://angular.dev/guide/templates)
+
+### Text interpolation
+
+La interpolación se refiere a incrustar expresiones en texto marcado. De forma predeterminada, la interpolación utiliza las llaves dobles `{{` y `}}` como delimitadores:
+
+```typescript
+import {Component} from '@angular/core';
+import {NgFor} from '@angular/common';
+import {CUSTOMERS} from './customers';
+@Component({
+  standalone: true,
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  imports: [NgFor],
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent {
+  customers = CUSTOMERS;
+  currentCustomer = 'Maria';
+  title = 'Featured product:';
+  itemImageUrl = '../assets/potted-plant.svg';
+  getVal(): number {
+    return 2;
+  }
+}
+```
+
+Se utiliza la interpolación para mostrar el valor de las variables en la plantilla de componente correspondiente:
+
+```html
+<div>
+  <h1>Interpolation and Template Expressions</h1>
+  <hr />
+  <div>
+    <h2>Interpolation</h2>
+    <h3>Current customer: {{ currentCustomer }}</h3>
+    <p>{{ title }}</p>
+    <div><img alt="item" src="{{ itemImageUrl }}"></div>
+    <h3>Evaluating template expressions </h3>
+    <h4>Simple evaluation (to a string):</h4>
+    <!-- "The sum of 1 + 1 is 2" -->
+    <p>The sum of 1 + 1 is {{ 1 + 1 }}.</p>
+    <h4>Evaluates using a method (also evaluates to a string):</h4>
+    <!-- "The sum of 1 + 1 is not 4" -->
+    <p>The sum of 1 + 1 is not {{ 1 + 1 + getVal() }}.</p>
+  </div>
+  <hr />
+<h2>Expression Context</h2>
+<div>
+  <h4>Template context, template input variables (let customer):</h4>
+  <ul>
+    @for (customer of customers; track customer) {
+      <li>{{ customer.name }}</li>
+    }
+  </ul>
+</div>
+```
+
+[Más información](https://angular.dev/guide/templates/interpolation)
+
+### Template statements
+
+Las declaraciones de plantilla o _'template statements'_ son métodos o propiedades que se pueden utilizar en el HTML para responder a los eventos del usuario:
+
+```html
+<button type="button" (click)="deleteHero()">Delete hero</button>
+```
+
+Cuando el usuario pulsa en el botón _'Delete hero'_, Angular llama al método `deleteHero()`.
+
+[Más información](https://angular.dev/guide/templates/template-statements)
+
+Al igual que la interpolación de texto, los _'template statements'_ utilizan un lenguaje que parece JavaScript. Sin embargo, hay algunas diferencias con la interpolación de texto. Concretamente, los _'template statements'_ soportan el uso de la asignación mediante el signo igual `=` y el encadenado de expresiones con el uso de semicolons `;`:
+
+```html
+<button (click)="mostrarMensaje(); contarClicks()">Haz clic</button>
+<!-- ... -->
+<button (click)="contador = contador + 1; showMessage('Contador:', contador)">Incrementar Contador</button>
+```
+
+```typescript
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
+})
+export class AppComponent {
+  title = "my-app";
+  contador = 0;
+
+  showMessage(message: string, contador: number) {
+    console.log(message, contador);
+  }
+}
+```
+
+Las declaraciones tienen un **contexto**: una parte particular de la aplicación a la que pertenece la declaración.
+
+El contexto de la declaración también puede hacer referencia a propiedades del propio contexto de la plantilla. En el siguiente ejemplo, el método de manejo de eventos del componente, `onSave()` toma el objeto `$event` de la plantilla como argumento:
+
+```html
+<button type="button" (click)="onSave($event)">Save</button>
+```
+
+### Property binding
+
+TODO
+
+[Más información](https://angular.dev/guide/templates/property-binding)
+
+### Attribute binding
+
+La vinculación de atributos o _'attribute binding'_ en Angular permite establecer valores para los atributos directamente.
+
+La sintaxis de vinculación de atributos se parece a la vinculación de propiedades, pero en lugar de una propiedad de elemento entre corchetes, se antepone el nombre del atributo con el prefijo `attr`, seguido de un punto. Luego, se establece el valor del atributo con una expresión que se resuelve en una cadena:
+
+```html
+<p [attr.attribute-you-are-targeting]="expression"></p>
+```
+
+NOTA: cuando la expresión se resuelve con un `null` o un `undefined`, Angular elimina el atributo.
+
+Uno de los usos más frecuentes es establecer atributos ['ARIA'](https://developer.mozilla.org/es/docs/Web/Accessibility/ARIA).
+
+```html
+<!-- create and set an aria attribute for assistive technology -->
+<button type="button" [attr.aria-label]="actionName">{{ actionName }} with Aria</button>
+```
+
+Otro uso podría ser establecer el atributo `colspan` de una tabla HTML, lo que permitiría ajustar de forma dinámica una tablas:
+
+```html
+<!--  expression calculates colspan=2 -->
+<tr><td [attr.colspan]="1 + 1">One-Two</td></tr>
+```
+
+[Más información](https://angular.dev/guide/templates/attribute-binding)
 
 ---
 
