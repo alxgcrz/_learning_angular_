@@ -643,7 +643,7 @@ Se utiliza la interpolación para mostrar el valor de las variables en la planti
 
 ### Template statements
 
-Las declaraciones de plantilla o _'template statements'_ son métodos o propiedades que se pueden utilizar en el HTML para responder a los eventos del usuario:
+Las declaraciones de plantilla o **_'template statements'_** son métodos o propiedades que se pueden utilizar en el HTML para responder a los eventos del usuario:
 
 ```html
 <button type="button" (click)="deleteHero()">Delete hero</button>
@@ -689,7 +689,40 @@ El contexto de la declaración también puede hacer referencia a propiedades del
 
 ### Property binding
 
-TODO
+La vinculación de propiedades o **_'property binding'_** en Angular permite establecer valores para las propiedades de elementos o directivas HTML.
+
+Este _'property binding'_ mueve el valor en una dirección, desde la propiedad de un **componente** a la propiedad del elemento de destino en el **HTML**.
+
+```typescript
+@Component({
+  ...
+})
+export class ExampleBindingComponent {
+  itemImageUrl = '../assets/phone.svg';
+}
+```
+
+Para vincular la propiedad, se encierra el nombre de la propiedad entre corchetes `[]`. Si no se encierra entre corchetes, Angular interpreta la cadena de forma literal.
+
+```html
+<img alt="item" [src]="itemImageUrl">
+```
+
+Para **desactivar** un botón por ejemplo, se puede vincular la propiedad `disabled` del DOM con un booleano en la clase:
+
+```typescript
+@Component({
+  ...
+})
+export class ExampleBindingComponent {
+  isUnchanged = true;
+}
+```
+
+```html
+<!-- Bind button disabled state to `isUnchanged` property -->
+<button type="button" [disabled]="isUnchanged">Disabled Button</button>
+```
 
 [Más información](https://angular.dev/guide/templates/property-binding)
 
@@ -720,6 +753,125 @@ Otro uso podría ser establecer el atributo `colspan` de una tabla HTML, lo que 
 ```
 
 [Más información](https://angular.dev/guide/templates/attribute-binding)
+
+### Class and style binding
+
+La vinculación de clases y estilos permite agregar y eliminar nombres de clases CSS del atributo de clase de un elemento o establecer estilos dinámicamente.
+
+#### Binding to a single CSS class
+
+Para realizar la vinculación con una **única clase CSS** se utiliza la forma `[class.classname]="expression"` siendo `expression` una expresión que se evalúa como `true` o `false` para indicar si se aplica o no la clase CSS.
+
+La expresión también puede ser una propiedad que se evalúe a `true` o `false`:
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-other-component',
+  standalone: true,
+  imports: [],
+  template: `
+    <p [class.background]="mark" [class.larger]="true">
+      other-component works!
+    </p>
+  `,
+  styles: `
+    .background {
+      background-color: yellow;
+    }
+    .larger {
+      font-size: 2em;
+    }
+  `
+})
+export class OtherComponentComponent {
+  mark: boolean = true;
+}
+```
+
+#### Binding to multiple CSS clasess
+
+Para vincular **más de una clase CSS** se utiliza la forma `[class]="classExpression"` donde `classExpression` puede ser:
+
+- Una cadena de nombres de clases delimitada por espacios como por ejemplo `"my-class-1 my-class-2 my-class-3"`.
+
+- Un objeto con nombres de clases como claves y expresiones verdaderas o falsas como valores.
+
+- Un array de nombres de clase, como por ejemplo `['my-class-1', 'my-class-2']`
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-other-component',
+  standalone: true,
+  imports: [],
+  template: `
+    <p [class]="['background', 'larger']">
+      other-component works!
+    </p>
+  `,
+  styles: `
+    .background {
+      background-color: green;
+    }
+    .larger {
+      font-size: 2em;
+    }
+  `
+})
+export class OtherComponentComponent {}
+```
+
+#### Binding to a single style
+
+Para vincular un **único estilo CSS**, se utiliza la forma `[style.styleName]="expression"`. Según el estilo, la expresión será una cadena o numérico, como por ejemplo para indicar un '%' o un tamaño en 'em'.
+
+```typescript
+import {Component} from '@angular/core';
+@Component({
+  standalone: true,
+  selector: 'app-nav-bar',
+  template: `
+    <a [style.text-decoration]="activeLinkStyle">Home Page</a>
+    <a [style.text-decoration]="linkStyle">Login</a>
+  `,
+})
+export class NavBarComponent {
+  linkStyle = 'underline';
+  activeLinkStyle = 'overline';
+  /* . . . */
+}
+```
+
+#### Binding to multiple styles
+
+Para vincular **múltiples estilos**, se utiliza la forma `[style]="styleExpression"`, donde `styleExpression` será:
+
+- Una lista de cadenas que corresponden a los estilos, como por ejemplo `"width: 100px; height: 100px; background-color: cornflowerblue;"`.
+
+- Un objeto con el nombre del estilo como clave y el valor del estilo como valor, como por ejemplo `{width: '100px', height: '100px', backgroundColor: 'cornflowerblue'}`.
+
+```typescript
+import {Component} from '@angular/core';
+@Component({
+  standalone: true,
+  selector: 'app-nav-bar',
+  template: ` <nav [style]="navStyle">
+    <a [style.text-decoration]="activeLinkStyle">Home Page</a>
+    <a [style.text-decoration]="linkStyle">Login</a>
+  </nav>`,
+})
+export class NavBarComponent {
+  navStyle = 'font-size: 1.2rem; color: cornflowerblue;';
+  linkStyle = 'underline';
+  activeLinkStyle = 'overline';
+  /* . . . */
+}
+```
+
+[Más información](https://angular.dev/guide/templates/class-binding)
 
 ---
 
