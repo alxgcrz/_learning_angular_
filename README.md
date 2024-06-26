@@ -873,6 +873,112 @@ export class NavBarComponent {
 
 [Más información](https://angular.dev/guide/templates/class-binding)
 
+### Event binding
+
+La vinculación de eventos o **_'event binding'_** permite escuchar y responder a las acciones del usuario, como pulsaciones de teclas, movimientos del mouse, clics y toques.
+
+Para vincularse a un evento, se utiliza la sintaxis de vinculación de eventos Angular:
+
+```html
+<button (click)="onSave()">Save</button>
+```
+
+La vinculación de eventos "escucha" los eventos de 'click' en el botón e invoca el método `onSave()` del componente cuando este evento se produce.
+
+También se pueden realizar vinculaciones de eventos de teclado usando la sintaxis de Angular:
+
+```html
+<input (keydown.shift.t)="onKeydown($event)" />
+```
+
+Los campos `key` y `code` son una parte nativa del objeto de evento del teclado del navegador.
+
+[Más información](https://angular.dev/guide/templates/event-binding)
+
+### Two-way binding
+
+El enlace bidireccional o **_'two-way binding'_** brinda a los componentes de una aplicación una forma de compartir datos. Se utiliza el enlace bidireccional para escuchar eventos y actualizar valores simultáneamente entre los componentes principal y secundario.
+
+Este tipo de vinculación combina el [_'property binding'_](#property-binding) con el [_'event binding'_](#event-binding).
+
+Por tanto la sintaxis del _'two-way binding'_ es una mezcla de ambas sintaxis:
+
+```html
+<app-sizer [(size)]="fontSizePx"></app-sizer>
+```
+
+En los formularios, se utiliza la directiva `ngModel`.
+
+[Más información](https://angular.dev/guide/templates/two-way-binding)
+
+### Pipes
+
+Las **_'pipes'_** se utilizan para transformar cadenas, importes de moneda, fechas y otros datos para su visualización.
+
+Las _'pipes'_ son funciones simples de usar en plantillas que aceptan un valor de entrada y devuelven un valor transformado. Son útiles porque se pueden utilizar en toda la aplicación, declarando cada _'pipe'_ sólo una vez.
+
+Angular provee de una serie de _'pipes'_ para transformaciones típicas:
+
+- [DatePipe](https://angular.dev/api/common/DatePipe)
+
+- [UpperCasePipe](https://angular.dev/api/common/UpperCasePipe)
+
+- [LowerCasePipe](https://angular.dev/api/common/LowerCasePipe)
+
+- [CurrencyPipe](https://angular.dev/api/common/CurrencyPipe)
+
+- [DecimalPipe](https://angular.dev/api/common/DecimalPipe)
+
+- [PercentPipe](https://angular.dev/api/common/PercentPipe)
+
+- [AsyncPipe](https://angular.dev/api/common/AsyncPipe)
+
+- [JsonPipe](https://angular.dev/api/common/JsonPipe)
+
+Para usar una _'pipe'_ hay que usar el operador `|` tal y como se muestra en el ejemplo. Además, se tiene que importar del paquete `@angular/common`:
+
+```typescript
+import { Component } from '@angular/core';
+import { DatePipe } from '@angular/common';
+@Component({
+  standalone: true,
+  template: `
+    <p>The hero's birthday is {{ birthday | date }}</p>
+  `,
+  imports: [DatePipe],
+})
+export class AppComponent {
+  birthday = new Date();
+}
+```
+
+Las _'pipes'_ pueden tomar parámetros adicionales que permitan configurar la transformación. Estos parámetros pueden ser **obligatorios** u **opcionales**:
+
+```html
+<p>The hero's birthday is in {{ birthday | date:'yyyy' }}</p>
+```
+
+Algunas _'pipes'_ pueden tomar múltiples parámetros. Para ello se utiliza el operador `:`:
+
+```html
+<p>The current time is: {{ currentTime | date:'hh:mm':'UTC' }}</p>
+```
+
+Por último, las _'pipes'_ se pueden **encadenar** de forma que la salida de la _'pipe'_ anterior es la entrada de la siguiente:
+
+```html
+<p>The hero's birthday is {{ birthday | date }}</p>
+<p>The hero's birthday is in {{ birthday | date:'yyyy' | uppercase }}</p>
+```
+
+[Más información](https://angular.dev/guide/templates/two-way-binding)
+
+## Directives
+
+TODO
+
+[Más información](https://angular.dev/guide/directives)
+
 ---
 
 ## Enlaces de interés
