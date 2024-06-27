@@ -911,7 +911,23 @@ En los formularios, se utiliza la directiva `ngModel`.
 
 [Más información](https://angular.dev/guide/templates/two-way-binding)
 
-### Pipes
+### [Control flow](https://angular.dev/guide/templates/control-flow)
+
+Las plantillas en Angular admiten bloques de flujo de control que le permiten mostrar, ocultar y repetir elementos condicionalmente a partir de la **v18**.
+
+#### Bloques condicionales
+
+El bloque condicional con `@if` muestra el contenido cuando la expresión de condición es verdadera:
+
+```typescript
+@if (a > b) {
+{{a}} is greater than {{b}}
+}
+```
+
+TODO
+
+### [Pipes](https://angular.dev/guide/pipes)
 
 Las **_'pipes'_** se utilizan para transformar cadenas, importes de moneda, fechas y otros datos para su visualización.
 
@@ -971,20 +987,106 @@ Por último, las _'pipes'_ se pueden **encadenar** de forma que la salida de la 
 <p>The hero's birthday is in {{ birthday | date:'yyyy' | uppercase }}</p>
 ```
 
-[Más información](https://angular.dev/guide/templates/two-way-binding)
+## [Directives](https://angular.dev/guide/directives)
 
-## Directives
+Las directivas son clases que agregan comportamiento adicional a los elementos de una aplicación Angular.
+
+Angular dispone de tres tipos de directivas:
+
+- **_Components_**: los componentes en Angular son una forma especial de directiva con una plantilla asociada.
+
+- **_Attributes directives_**: cambiar la apariencia o el comportamiento de un elemento, componente u otra directiva.
+
+- **_Structural directives_**: cambiar el diseño DOM agregando y eliminando elementos DOM.
+
+### [Built-in attribute directives](https://angular.dev/guide/directives#built-in-attribute-directives)
+
+Las directivas de atributos más comunes son **NgClass**, **NgStyle** y **NgModel**.
+
+#### [NgClass](https://angular.dev/guide/directives#adding-and-removing-classes-with-ngclass)
+
+Con `NgClass` se pueden añadir o eliminar **múltiples clases CSS** de forma simultánea. Para añadir o eliminar una única clase CSS es mejor utilizar el _'class binding'_.
+
+En el siguiente ejemplo se muestra el uso de `NgClass` y un _'class binding'_ para una única clase CSS:
+
+```typescript
+import { Component } from '@angular/core';
+import { NgClass } from '@angular/common';
+
+@Component({
+  selector: 'app-moon',
+  standalone: true,
+  imports: [NgClass],
+  template: `
+    <p [ngClass]="isLarger ? 'larger' : 'shorter'" [class.background]="withBackground">
+      moon works!
+    </p>
+  `,
+  styles: `
+    .background {
+      background-color: green;
+    }
+    .larger {
+      font-size: 2em;
+    }
+    .shorter {
+      font-size: 1em;
+    }
+  `
+})
+export class MoonComponent {
+  withBackground = true;
+  isLarger = true;
+}
+```
+
+#### [NgStyle](https://angular.dev/guide/directives#setting-inline-styles-with-ngstyle)
+
+Con `NgStyle` se pueden aplicar estilos inline a un elemento:
+
+```typescript
+import { Component } from '@angular/core';
+import { NgStyle } from '@angular/common';
+
+@Component({
+  selector: 'app-mars',
+  standalone: true,
+  imports: [NgStyle],
+  template: `
+    <p [ngStyle]="currentStyles">
+      mars works!
+    </p>
+  `,
+  styles: ``
+})
+export class MarsComponent {
+  canSave = true;
+  isUnchanged = true;
+  isSpecial = true;
+
+  currentStyles = {
+    'font-style': this.canSave ? 'italic' : 'normal',
+    'font-weight': !this.isUnchanged ? 'bold' : 'normal',
+    'font-size': this.isSpecial ? '24px' : '12px',
+    'background-color': 'red'
+  };
+}
+```
+
+#### [NgModel](https://angular.dev/guide/directives#displaying-and-updating-properties-with-ngmodel)
 
 TODO
 
-[Más información](https://angular.dev/guide/directives)
+### [Structural directives](https://angular.dev/guide/directives#built-in-structural-directives)
+
+TODO
 
 ---
 
 ## Enlaces de interés
 
-- <https://angular.dev/>
-- <https://www.typescriptlang.org/>
+- <https://angular.dev>
+- <https://www.typescriptlang.org>
 - <https://www.youtube.com/@Angular>
 
 ## Licencia
