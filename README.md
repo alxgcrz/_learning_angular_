@@ -1,5 +1,7 @@
 # Angular
 
+... **DOCUMENTO EN DESARROLLO** ...
+
 ## Introducción
 
 **Angular es un framework** de desarrollo de aplicaciones web desarrollado y mantenido por Google. Angular está basado en el lenguaje de programación **TypeScript** y sigue el patrón de diseño de arquitectura MVC (Modelo-Vista-Controlador), específicamente la variante MVVM (Modelo-Vista-VistaModelo).
@@ -913,19 +915,148 @@ En los formularios, se utiliza la directiva `ngModel`.
 
 ### [Control flow](https://angular.dev/guide/templates/control-flow)
 
-Las plantillas en Angular admiten bloques de flujo de control que le permiten mostrar, ocultar y repetir elementos condicionalmente a partir de la **v18**.
+Las plantillas en Angular admiten bloques de flujo de control que le permiten mostrar, ocultar y repetir elementos condicionalmente.
+
+Esta característica se introdujo en la **v18 de Angular**. En versiones previas se utilizan directivas estructurales como **NgIf**, **NgFor** o **NgSwitch**.
 
 #### Bloques condicionales
 
 El bloque condicional con `@if` muestra el contenido cuando la expresión de condición es verdadera:
 
 ```typescript
-@if (a > b) {
-{{a}} is greater than {{b}}
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-jupiter',
+  standalone: true,
+  imports: [],
+  template: `
+    @if (showSection) {
+      <p>jupiter works!</p>
+    }
+  `,
+  styles: ``
+})
+export class JupiterComponent {
+  showSection = true;
 }
 ```
 
-TODO
+El bloque `@if` puede tener uno o más bloques `@else` asociados. Inmediatamente después de un bloque `@if`, puede opcionalmente especificar cualquier número de bloques `@else if` y un bloque `@else`:
+
+```typescript
+@if (a > b) {
+  {{a}} is greater than {{b}}
+} @else if (b > a) {
+  {{a}} is less than {{b}}
+} @else {
+  {{a}} is equal to {{b}}
+}
+```
+
+El nuevo condicional @if incorporado admite la referencia de resultados de expresiones para mantener una solución para patrones de codificación comunes:
+
+```typescript
+// El resultado del pipe 
+@if (users$ | async; as users) {
+  {{ users.length }}
+}
+```
+
+En el ejemplo, el resultado del pipe `users$ | async;` se asigna a la variable _'users'_, un patrón común en la evaluación del patrón observable.
+
+#### Bloques en bucle
+
+La anotación `@for` renderiza repetidamente el contenido de un bloque para cada elemento en una colección. La colección puede ser representada como cualquier iterable de JavaScript, pero existen ventajas de rendimiento al usar un Array regular. Un bucle básico `@for` se ve así:
+
+```typescript
+@for (item of items; track item.id) {
+  {{ item.name }}
+}
+```
+
+Utilizar `track` de manera efectiva puede mejorar significativamente el rendimiento de tu aplicación, especialmente en bucles que iteran sobre colecciones de datos.
+
+Para colecciones que no sufren modificaciones (es decir, ningún elemento se mueve, añade o elimina), usar `track $index` es una estrategia eficiente. Esto aprovecha el índice de posición en el array como clave de seguimiento.
+
+Sin embargo, para colecciones con datos mutables o cambios frecuentes, es mejor seleccionar una propiedad que identifique de manera única cada elemento y utilizarla como expresión de seguimiento, como por ejemplo `item.id`.
+
+Dentro de los contenidos `@for`, siempre están disponibles varias variables implícitas:
+
+- **$count**: número de elementos de una colección iterados
+
+- **$index**: índice de la fila actual
+
+- **$first**: si la fila actual es la primera fila
+
+- **$last**: si la fila actual es la última fila
+
+- **$even**: si el índice de fila actual es par
+
+- **$odd**: si el índice de la fila actual es impar
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-jupiter',
+  standalone: true,
+  imports: [],
+  template: `
+    @for (item of numeros; track $index) {
+      @if ($odd) {
+        <p>{{item}}</p>
+      }
+    }
+  `,
+  styles: ``
+})
+export class JupiterComponent {
+  numeros = [1, 2, 3, 4, 5];
+}
+```
+
+En caso de bloques `@for` anidados, el uso de estas variables puede provocar colisiones. Para ello se puede usar un **alias** con `let`:
+
+```typescript
+@for (item of items; track item.id; let idx = $index, e = $even) {
+Item #{{ idx }}: {{ item.name }}
+}
+```
+
+Opcionalmente, puede incluir una sección `@empty` inmediatamente después del contenido del bloque `@for`. El contenido de este bloque se mostrará cuando no hay elementos disponibles:
+
+```html
+@for (item of items; track item.name) {
+  <li> {{ item.name }}</li>
+} @empty {
+  <li> There are no items.</li>
+}
+```
+
+#### Bloques de selección
+
+La sintaxis de `@switch` es muy similar a `@if` y está inspirada en la declaración de `switch` de JavaScript:
+
+```typescript
+@switch (condition) {
+  @case (caseA) {
+    Case A.
+  }
+  @case (caseB) {
+    Case B.
+  }
+  @default {
+    Default case.
+  }
+}
+```
+
+El valor de la expresión condicional se compara con la expresión de caso utilizando el operador '==='.
+
+`@switch` no tiene falla, por lo que no necesita un equivalente a una declaración de `break` o `return`.
+
+El bloque `@default` es opcional y puede ser omitido. Si ningún bloque `@case` coincide con la expresión evaluada y no hay un bloque `@default`, no se mostrará nada.
 
 ### [Pipes](https://angular.dev/guide/pipes)
 
