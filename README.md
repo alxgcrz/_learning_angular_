@@ -234,7 +234,7 @@ Dentro de la carpeta `src/`, la carpeta `app/` contiene la lógica y los datos d
 
 [Más información](https://angular.dev/reference/configs/file-structure#application-project-files)
 
-## Componentes
+## [Components](https://angular.dev/guide/components)
 
 En el contexto de Angular, un componente es una **parte fundamental** de la arquitectura de este framework para el desarrollo de aplicaciones web. Angular utiliza una arquitectura basada en componentes, lo que significa que la interfaz de usuario se construye mediante la composición de componentes individuales.
 
@@ -280,7 +280,7 @@ El DOM representado por un componente, correspondiente a la plantilla de ese com
 
 [Más información](https://angular.dev/guide/components)
 
-### Importar y usar componentes
+### [Importing and using components](https://angular.dev/guide/components/importing)
 
 Angular dispone de **dos formas** de hacer disponible los componentes:
 
@@ -311,9 +311,7 @@ export class ProfilePhoto { }
 export class UserProfile { }
 ```
 
-[Más información](https://angular.dev/guide/components/importing)
-
-### Selectores
+### [Selectors](https://angular.dev/guide/components/selectors)
 
 Los selectores se utilizan para identificar los componentes en el DOM y son esenciales para el mecanismo de plantillas de Angular.
 
@@ -400,7 +398,7 @@ Hay que evitar prefijos como `app-` que pueden generar confusión. También hay 
 
 [Más información](https://angular.dev/guide/components/importing)
 
-### Styling
+### [Styling](https://angular.dev/guide/components/styling)
 
 Los componentes pueden incluir estilos CSS que se aplicarán a todos los elementos que pueda tener el _template_ del componente:
 
@@ -436,9 +434,7 @@ En el _template_ del componente se puede usar `<link>` para referenciar un fiche
 
 Estos ficheros externos son tratados por Angular como **estilos externos**, por lo que no se ven afectos por el ámbito de aplicación de los estilos.
 
-[Más información](https://angular.dev/guide/components/styling)
-
-### Accepting data with input properties
+### [Accepting data with input properties](https://angular.dev/guide/components/inputs)
 
 Al crear un componente, puede marcar propiedades de clase específicas como **vinculables** agregando el decorador `@Input` en la propiedad:
 
@@ -486,9 +482,7 @@ Al extender una clase de componente, los _'input'_ son heredados por la clase se
 
 Los nombres utilizados son _'case-sensitive'_. Por tanto, el nombre de la propiedad en el componente debe coincidir con el nombre de la propiedad en la plantilla.
 
-[Más información](https://angular.dev/guide/components/inputs)
-
-#### Customizing inputs
+#### [Customizing inputs](https://angular.dev/guide/components/inputs#customizing-inputs)
 
 El decorador `@Input` acepta un objeto de configuración que permite modificar su comportamiento.
 
@@ -526,7 +520,7 @@ function upperCaseString(value: string | undefined) {
 }
 ```
 
-#### Type checking
+#### [Type checking](https://angular.dev/guide/components/inputs#type-checking)
 
 Cuando se especifica una transformación, el tipo de parámetro de la función de transformación determina los tipos de valores que se pueden establecer para la entrada en una plantilla.
 
@@ -542,7 +536,7 @@ function appendPx(value: number) {
 }
 ```
 
-#### Built-in transformations
+#### [Built-in transformations](https://angular.dev/guide/components/inputs#built-in-transformations)
 
 Angular incluye dos funciones de transformación integradas para los dos escenarios más comunes: convertir valores a booleanos y números:
 
@@ -555,7 +549,7 @@ export class CustomSlider {
 }
 ```
 
-#### Inputs aliases
+#### [Inputs aliases](https://angular.dev/guide/components/inputs#input-aliases)
 
 Se puede especificar un alias opcional para cambiar el nombre de una entrada en las plantillas:
 
@@ -570,7 +564,7 @@ export class CustomSlider {
 <custom-slider [sliderValue]="50" />
 ```
 
-## Template syntax
+## [Template syntax](https://angular.dev/guide/templates)
 
 En Angular, una _'plantilla'_ es un fragmento de HTML. Se utiliza una **sintaxis especial** dentro de una plantilla para aprovechar muchas de las funciones de Angular.
 
@@ -582,9 +576,7 @@ Casi toda la sintaxis HTML es sintaxis de plantilla válida. Sin embargo, debido
 
 Cuando se genera una aplicación Angular con la herramienta de Angular CLI, el archivo `app.component.html` es la plantilla **predeterminada** que contiene HTML general.
 
-[Más información](https://angular.dev/guide/templates)
-
-### Text interpolation
+### [Text interpolation](https://angular.dev/guide/templates/interpolation)
 
 La interpolación se refiere a incrustar expresiones en texto marcado. De forma predeterminada, la interpolación utiliza las llaves dobles `{{` y `}}` como delimitadores:
 
@@ -641,9 +633,7 @@ Se utiliza la interpolación para mostrar el valor de las variables en la planti
 </div>
 ```
 
-[Más información](https://angular.dev/guide/templates/interpolation)
-
-### Template statements
+### [Template statements](https://angular.dev/guide/templates/template-statements)
 
 Las declaraciones de plantilla o **_'template statements'_** son métodos o propiedades que se pueden utilizar en el HTML para responder a los eventos del usuario:
 
@@ -652,8 +642,6 @@ Las declaraciones de plantilla o **_'template statements'_** son métodos o prop
 ```
 
 Cuando el usuario pulsa en el botón _'Delete hero'_, Angular llama al método `deleteHero()`.
-
-[Más información](https://angular.dev/guide/templates/template-statements)
 
 Al igual que la interpolación de texto, los _'template statements'_ utilizan un lenguaje que parece JavaScript. Sin embargo, hay algunas diferencias con la interpolación de texto. Concretamente, los _'template statements'_ soportan el uso de la asignación mediante el signo igual `=` y el encadenado de expresiones con el uso de semicolons `;`:
 
@@ -689,7 +677,7 @@ El contexto de la declaración también puede hacer referencia a propiedades del
 <button type="button" (click)="onSave($event)">Save</button>
 ```
 
-### Property binding
+### [Property binding](https://angular.dev/guide/templates/property-binding)
 
 La vinculación de propiedades o **_'property binding'_** en Angular permite establecer valores para las propiedades de elementos o directivas HTML.
 
@@ -726,9 +714,7 @@ export class ExampleBindingComponent {
 <button type="button" [disabled]="isUnchanged">Disabled Button</button>
 ```
 
-[Más información](https://angular.dev/guide/templates/property-binding)
-
-### Attribute binding
+### [Attribute binding](https://angular.dev/guide/templates/attribute-binding)
 
 La vinculación de atributos o _'attribute binding'_ en Angular permite establecer valores para los atributos directamente.
 
@@ -754,9 +740,7 @@ Otro uso podría ser establecer el atributo `colspan` de una tabla HTML, lo que 
 <tr><td [attr.colspan]="1 + 1">One-Two</td></tr>
 ```
 
-[Más información](https://angular.dev/guide/templates/attribute-binding)
-
-### Class and style binding
+### [Class and style binding](https://angular.dev/guide/templates/class-binding)
 
 La vinculación de clases y estilos permite agregar y eliminar nombres de clases CSS del atributo de clase de un elemento o establecer estilos dinámicamente.
 
@@ -873,9 +857,7 @@ export class NavBarComponent {
 }
 ```
 
-[Más información](https://angular.dev/guide/templates/class-binding)
-
-### Event binding
+### [Event binding](https://angular.dev/guide/templates/event-binding)
 
 La vinculación de eventos o **_'event binding'_** permite escuchar y responder a las acciones del usuario, como pulsaciones de teclas, movimientos del mouse, clics y toques.
 
@@ -895,9 +877,7 @@ También se pueden realizar vinculaciones de eventos de teclado usando la sintax
 
 Los campos `key` y `code` son una parte nativa del objeto de evento del teclado del navegador.
 
-[Más información](https://angular.dev/guide/templates/event-binding)
-
-### Two-way binding
+### [Two-way binding](https://angular.dev/guide/templates/two-way-binding)
 
 El enlace bidireccional o **_'two-way binding'_** brinda a los componentes de una aplicación una forma de compartir datos. Se utiliza el enlace bidireccional para escuchar eventos y actualizar valores simultáneamente entre los componentes principal y secundario.
 
@@ -911,13 +891,11 @@ Por tanto la sintaxis del _'two-way binding'_ es una mezcla de ambas sintaxis:
 
 En los formularios, se utiliza la directiva `ngModel`.
 
-[Más información](https://angular.dev/guide/templates/two-way-binding)
-
 ### [Control flow](https://angular.dev/guide/templates/control-flow)
 
 Las plantillas en Angular admiten bloques de flujo de control que le permiten mostrar, ocultar y repetir elementos condicionalmente.
 
-Esta característica se introdujo en la **v18 de Angular**. En versiones previas se utilizan directivas estructurales como **NgIf**, **NgFor** o **NgSwitch**.
+Esta característica se introdujo en Angular en la **v.17** como experimental y en la **v.18** se convirtió en estable. En versiones previas se utilizan directivas estructurales como **NgIf**, **NgFor** o **NgSwitch**.
 
 #### Bloques condicionales
 
@@ -1206,9 +1184,66 @@ export class MarsComponent {
 
 #### [NgModel](https://angular.dev/guide/directives#displaying-and-updating-properties-with-ngmodel)
 
-TODO
+Utilice la directiva `NgModel` para mostrar una propiedad de datos y actualizar esa propiedad cuando el usuario realice cambios:
+
+```typescript
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-venus',
+  standalone: true,
+  imports: [FormsModule],
+  template: `
+    <input [(ngModel)]="nombre" placeholder="Ingrese su nombre">
+    <p>Tu nombre ingresado es: {{ nombre }}</p>
+  `,
+  styles: ``
+})
+export class VenusComponent {
+  nombre: string = ''; // Variable para almacenar el nombre ingresado
+}
+```
 
 ### [Structural directives](https://angular.dev/guide/directives#built-in-structural-directives)
+
+Las directivas estructurales son responsables del diseño HTML. Dan forma o remodelan la estructura del DOM, generalmente agregando, eliminando y manipulando los elementos host a los que están adjuntos.
+
+#### [Using NgIf](https://angular.dev/guide/directives#using-ngif)
+
+Para agregar o eliminar un elemento, vincule `*ngIf` a una expresión de condición, es decir, que se evalúe a verdadero o falso:
+
+```typescript
+import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
+
+@Component({
+  selector: 'app-ejemplo-ngif',
+  template: `
+    <div *ngIf="mostrarElemento">
+      Este elemento se muestra si mostrarElemento es true.
+    </div>
+    <button (click)="toggleElemento()">Toggle Elemento</button>
+  `
+})
+export class EjemploNgIfComponent {
+  mostrarElemento: boolean = true;
+
+  toggleElemento() {
+    this.mostrarElemento = !this.mostrarElemento;
+  }
+}
+```
+
+Si se aplica a un componente, cuando la expresión es verdadera, Angular añade el componente al DOM. Sin embargo, cuando es falsa, suprime el componente del DOM:
+
+```html
+<app-item-detail *ngIf="isActive" [item]="item"></app-item-detail>
+```
+
+De forma predeterminada, la directiva `NgIf` impide la visualización de un elemento vinculado a un valor nulo.
+
+### [Using NgFor](https://angular.dev/guide/directives#using-ngfor)
 
 TODO
 
