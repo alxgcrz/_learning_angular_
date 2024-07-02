@@ -714,6 +714,16 @@ export class ExampleBindingComponent {
 <button type="button" [disabled]="isUnchanged">Disabled Button</button>
 ```
 
+A menudo se puede elegir entre interpolación o _'property binding'_. Los siguientes ejemplos son equivalentes:
+
+```html
+<p><img src="{{itemImageUrl}}"> is the <i>interpolated</i> image.</p>
+<p><img [src]="itemImageUrl"> is the <i>property bound</i> image.</p>
+
+<p><span>"{{interpolationTitle}}" is the <i>interpolated</i> title.</span></p>
+<p>"<span [innerHTML]="propertyTitle"></span>" is the <i>property bound</i> title.</p>
+```
+
 ### [Attribute binding](https://angular.dev/guide/templates/attribute-binding)
 
 La vinculación de atributos o _'attribute binding'_ en Angular permite establecer valores para los atributos directamente.
@@ -1205,6 +1215,12 @@ export class VenusComponent {
 }
 ```
 
+Para personalizar su configuración, escriba el formulario ampliado, que separa el enlace de propiedad y evento. Utilice el enlace de propiedad para establecer el enlace de propiedad y evento para responder a los cambios:
+
+```html
+<input [ngModel]="currentItem.name" (ngModelChange)="setUppercaseName($event)" id="example-uppercase">
+```
+
 ### [Structural directives](https://angular.dev/guide/directives#built-in-structural-directives)
 
 Las directivas estructurales son responsables del diseño HTML. Dan forma o remodelan la estructura del DOM, generalmente agregando, eliminando y manipulando los elementos host a los que están adjuntos.
@@ -1245,11 +1261,100 @@ De forma predeterminada, la directiva `NgIf` impide la visualización de un elem
 
 ### [Using NgFor](https://angular.dev/guide/directives#using-ngfor)
 
+la directiva `*ngFor` en Angular se utiliza para iterar sobre elementos en una colección, como un array o una lista, y renderizar dinámicamente elementos HTML basados en cada elemento de la colección:
+
+```typescript
+import { Component } from '@angular/core';
+import { NgFor } from '@angular/common';
+
+@Component({
+  selector: 'app-jupiter',
+  standalone: true,
+  imports: [NgFor],
+  template: `
+    <ul>
+      <li *ngFor="let num of numeros; let i = index">
+        Índice: {{ i + 1 }} - Número: {{ num }}
+      </li>
+    </ul>
+  `,
+  styles: ``
+})
+export class JupiterComponent {
+  numeros = [2, 4, 6, 8, 10, 12];
+}
+```
+
+Para repetir un elemento componente, aplique `*ngFor` al selector:
+
+```html
+<app-item-detail *ngFor="let item of items" [item]="item"></app-item-detail>
+```
+
+### [Using NgSwitch](https://angular.dev/guide/directives#using-ngswitch)
+
+La directiva `NgSwitch` muestra un elemento entre varios elementos posibles, según una condición de cambio. Angular coloca solo el elemento seleccionado en el DOM.
+
+Esta directiva se compone de tres directivas que deberán ser importadas: `NgSwitch`, `NgSwitchCase` and `NgSwitchDefault`.
+
+```html
+<div [ngSwitch]="currentItem.feature">
+  <app-stout-item    *ngSwitchCase="'stout'"    [item]="currentItem"></app-stout-item>
+  <app-device-item   *ngSwitchCase="'slim'"     [item]="currentItem"></app-device-item>
+  <app-lost-item     *ngSwitchCase="'vintage'"  [item]="currentItem"></app-lost-item>
+  <app-best-item     *ngSwitchCase="'bright'"   [item]="currentItem"></app-best-item>
+...
+  <app-unknown-item  *ngSwitchDefault           [item]="currentItem"></app-unknown-item>
+</div>
+```
+
+### [Hosting a directive without a DOM element](https://angular.dev/guide/directives#hosting-a-directive-without-a-dom-element)
+
+La directiva de Angular `<ng-container>` es un elemento de agrupación que no interfiere con los estilos o el diseño porque Angular no lo coloca en el DOM.
+
+Es decir, `<ng-container>` es útil cuando se necesita aplicar directivas estructurales (`*ngIf`, `*ngFor`) a múltiples elementos sin introducir un nodo extra en el DOM final.
+
+No se renderiza en el DOM final, por lo que es una herramienta poderosa para controlar la estructura del HTML sin afectar el renderizado.
+
+Por ejemplo, con la directiva `ngIf`. Se condiciona la renderización del mensaje sin agregar elementos HTML adicionales al DOM final según la propiedad booleana:
+
+```html
+<div>
+  <ng-container *ngIf="showMessage">
+    <p>This is a conditional message.</p>
+  </ng-container>
+</div>
+```
+
+Otro ejemplo con la directiva `*ngFor`:
+
+```html
+<ul>
+  <ng-container *ngFor="let num of numbers">
+    <li *ngIf="num % 2 === 0">
+      {{ num }}
+    </li>
+  </ng-container>
+</ul>
+```
+
+## [Dependency injection in Angular](https://angular.dev/guide/di)
+
+Cuando se desarrolla una parte más pequeña del sistema, como un módulo o una clase, puede ser necesario utilizar funcionalidades de otras clases. Por ejemplo, es posible que se necesite un servicio HTTP para realizar llamadas al backend. La **inyección de dependencias**, o DI, es un patrón de diseño y un mecanismo para crear y proporcionar algunas partes de una aplicación a otras partes que las necesiten. Angular soporta este patrón de diseño y se puede utilizar en las aplicaciones para aumentar la flexibilidad y la modularidad.
+
+En Angular, las dependencias suelen ser **servicios**, aunque también pueden ser valores como cadenas o funciones. Un inyector para una aplicación (creado automáticamente durante el arranque) instancia las dependencias cuando son necesarias, utilizando un proveedor configurado del servicio o valor.
+
+### [Understanding dependency injection](https://angular.dev/guide/di/dependency-injection)
+
+La inyección de dependencias, o DI, es uno de los conceptos fundamentales en Angular. La DI está integrada en el marco de Angular y permite a las clases con decoradores de Angular, como **Componentes**, **Directivas**, **Pipes** e **Inyectables**, configurar las dependencias que necesitan.
+
+En el sistema de DI existen dos roles principales: el **consumidor** de dependencias y el **proveedor** de dependencias.
+
 TODO
 
 ---
 
-## Enlaces de interés
+## Referencias
 
 - <https://angular.dev>
 - <https://www.typescriptlang.org>
