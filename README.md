@@ -1350,6 +1350,88 @@ La inyección de dependencias, o DI, es uno de los conceptos fundamentales en An
 
 En el sistema de DI existen dos roles principales: el **consumidor** de dependencias y el **proveedor** de dependencias.
 
+Angular facilita la interacción entre los consumidores de dependencias y los proveedores de dependencias utilizando una abstracción llamada _"Injector"_. Cuando se solicita una dependencia, el injector verifica su registro para ver si ya hay una instancia disponible allí. Si no la hay, se crea una nueva instancia y se almacena en el registro.
+
+Angular crea un injector de aplicación a nivel global (también conocido como "root" injector) durante el proceso de inicio de la aplicación. En la mayoría de los casos, no es necesario crear manualmente injectores, pero es importante saber que existe una capa que conecta proveedores y consumidores.
+
+#### [Providing a dependency](https://angular.dev/guide/di/dependency-injection#providing-a-dependency)
+
+El primer paso es agregar el decorador `@Injectable` para mostrar que la clase se puede inyectar.
+
+```typescript
+@Injectable()
+class HeroService {}
+```
+
+El siguiente paso es hacerlo disponible en la inyección de dependencias (DI) proporcionándolo. Una dependencia puede ser proporcionada en varios lugares, siendo la recomendable mediante el metadato _"providedIn"_ en el decorador `@Injectable`:
+
+```typescript
+@Injectable({
+  providedIn: 'root'
+})
+class HeroService {}
+```
+
+Proporcionar un servicio a **nivel de raíz (_"root"_)** de la aplicación utilizando _"providedIn"_ permite inyectar el servicio en todas las demás clases. Esto permite a Angular y a los optimizadores de código JavaScript eliminar de manera efectiva los servicios que no se utilizan.
+
+Cuando se proporciona el servicio a nivel de raíz, Angular crea **una única instancia compartida del servicio** y lo inyecta en cualquier clase que lo solicite.
+
+Otra forma es a **nivel de componente** en el decorador `@Component` usando el metadato _"providers"_. En este caso, el servicio estará disponible para todas las instancias de este componente y para otros componentes y directivas utilizados en la plantilla:
+
+```typescript
+@Component({
+  standalone: true,
+  selector: 'hero-list',
+  template: '...',
+  providers: [HeroService]
+})
+class HeroListComponent {}
+```
+
+Cuando se registra un proveedor a nivel de componente, se obtiene una nueva instancia del servicio con cada nueva instancia de ese componente.
+
+El inconveniente de esta forma es que declarar un servicio de esta manera hace que siempre esté incluido en la aplicación, incluso si el servicio no se utiliza.
+
+#### [Injecting/consuming a dependency](https://angular.dev/guide/di/dependency-injection#injecting-consuming-a-dependency)
+
+La forma más común de inyectar una dependencia es declararla en el constructor de una clase. Cuando Angular crea una nueva instancia de una clase de componente, directiva o _pipe_, determina qué servicios u otras dependencias necesita esa clase observando los tipos de parámetros del constructor.
+
+```typescript
+@Component({ … })
+class HeroListComponent {
+  constructor(private service: HeroService) {}
+}
+```
+
+Esta es la forma recomendable ya que al inyectar dependencias en el constructor, Angular puede gestionar el ciclo de vida y las instancias de los servicios de manera más eficaz. Esto también facilita la sustitución de dependencias durante **las pruebas unitarias** mediante el uso de _mocks_ o _stubs_.
+
+Otra opción es utilizar el método `inject()`:
+
+```typescript
+@Component({ … })
+class HeroListComponent {
+  private service = inject(HeroService);
+}
+```
+
+## [Signals](https://angular.dev/guide/signals)
+
+TODO
+
+## [Routing](https://angular.dev/guide/routing)
+
+TODO
+
+## [Forms in Angular](https://angular.dev/guide/forms)
+
+TODO
+
+## [HTTP Client](https://angular.dev/guide/http)
+
+TODO
+
+## [Testing](https://angular.dev/guide/testing)
+
 TODO
 
 ---
