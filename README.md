@@ -1416,7 +1416,36 @@ class HeroListComponent {
 
 ## [Signals](https://angular.dev/guide/signals)
 
-TODO
+Las _"Signals"_ en Angular es un sistema que rastrea de forma granular cómo y dónde se usa su estado en una aplicación, lo que permite que el framework optimice las actualizaciones de renderizado.
+
+Una señal es un envoltorio o _"wrapper"_ alrededor de un valor que notifica a los consumidores interesados ​​cuando ese valor cambia. Las señales pueden contener cualquier valor, desde primitivos hasta estructuras de datos complejas.
+
+El valor de una señal se lee llamando a su función _"getter"_, que permite a Angular rastrear dónde se utiliza la señal.
+
+Las señales pueden ser de escritura (_"writable"_) o de sólo lectura (_"read-only"_).
+
+### [Writable signals](https://angular.dev/guide/signals#writable-signals)
+
+Estas señales proporcionan una API para actualizar sus valores directamente. Para crear una _"writable signal"_ se llama a la función con el valor inicial de la señal:
+
+```typescript
+const count = signal(0);
+// Signals are getter functions - calling them reads their value.
+console.log('The count is: ' + count());
+```
+
+Para modificar el valor de la _"writable signal"_, se hace con la función `.set()`:
+
+```typescript
+count.set(3);
+```
+
+O para tener en cuenta el valor anterior de la señal, se utiliza la función `.update()`:
+
+```typescript
+// Increment the count by 1.
+count.update(value => value + 1);
+```
 
 ## [Routing](https://angular.dev/guide/routing)
 
