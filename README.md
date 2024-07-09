@@ -1418,7 +1418,7 @@ class HeroListComponent {
 
 Las _"Signals"_ en Angular es un sistema que rastrea de forma granular cómo y dónde se usa su estado en una aplicación, lo que permite que el framework optimice las actualizaciones de renderizado.
 
-Una señal es un envoltorio o _"wrapper"_ alrededor de un valor que notifica a los consumidores interesados ​​cuando ese valor cambia. Las señales pueden contener cualquier valor, desde primitivos hasta estructuras de datos complejas.
+Una señal es un envoltorio o _"wrapper"_ alrededor de un valor que **notifica a los consumidores interesados ​​cuando ese valor cambia**. Las señales pueden contener cualquier valor, desde primitivos hasta estructuras de datos complejas.
 
 El valor de una señal se lee llamando a su función _"getter"_, que permite a Angular rastrear dónde se utiliza la señal.
 
@@ -1426,7 +1426,7 @@ Las señales pueden ser de escritura (_"writable"_) o de sólo lectura (_"read-o
 
 ### [Writable signals](https://angular.dev/guide/signals#writable-signals)
 
-Estas señales proporcionan una API para actualizar sus valores directamente. Para crear una _"writable signal"_ se llama a la función con el valor inicial de la señal:
+Estas señales proporcionan una API para actualizar sus valores directamente. Para crear una señal modificable o  _"writable signal"_ se llama a la función con el valor inicial de la señal:
 
 ```typescript
 const count = signal(0);
@@ -1446,6 +1446,107 @@ O para tener en cuenta el valor anterior de la señal, se utiliza la función `.
 // Increment the count by 1.
 count.update(value => value + 1);
 ```
+
+### [Computed Signals](https://angular.dev/guide/signals#computed-signals)
+
+Las señales calculadas o _"computed signals"_ son señales de solo lectura que derivan su valor de otras señales. Las señales calculadas se definen utilizando la función `computed`:
+
+```typescript
+const count: WritableSignal<number> = signal(0);
+const doubleCount: Signal<number> = computed(() => count() * 2);
+```
+
+La señal `doubleCount` depende de la señal `count`. Cada vez que se actualiza `count`, Angular sabe que `doubleCount` también debe actualizarse.
+
+Las señales calculadas no son señales modificables, es decir, no se puede modificar su valor directamente. Un intento de modificar una señal calculada produce un **error de compilación**:
+
+```typescript
+doubleCount.set(3);
+```
+
+### [Effects](https://angular.dev/guide/signals#effects)
+
+Las señales son útiles porque notifican a los consumidores interesados ​​cuando cambian. Un _"effect"_ es una operación que se ejecuta cada vez que uno o más valores de señal cambian. Se puedes crear un _"effect"_ con la función correspondiente:
+
+```typescript
+effect(() => {
+  console.log(`The current count is: ${count()}`);
+});
+```
+
+Los _"effect"_ siempre se ejecutan **al menos una vez**. Cuando se ejecuta, rastrea cualquier valor de señal leído. Siempre que cualquiera de estos valores de señal cambie, el _"effect"_ se ejecutará nuevamente. De manera similar a las señales calculadas, los efectos realizan un seguimiento de sus dependencias dinámicamente y solo rastrean las señales que se leyeron en la ejecución más reciente.
+
+Los _"effect"_ siempre se ejecutan de **forma asincrónica**, durante el proceso de detección de cambios.
+
+De forma predeterminada, solo puedes crear un `effect()` dentro de un contexto de inyección (donde se tiene acceso a la función de inyección). La forma más sencilla de satisfacer este requisito es dentro de un componente, directiva o constructor de servicios.
+
+En este ejemplo, se utiliza un _"effect"_ para suscribirse a una señal desde otro componte. Cómo nexo de unión se utiliza un servicio entre ambos componentes:
+
+```typescript
+import { Injectable } from '@angular/core';
+import { signal } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ContadorService {
+  contador = signal(0);
+
+  incrementar() {
+    this.contador.set(this.contador() + 1);
+  }
+}
+```
+
+Este componente definirá la lógica para cambiar el valor de la señal:
+
+```typescript
+import { Component } from '@angular/core';
+import { ContadorService } from './contador.service';
+
+@Component({
+  selector: 'app-contador',
+  template: `
+    <div>
+      <p>Contador: {{ contadorService.contador() }}</p>
+      <button (click)="incrementar()">Incrementar</button>
+    </div>
+  `
+})
+export class ContadorComponent {
+  constructor(public contadorService: ContadorService) {}
+
+  incrementar() {
+    this.contadorService.incrementar();
+  }
+}
+```
+
+Por último, en este componente se inyecta el servicio y se crea el _"effect"_ dentro del contexto de inyeccción para suscribirse a la señal:
+
+```typescript
+import { Component } from '@angular/core';
+import { ContadorService } from './contador.service';
+import { effect } from '@angular/core';
+
+@Component({
+  selector: 'app-logger',
+  template: `
+    <div>
+      <p>Logger: Mira la consola para los cambios en el contador</p>
+    </div>
+  `
+})
+export class LoggerComponent {
+  constructor(private contadorService: ContadorService) {
+    effect(() => {
+      console.log(`El valor del contador es: ${this.contadorService.contador()}`);
+    });
+  }
+}
+```
+
+Cuando crea un _"effect"_, **se destruye automáticamente cuando se destruye el contexto que lo contiene**. Esto significa que los efectos creados dentro de los componentes se destruyen cuando se destruye el componente. Lo mismo ocurre con los efectos dentro de directivas, servicios, etcétera...
 
 ## [Routing](https://angular.dev/guide/routing)
 
