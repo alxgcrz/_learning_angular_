@@ -1550,7 +1550,201 @@ Cuando crea un _"effect"_, **se destruye automáticamente cuando se destruye el 
 
 ## [Routing](https://angular.dev/guide/routing)
 
-TODO
+El enrutamiento ayuda a cambiar lo que ve el usuario en **una aplicación de una sola página**.
+
+En una aplicación de una sola página, se cambia lo que ve el usuario mostrando u ocultando partes de la pantalla que corresponden a componentes particulares, en lugar de ir al servidor para obtener una nueva página.
+
+A medida que los usuarios realizan tareas en la aplicación, deben poder moverse entre las diferentes vistas que se hayan definido.
+
+Para manejar la navegación de una vista a la siguiente, se utiliza el `Router` en Angular. El enrutador permite la navegación interpretando la URL del navegador como una instrucción para cambiar la vista.
+
+### [Defining a basic route](https://angular.dev/guide/routing/common-router-tasks#defining-a-basic-route)
+
+Para utilizar el enrutador Angular, una aplicación debe tener al menos **dos componentes** para poder navegar de uno a otro.
+
+Los componentes que se vayan a utilizar en el enrutador, se agregan al fichero `app.routes.ts` y al array `Routes[]`. Si se ha utilizado la CLI de Angular, este fichero ya estará creado y también se habrá generado un array `Routes[]` vacío:
+
+```typescript
+import { Routes } from '@angular/router';
+import { FirstComponent } from './routerExample/first/first.component';
+import { SecondComponent } from './routerExample/second/second.component';
+
+export const routes: Routes = [
+  { path: 'first-component', component: FirstComponent }, 
+  { path: 'second-component', component: SecondComponent}
+];
+```
+
+El enrutador y las rutas se deben importar en `app.config.ts`. Las rutas deben añadirse en la función `provideRouter()` y a su vez esta función añadirse a `providers[...]`. Sin emargo, si se ha utilizado la CLI de Angular para generar la aplicación, por defecto ya se habrá creado este fichero y se habrá configurado con el enrutador y las rutas:
+
+```typescript
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
+
+import { routes } from './app.routes';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideAnimationsAsync()]
+};
+```
+
+Ahora que se han definido sus rutas, hay que agregarlas a la aplicación mediante etiquetas `<a>` por ejemplo.
+
+Además, se utiliza `routerLink`. Es una directiva que se utiliza para **enlazar rutas** en aplicaciones Angular. Es similar a un enlace HTML (`<a href="...">`), pero en lugar de recargar la página, Angular maneja la navegación internamente.
+
+También se utiliza `routerLinkActive`. Es una directiva que se utiliza para **aplicar clases CSS** a un enlace cuando la ruta asociada está activa. Esto es útil para indicar visualmente al usuario en qué página se encuentra actualmente.
+
+A continuación, actualice la plantilla de su componente para incluir `<router-outlet>`. Este elemento informa a Angular que actualice la vista de la aplicación con el componente para la ruta seleccionada.
+
+```html
+<h1>Angular Router App</h1>
+<nav>
+  <ul>
+    <li><a routerLink="/first-component" routerLinkActive="active" ariaCurrentWhenActive="page">First Component</a></li>
+    <li><a routerLink="/second-component" routerLinkActive="active" ariaCurrentWhenActive="page">Second Component</a></li>
+  </ul>
+</nav>
+<!-- The routed views render in the <router-outlet>-->
+<router-outlet></router-outlet>
+```
+
+También se debe agregar `RouterLink`, `RouterLinkActive` y `RouterOutlet` a la matriz de importaciones de `AppComponent`:
+
+```typescript
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'routing-app';
+}
+```
+
+El **orden de las rutas** es crucial porque el `Router` utiliza una estrategia de "la primera coincidencia gana" al hacer coincidir las rutas. Por lo tanto, las rutas más específicas deben colocarse antes que las rutas menos específicas:
+
+- Primero las rutas con un camino estático,
+
+- Seguidas por una ruta de camino vacío, que coincide con la ruta predeterminada.
+
+- La ruta comodín viene al final porque coincide con cualquier URL y el `Router` la selecciona solo si ninguna otra ruta coincide primero.
+
+```typescript
+const routes: Routes = [
+  { path: 'detalle/:id', component: DetalleComponent },  // Ruta específica con parámetro
+  { path: 'lista', component: ListaComponent },          // Ruta específica estática
+  { path: '', redirectTo: '/home', pathMatch: 'full' },  // Ruta de camino vacío (ruta predeterminada)
+  { path: '**', component: PaginaNoEncontradaComponent } // Ruta comodín (ruta de error 404)
+];
+```
+
+### [Getting route information](https://angular.dev/guide/routing/common-router-tasks#getting-route-information)
+
+A menudo, cuando un usuario navega por la aplicación, desea pasar información de un componente a otro. Por ejemplo, desde una lista de elementos cuando se accede a la edición o al detalle de un elemento concreto. En esa página de detalle se necesita saber que elemento (mediante un id, por ejemplo) ha seleccionado el usuario.
+
+Se agrega la característica `withComponentInputBinding` a la función `provideRouter():
+
+```typescript
+providers: [
+  provideRouter(appRoutes, withComponentInputBinding()),
+]
+```
+
+En el componente, se añade el decorador `@Input()` con el nombre que coincida con el parámetro:
+
+```typescript
+@Component({
+  selector: 'app-second',
+  standalone: true,
+  imports: [],
+  templateUrl: './second.component.html',
+  styleUrl: './second.component.css'
+})
+export class SecondComponent {
+  @Input()
+  set id(id: string) {
+    console.log(`Identificador: ${id}`);
+  }
+}
+```
+
+Se añade el parámetro en las rutas del `app.routes.ts`:
+
+```typescript
+import { Routes } from '@angular/router';
+import { FirstComponent } from './routerExample/first/first.component';
+import { SecondComponent } from './routerExample/second/second.component';
+
+export const routes: Routes = [
+  { path: 'first-component', component: FirstComponent, title: 'My First Component' },
+  { path: 'second-component/:id', component: SecondComponent, title: 'My Second Component'}
+];
+```
+
+Por último, se añade el parámetro al `routerLink`, por interpolación por ejemplo o por cualquier otro sistema.
+
+```html
+<nav>
+  <ul>
+    <li><a routerLink="/first-component" routerLinkActive="active" ariaCurrentWhenActive="page">First Component</a></li>
+    <li><a routerLink="/second-component/{{id}}" routerLinkActive="active" ariaCurrentWhenActive="page">Second Component</a></li>
+  </ul>
+</nav>
+```
+
+### [Setting up wildcard routes](https://angular.dev/guide/routing/common-router-tasks#setting-up-wildcard-routes)
+
+Una aplicación que funcione bien debería manejar todos los escenarios, como por ejemplo cuando los usuarios intentan navegar a una parte de la aplicación que no existe.
+
+Para agregar esta funcionalidad a la aplicación, se configura una **ruta comodín**. El enrutador Angular selecciona esta ruta cada vez que la URL solicitada no coincide con ninguna ruta del enrutador.
+
+```typescript
+const routes: Routes = [
+  { path: 'detalle/:id', component: DetalleComponent },  // Ruta específica con parámetro
+  { path: 'lista', component: ListaComponent },          // Ruta específica estática
+  { path: '', redirectTo: '/home', pathMatch: 'full' },  // Ruta de camino vacío (ruta predeterminada)
+  { path: '**', component: PaginaNoEncontradaComponent } // Ruta comodín (ruta de error 404)
+];
+```
+
+Los dos asteriscos, `**`, indican a Angular que esta definición de ruta es una ruta comodín. La ruta comodín es la **última ruta** porque coincide con cualquier URL.
+
+Para la propiedad del componente, se puede definir cualquier componente en la aplicación. Las opciones comunes incluyen un componente específico de la aplicación, cuyo objetivo sea mostrar **una página 404** a los usuarios; o una **redirección al componente principal** de su aplicación.
+
+### [Setting up redirects](https://angular.dev/guide/routing/common-router-tasks#setting-up-redirects)
+
+En Angular, el concepto de redirección se utiliza para redirigir automáticamente a una ruta diferente cuando se accede a una ruta específica. Para ello se utiliza `redirectTo` para indicar la redirección y `pathMatch: 'full'` para indicar que la ruta debe coincidir exactamente con el camino especificado o `pathMatch: 'prefix'` cuando cualquier prefijo del camino puede coincidir.
+
+La redirección puede ser útil en varios escenarios.
+
+- Cuando los usuarios acceden a la raíz de la aplicación (/), pueden ser redirigidos a una ruta predeterminada, como una página de inicio o un dashboard.
+
+```typescript
+const routes: Routes = [
+  { path: '', redirectTo: '/home', pathMatch: 'full' }
+];
+```
+
+- Redirigir usuarios no autenticados a una página de inicio de sesión cuando intentan acceder a rutas protegidas:
+
+```typescript
+const routes: Routes = [
+  { path: 'protected', canActivate: [AuthGuard], component: ProtectedComponent },
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' }
+];
+```
+
+- Si una ruta antigua ha cambiado para redirigir a los usuarios a la nueva ruta con parámetros actualizados:
+
+```typescript
+const routes: Routes = [
+  { path: 'old-path/:id', redirectTo: '/new-path/:id', pathMatch: 'full' }
+];
+```
 
 ## [Forms in Angular](https://angular.dev/guide/forms)
 
