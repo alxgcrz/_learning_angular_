@@ -1752,7 +1752,128 @@ TODO
 
 ## [HTTP Client](https://angular.dev/guide/http)
 
-TODO
+La mayoría de las aplicaciones de front-end necesitan comunicarse con un servidor a través del protocolo HTTP, para descargar o cargar datos y acceder a otros servicios de back-end. Angular proporciona una API HTTP de cliente para aplicaciones Angular, la clase de servicio _"HttpClient"_ en `@angular/common/http`.
+
+### [Setting up HttpClient](https://angular.dev/guide/http/setup)
+
+Antes de poder usar _"HttpClient"_ en la aplicación, se debe configurar mediante la inyección de dependencias.
+
+_"HttpClient"_ se proporciona mediante la función auxiliar `provideHttpClient()`, que la mayoría de las aplicaciones incluyen en los proveedores de aplicaciones `providers[]` en _"app.config.ts"_:
+
+```typescript
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+
+import { routes } from './app.routes';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes, withComponentInputBinding()),
+    provideAnimationsAsync(),
+    provideHttpClient()]
+};
+```
+
+La función `provideHttpClient()` acepta una lista de configuraciones de funciones opcionales para habilitar o configurar el comportamiento de diferentes aspectos del cliente.
+
+#### withFetch()
+
+De forma predeterminada, _"HttpClient"_ utiliza la API [`XMLHttpRequest`](https://developer.mozilla.org/docs/Web/API/XMLHttpRequest) para realizar solicitudes.
+
+La función `withFetch()` cambia el cliente para que utilice la API [`fetch`](https://developer.mozilla.org/docs/Web/API/Fetch_API). Esta es una API más moderna y está disponible en algunos entornos donde `XMLHttpRequest` no es compatible. Tiene algunas limitaciones, como no producir eventos de progreso de carga.
+
+```typescript
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(
+      withFetch(),
+    ),
+  ]
+};
+```
+
+#### withInterceptors(...)
+
+Con la función `withInterceptors(...)` se configura el conjunto de [funciones interceptoras](https://angular.dev/guide/http/interceptors) que procesarán las solicitudes realizadas a través de _"HttpClient"_.
+
+#### withInterceptorsFromDi(...)
+
+Con la función `withInterceptorsFromDi(...)` incluye el [estilo antiguo de interceptores](https://angular.dev/guide/http/interceptors) basados ​​en clases en la configuración de _"HttpClient"_.
+
+#### withRequestsMadeViaParent()
+
+De forma predeterminada, cuando configura _"HttpClient"_ usando `provideHttpClient(...)` dentro de un inyector determinado, esta configuración anula cualquier configuración para _"HttpClient"_ que pueda estar presente en el inyector principal.
+
+Cuando se agrega `withRequestsMadeViaParent()`, _"HttpClient"_ se configura para pasar solicitudes a la instancia de _"HttpClient"_ en el inyector principal, una vez que hayan pasado por cualquier interceptor configurado en este nivel.
+
+#### withJsonpSupport()
+
+Incluir `withJsonpSupport()` habilita el método `.jsonp()` en _"HttpClient"_, que realiza una solicitud GET a través de la [convención JSONP](https://en.wikipedia.org/wiki/JSONP) para la carga de datos entre dominios.
+
+Sin embargo, es preferible usar CORS para realizar solicitudes entre dominios en lugar de JSONP cuando sea posible.
+
+#### withXsrfConfiguration(...)
+
+La inclusión de esta opción permite la personalización de la funcionalidad de [seguridad XSRF](https://angular.dev/best-practices/security) integrada de _"HttpClient"_.
+
+#### withNoXsrfProtection()
+
+Incluir esta opción deshabilita la funcionalidad de [seguridad XSRF](https://angular.dev/best-practices/security) incorporada de HttpClient.
+
+### [Making requests](https://angular.dev/guide/http/making-requests)
+
+A partir del momento en que se haya importado y configurado `provideHttpClient()`, ya se puede inyectar el servicio _"HttpClient"_ como una dependencia de componentes, servicios u otras clases:
+
+```typescript
+@Injectable({providedIn: 'root'})
+export class ConfigService {
+  constructor(private http: HttpClient) {
+    // This service can now make HTTP requests via `this.http`.
+  }
+}
+```
+
+[_"HttpClient"_](https://angular.dev/api/common/http/HttpClient) dispone de métodos correspondientes a los diferentes verbos HTTP utilizados para realizar solicitudes, tanto para cargar datos como para aplicar mutaciones en el servidor.
+
+Cada método devuelve un [`Observable` RxJS](https://rxjs.dev/guide/observable) que, cuando se suscribe, envía la solicitud y luego emite los resultados cuando el servidor responde.
+
+Los observables creados por _"HttpClient"_ pueden suscribirse tantas veces como desee y realizarán una nueva solicitud de backend para cada suscripción.
+
+Obtener datos de un backend a menudo requiere realizar una solicitud GET utilizando el método `HttpClient.get()`. Este método toma dos argumentos: la URL del endpoint desde la cual obtener y un objeto de opciones para configurar la solicitud.
+
+```typescript
+getUserData(username: string): void {
+  const url = 'https://api.github.com/users';
+  this.http.get<any>(`${url}/${username}`).subscribe({
+    next: (data) => {
+      this.userData = data;
+    },
+    error: (error) => {
+      console.error('Error al obtener datos del usuario:', error);
+    }
+  });
+}
+```
+
+De forma predeterminada, _"HttpClient"_ supone que los servidores devolverán **datos JSON**. Al interactuar con una API que no es JSON, puede indicarle a _"HttpClient"_ qué tipo de respuesta esperar y devolver al realizar la solicitud. Esto se hace con la opción `responseType`:
+
+- **'json' (por defecto)**: datos JSON del tipo genérico dado
+
+- **'text'**: datos en formato string
+
+- **'arraybuffer'**: un [`ArrayBuffer`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) que contiene los bytes de respuesta sin procesar
+
+- **'blob'**: una instancia de [`Blob`](https://developer.mozilla.org/docs/Web/API/Blob)
+
+Por ejemplo, puede pedirle a _"HttpClient"_ que descargue los bytes sin procesar de una imagen .jpeg en un _"ArrayBuffer"_:
+
+```typescript
+http.get('/images/dog.jpg', {responseType: 'arraybuffer'}).subscribe(buffer => {
+  console.log('The image is ' + buffer.byteLength + ' bytes large');
+});
+```
 
 ## [Testing](https://angular.dev/guide/testing)
 
