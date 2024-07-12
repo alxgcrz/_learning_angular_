@@ -1841,7 +1841,9 @@ Cada método devuelve un [`Observable` RxJS](https://rxjs.dev/guide/observable) 
 
 Los observables creados por _"HttpClient"_ pueden suscribirse tantas veces como desee y realizarán una nueva solicitud de backend para cada suscripción.
 
-Obtener datos de un backend a menudo requiere realizar una solicitud GET utilizando el método `HttpClient.get()`. Este método toma dos argumentos: la URL del endpoint desde la cual obtener y un objeto de opciones para configurar la solicitud.
+#### [Fetching JSON data](https://angular.dev/guide/http/making-requests#fetching-json-data)
+
+Obtener datos de un backend a menudo requiere realizar una solicitud GET utilizando el método `HttpClient.get()`. Este método toma dos argumentos: la URL del endpoint desde la cual obtener los datos y un objeto de opciones para configurar la solicitud.
 
 ```typescript
 getUserData(username: string): void {
@@ -1874,6 +1876,322 @@ http.get('/images/dog.jpg', {responseType: 'arraybuffer'}).subscribe(buffer => {
   console.log('The image is ' + buffer.byteLength + ' bytes large');
 });
 ```
+
+#### [Mutating server state](https://angular.dev/guide/http/making-requests#mutating-server-state)
+
+Los APIs del servidor que realizan mutaciones a menudo requieren hacer solicitudes POST con un cuerpo de la solicitud que especifique el nuevo estado o el cambio que se debe realizar.
+
+El método `HttpClient.post()` se comporta de manera similar a `HttpClient.get()`, y acepta un argumento adicional para el cuerpo (body) antes de sus opciones:
+
+```typescript
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ApiService {
+
+  private apiUrl = 'https://api.example.com/data';  // URL de la API
+
+  constructor(private http: HttpClient) { }
+
+  // Método para realizar una solicitud POST
+  sendData(data: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post<any>(this.apiUrl, data, { headers: headers });
+  }
+}
+```
+
+Este componente utiliza el servicio:
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { ApiService } from './api.service';
+
+@Component({
+  selector: 'app-my-component',
+  templateUrl: './my-component.component.html',
+  styleUrls: ['./my-component.component.css']
+})
+export class MyComponent implements OnInit {
+
+  constructor(private apiService: ApiService) { }
+
+  ngOnInit(): void {
+    const postData = {
+      name: 'John Doe',
+      age: 30
+    };
+
+    this.apiService.sendData(postData).subscribe(response => {
+      console.log('Response from server:', response);
+    }, error => {
+      console.error('Error occurred:', error);
+    });
+  }
+}
+```
+
+Muchos tipos diferentes de valores pueden proporcionarse como el _"body"_ de la solicitud, y _"HttpClient"_ los **serializará** en consecuencia:
+
+- **'string'**: serializado como texto en plano
+
+- **'number, boolean, array or plain objet'**: serializado como JSON
+
+- **[`ArrayBuffer`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer)**: datos sin procesar del buffer
+
+- **[`Blob`](https://developer.mozilla.org/docs/Web/API/Blob)**: datos sin procesar con el tipo de contenido del Blob
+
+- **[`FormData`](https://developer.mozilla.org/docs/Web/API/FormData)**: datos codificados _"multipart/form-data"_
+
+- **[`HttpParams`](https://angular.dev/api/common/http/HttpParams)**: cadena formateada _"application/x-www-form-urlencoded"_
+
+- **[`URLSearchParams`](https://developer.mozilla.org/docs/Web/API/URLSearchParams)**: cadena formateada _"application/x-www-form-urlencoded"_
+
+#### [Setting URL parameters](https://angular.dev/guide/http/making-requests#setting-url-parameters)
+
+Especifique los parámetros de solicitud que deben incluirse en la URL de solicitud mediante la opción _"params"_.
+
+Pasar un objeto es la forma más sencilla de configurar los parámetros de URL:
+
+```typescript
+http.get('/api/config', {
+  params: {filter: 'all'},
+}).subscribe(config => {
+  // ...
+});
+```
+
+Como alternativa, se puede pasar una instancia de _"HttpParams"_ si se necesita más control sobre la construcción o serialización de los parámetros.
+
+```typescript
+const baseParams = new HttpParams()
+      .set('filter', 'all')
+      .set('show', 'yes');
+
+// URL -> /api/config?filter=all&show=yes&details=enabled
+http.get('/api/config', {
+  params: baseParams.set('details', 'enabled'),
+}).subscribe(config => {
+  // ...
+});
+```
+
+[`HttpParams`](https://angular.dev/api/common/http/HttpParams) es una clase inmutable para manejar parámetros de URL de HTTP y no puede ser modificada directamente. En vez de eso, hay que usar métodos como `.set()` o `.append()`.
+
+#### [Setting request headers](https://angular.dev/guide/http/making-requests#setting-request-headers)
+
+Se puede especificar los encabezados de solicitud que deben incluirse en la solicitud mediante la opción _"headers"_.
+
+Pasar un objeto es la forma más sencilla de configurar encabezados de solicitud:
+
+```typescript
+http.get('/api/config', {
+  headers: {
+    'X-Debug-Level': 'verbose',
+  }
+}).subscribe(config => {
+  // ...
+});
+```
+
+Como alternativa, se puede pasar una instancia de _"HttpHeaders"_ si necesita más control sobre la construcción de encabezados.
+
+[`HttpHeaders`](https://angular.dev/api/common/http/HttpHeaders) es una clase inmutable para manejar encabezados y no puede ser modificada directamente. En vez de eso, hay que usar métodos como `.set()` o `.append()`.
+
+```typescript
+const baseHeaders = new HttpHeaders().set('X-Debug-Level', 'minimal');
+
+http.get<Config>('/api/config', {
+  headers: baseHeaders.set('X-Debug-Level', 'verbose'),
+}).subscribe(config => {
+  // ...
+});
+```
+
+#### [Interacting with the server response events](https://angular.dev/guide/http/making-requests#interacting-with-the-server-response-events)
+
+Para mayor comodidad, _"HttpClient"_ devuelve de forma predeterminada un _"Observable"_ de los datos devueltos por el servidor (el cuerpo de la respuesta). En ocasiones es conveniente examinar la respuesta real, por ejemplo, para recuperar encabezados de respuesta específicos.
+
+Para acceder a la respuesta completa, configure la opción `observe` en 'response':
+
+```typescript
+http.get<Config>('/api/config', {observe: 'response'}).subscribe(res => {
+  console.log('Response status:', res.status);
+  console.log('Body:', res.body);
+});
+```
+
+Este es otro ejemplo con la API de Github:
+
+```typescript
+getUserData2(username: string): void {
+  const url = 'https://api.github.com/users';
+  this.http.get<any>(`${url}/${username}`, { observe: 'response' }).subscribe({
+    next: (data) => {
+      this.userData = data;
+      console.log('Response status:', data.status);  // Imprime el estado de la respuesta HTTP
+      console.log('Body:', data.body);  // Imprime el cuerpo de la respuesta (tipo Config)
+    },
+    error: (error) => {
+      console.error('Error al obtener datos del usuario:', error);
+    }
+  });
+}
+```
+
+#### [Receiving raw progress events](https://angular.dev/guide/http/making-requests#receiving-raw-progress-events)
+
+Además del cuerpo de la respuesta o del objeto de respuesta, _"HttpClient"_ también puede devolver un flujo de eventos en bruto que corresponden a momentos específicos en el ciclo de vida de la solicitud.
+
+Estos eventos incluyen cuándo se envía la solicitud, cuándo se devuelve el encabezado de respuesta y cuándo se completa el cuerpo. También pueden incluir eventos de progreso que informan sobre el estado de carga y descarga para cuerpos grandes de solicitud o respuesta.
+
+Los eventos de progreso están deshabilitados de forma predeterminada (ya que tienen un costo de rendimiento), pero se pueden habilitar con la opción _"reportProgress"_.
+
+La implementación [`fetch`](https://developer.mozilla.org/docs/Web/API/Fetch_API) opcional de _"HttpClient"_ no informa eventos de progreso de carga.
+
+#### [Handling request failure](https://angular.dev/guide/http/making-requests#handling-request-failure)
+
+Hay dos formas en que una solicitud HTTP puede **fallar**:
+
+- Un error de red o de conexión puede impedir que la solicitud llegue al servidor backend.
+
+- El backend puede recibir la solicitud pero no puede procesarla y devolver una respuesta de error.
+
+_"HttpClient"_ captura ambos tipos de errores en un `HttpErrorResponse`, que devuelve a través del canal de error del Observable.
+
+Los errores de red tienen un **código de estado 0** y el error es una instancia de [`ProgressEvent`](https://developer.mozilla.org/docs/Web/API/ProgressEvent).
+
+Los errores del servidor backend tienen el **código de estado fallido devuelto por el backend**, y la respuesta de error como _"error"_.
+
+Se puede utilizar el operador _"catchError"_ para transformar una respuesta de error en un valor para la interfaz de usuario. Este valor puede indicarle a la interfaz de usuario que muestre una página o valor de error y capture la causa del error si es necesario.
+
+```typescript
+import { HttpErrorResponse } from '@angular/common/http';  // Importar HttpErrorResponse
+
+// ...
+
+ngOnInit(): void {
+  this.apiService.getData().subscribe(
+    (response) => {
+      console.log('Response from server:', response);
+      // Trabajar con la respuesta exitosa
+    },
+    (error: HttpErrorResponse) => {
+      if (error.error instanceof ErrorEvent) {
+        // Error del lado del cliente o de red
+        console.error('An error occurred:', error.error.message);
+      } else {
+        // Error del lado del servidor
+        console.error(
+          `Backend returned code ${error.status}, ` +
+          `body was: ${error.error}`);
+      }
+      // Realizar acciones específicas en caso de error
+    }
+  );
+}
+```
+
+Dentro de la función de manejo de errores `(error: HttpErrorResponse) => { ... }`, ahora `error` es tipado como `HttpErrorResponse`, lo que permite acceder a propiedades específicas del error como `error.status`, `error.error`, etc.
+
+`error.error instanceof ErrorEvent`: verifica si el error es del lado del cliente o de red (`ErrorEvent`), por ejemplo, problemas de conexión o errores de cliente.
+
+Si no es un `ErrorEvent`, se asume que es un error del servidor, por lo que se imprime el código de estado del error y el cuerpo de la respuesta de error.
+
+#### [Http Observables](https://angular.dev/guide/http/making-requests#http-observables)
+
+Los métodos de _"HttpClient"_ devuelven _"Observables"_ que representan el tipo de respuesta solicitada. Estos _"Observables"_ son "fríos" en RxJS, lo que significa que no se realiza ninguna solicitud hasta que se suscriban.
+
+Suscribirse a un _"Observable"_ de _"HttpClient"_ desencadena una solicitud al backend. Las múltiples suscripciones resultan en múltiples solicitudes, ya que cada suscripción es independiente.
+
+Desuscribirse de un _"Observable"_ suscrito aborta la solicitud en curso. Esto es beneficioso, especialmente al usar pipes asíncronas tipo `async` para cancelar automáticamente las solicitudes al navegar.
+
+Al recibir una respuesta, los _"Observables"_ de _"HttpClient"_ suelen completarse (los interceptores pueden afectar este comportamiento).
+
+Las suscripciones de _"HttpClient"_ generalmente evitan fugas de memoria debido a la finalización automática. Sin embargo, se recomienda limpiar las suscripciones al destruir el componente para evitar errores con componentes destruidos.
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Component({
+  selector: 'app-github-user',
+  template: `
+    <div *ngIf="user$ | async as user; else loading">
+      <h2>{{ user.login }}</h2>
+      <p>Nombre: {{ user.name }}</p>
+      <p>Ubicación: {{ user.location }}</p>
+      <p>Repositorios públicos: {{ user.public_repos }}</p>
+    </div>
+    <ng-template #loading>
+      <p>Cargando usuario...</p>
+    </ng-template>
+  `,
+  styleUrls: ['./github-user.component.css']
+})
+export class GithubUserComponent implements OnInit {
+
+  user$: Observable<any>;
+
+  constructor(private http: HttpClient) { }
+
+  ngOnInit(): void {
+    this.user$ = this.http.get('https://api.github.com/users/octocat');
+  }
+}
+```
+
+#### [Best practices](https://angular.dev/guide/http/making-requests#best-practices)
+
+Si bien _"HttpClient"_ se puede inyectar y utilizar directamente desde los componentes, generalmente es recomendable **crear servicios inyectables y reutilizables** que aíslen y encapsule la lógica de acceso a datos:
+
+```typescript
+@Injectable({providedIn: 'root'})
+export class UserService {
+  constructor(private http: HttpClient) {}
+  getUser(id: string): Observable<User> {
+    return this.http.get<User>(`/api/user/${id}`);
+  }
+}
+```
+
+Dentro de un componente, se puede combinar `@if` con la canalización asíncrona para representar la interfaz de usuario de los datos solo después de que haya terminado de cargarse:
+
+```typescript
+import { AsyncPipe } from '@angular/common';
+@Component({
+  standalone: true,
+  imports: [AsyncPipe],
+  template: `
+    @if (user$ | async; as user) {
+      <p>Name: {{ user.name }}</p>
+      <p>Biography: {{ user.biography }}</p>
+    }
+  `,
+})
+export class UserProfileComponent {
+  @Input() userId!: string;
+  user$!: Observable<User>;
+  
+  constructor(private userService: UserService) {}
+  
+  ngOnInit(): void {
+    this.user$ = userService.getUser(this.userId);
+  }
+}
+```
+
+### [Interceptors](https://angular.dev/guide/http/interceptors)
+
+TODO
 
 ## [Testing](https://angular.dev/guide/testing)
 
