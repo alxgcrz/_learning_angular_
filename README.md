@@ -2191,7 +2191,60 @@ export class UserProfileComponent {
 
 ### [Interceptors](https://angular.dev/guide/http/interceptors)
 
-TODO
+En Angular, los _"interceptors"_ (interceptores) son una característica poderosa del módulo `HttpClient` que permite **interceptar y manipular las solicitudes HTTP y sus respuestas**.
+
+Se utilizan principalmente para agregar lógica común a todas las solicitudes HTTP, como la gestión de autenticación, el manejo de errores, la configuración de encabezados, el registro de solicitudes, entre otros.
+
+`HttpClient` admite dos tipos de interceptores: funcionales y basados ​​en DI. La recomendación es utilizar **interceptores funcionales** porque tienen un comportamiento más predecible.
+
+Los interceptores generalmente son funciones que se pueden ejecutar para cada solicitud y tienen amplias capacidades para afectar el contenido y el flujo general de solicitudes y respuestas. Estos interceptores se pueden **encadenar**, de forma cada interceptor procesa la solicitud o respuesta antes de reenviarla al siguiente interceptor de la cadena.
+
+Puede utilizar interceptores para implementar una variedad de patrones comunes, como por ejemplo:
+
+- Agregar encabezados de autenticación a solicitudes salientes a una API en particular.
+- Reintentar solicitudes fallidas con retroceso exponencial.
+- Almacenamiento en caché de las respuestas durante un período de tiempo o hasta que las invaliden las mutaciones.
+- Personalización del análisis de respuestas.
+- Medir los tiempos de respuesta del servidor y registrarlos.
+- Controlar elementos de la interfaz de usuario, como un control de carga tipo _"spinner"_, mientras las operaciones de red están en curso.
+- Solicitudes de recopilación y lotes realizadas dentro de un período de tiempo determinado.
+- Solicitudes que fallan automáticamente después de una fecha límite o tiempo de espera configurable.
+- Sondear periódicamente el servidor y actualizar los resultados.
+
+#### [Defining an interceptor](https://angular.dev/guide/http/interceptors#defining-an-interceptor)
+
+La forma básica de un interceptor es una función que recibe la `HttpRequest` saliente y una función `next` que representa el siguiente paso de procesamiento en la cadena del interceptor.
+
+```typescript
+export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
+  console.log(req.url);
+  return next(req);
+}
+```
+
+#### [Configuring interceptors](https://angular.dev/guide/http/interceptors#configuring-interceptors)
+
+Se declara el conjunto de interceptores en la función `withInterceptors(...)` cuando se configura [`HttpClient`](#setting-up-httpclient) mediante DI:
+
+```typescript
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+
+import { routes } from './app.routes';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes, withComponentInputBinding()),
+    provideAnimationsAsync(),
+    provideHttpClient(
+      withInterceptors([loggingInterceptor, cachingInterceptor]),
+    )]
+};
+```
+
+Los interceptores que configuren se encadenan en el orden en que se hayan enumerado en `withInterceptors(...)`.
 
 ## [Testing](https://angular.dev/guide/testing)
 
