@@ -2244,7 +2244,73 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-Los interceptores que configuren se encadenan en el orden en que se hayan enumerado en `withInterceptors(...)`.
+Los interceptores se encadenan en el orden en que se hayan enumerado en `withInterceptors(...)`.
+
+#### [Modifying requests](https://angular.dev/guide/http/interceptors#modifying-requests)
+
+La mayoría de los aspectos de las instancias de _"HttpRequest"_ y _"HttpResponse"_ son **inmutables**, y los interceptores no pueden modificarlos directamente.
+
+En su lugar, los interceptores aplican modificaciones clonando estos objetos usando la operación `.clone()`, y especificando qué propiedades deben ser mutadas en la nueva instancia.
+
+```typescript
+const reqWithHeader = req.clone({
+  headers: req.headers.set('X-New-Header', 'new header value'),
+});
+```
+
+#### [Dependency injection in interceptors](https://angular.dev/guide/http/interceptors#dependency-injection-in-interceptors)
+
+Los interceptores se ejecutan en el contexto de inyección del inyector que los registró y pueden usar la API _"inject"_ de Angular para recuperar dependencias.
+
+Un interceptor puede inyectar y utilizar un servicio si lo necesita:
+
+```typescript
+export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
+  // Inject the current `AuthService` and use it to get an authentication token:
+  const authToken = inject(AuthService).getAuthToken();
+  // Clone the request to add the authentication header.
+  const newReq = req.clone({headers: {
+    req.headers.append('X-Authentication-Token', authToken),
+  }});
+  return next(newReq);
+}
+```
+
+#### [Request and response metadata](https://angular.dev/guide/http/interceptors#request-and-response-metadata)
+
+A menudo resulta útil incluir información en una solicitud que no se envía al backend, sino que está destinada específicamente a los interceptores.
+
+Las _"HttpRequests"_ tienen un objeto `.context` que almacena este tipo de metadatos como una instancia de `HttpContext`. Este objeto funciona como un mapa escrito, con claves de tipo `HttpContextToken`.
+
+Por ejemplo, para almacenar si el interceptor de almacenamiento en caché debe almacenar en caché una solicitud particular en el mapa `.context` de esa solicitud, defina un nuevo `HttpContextToken` para que actúe como clave:
+
+```typescript
+export const CACHING_ENABLED = new HttpContextToken<boolean>(() => true);
+```
+
+La función proporcionada crea el valor predeterminado para el token para solicitudes que no han establecido explícitamente un valor para él. El uso de una función garantiza que si el valor del token es un objeto o una matriz, cada solicitud obtenga su propia instancia.
+
+Luego, un interceptor puede leer el token y elegir aplicar la lógica de almacenamiento en caché o no en función de su valor:
+
+```typescript
+export function cachingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
+  if (req.context.get(CACHING_ENABLED)) {
+    // apply caching logic
+    return ...;
+  } else {
+    // caching has been disabled for this request
+    return next(req);
+  }
+}
+```
+
+Al realizar una solicitud a través de la API _"HttpClient"_, puede proporcionar valores para _"HttpContextTokens"_:
+
+```typescript
+const data$ = http.get('/sensitive/data', {
+  context: new HttpContext().set(CACHING_ENABLED, false),
+});
+```
 
 ## [Testing](https://angular.dev/guide/testing)
 
