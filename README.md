@@ -1748,11 +1748,47 @@ const routes: Routes = [
 
 ## [Forms in Angular](https://angular.dev/guide/forms)
 
+Manejar la entrada del usuario con formularios es la piedra angular de muchas aplicaciones comunes.
+
+Angular proporciona dos enfoques diferentes para manejar la entrada del usuario a través de formularios: **reactivo** y **basado en plantillas**. Ambos capturan eventos de entrada del usuario desde la vista, validan la entrada del usuario, crean un modelo de formulario y un modelo de datos para actualizar y proporcionan una forma de realizar un seguimiento de los cambios.
+
+Los **formularios reactivos** proporcionan acceso directo y explícito al modelo de objetos del formulario subyacente. Son más sólidos, más escalables, reutilizables y testeables. Si los formularios son una parte clave de la aplicación, o si ya se está utilizando patrones reactivos para crear la aplicación, los formularios reactivos son la mejor opción.
+
+Además, utilizan un **flujo de datos síncrono** entre la vista y el modelo de datos, lo que facilita la creación de formularios a gran escala. Los formularios reactivos requieren menos configuración para las pruebas, y las pruebas no requieren una comprensión profunda de la detección de cambios para probar adecuadamente las actualizaciones y validación de los formularios.
+
+Los **formularios basados en plantillas** son útiles para agregar un formulario simple a una aplicación, como un formulario de registro en una lista de correo electrónico. Son fáciles de agregar a una aplicación, pero no escalan tan bien como los formularios reactivos. Si tiene requisitos de formulario muy básicos y una lógica que se puede administrar únicamente en la plantilla, los formularios basados ​​en plantillas podrían ser una buena opción.
+
+Además, utilizan un **flujo de datos asíncrono** entre la vista y el modelo de datos. La abstracción de formularios basados ​​en plantillas también afecta las pruebas. Las pruebas dependen en gran medida de la ejecución manual de detección de cambios para ejecutarse correctamente y requieren más configuración.
+
+Tanto los formularios reactivos como los basados ​​en plantillas se basan en las siguientes clases base **_FormControl_**, **_FormGroup_**, **_FormArray_** y **_ControlValueAccessor_**.
+
+### [Reactive forms](https://angular.dev/guide/forms/reactive-forms)
+
+Para usar controles de formulario reactivos, importe `ReactiveFormsModule` desde el paquete `@angular/forms` en el componente y se añade a `imports[...]`:
+
+```typescript
+import { Component } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-reactive-forms',
+  standalone: true,
+  imports: [ReactiveFormsModule],
+  templateUrl: './reactive-forms.component.html',
+  styleUrl: './reactive-forms.component.css'
+})
+export class ReactiveFormsComponent { }
+```
+
+### [Template-driven forms](https://angular.dev/guide/forms/template-driven-forms)
+
 TODO
 
 ## [HTTP Client](https://angular.dev/guide/http)
 
-La mayoría de las aplicaciones de front-end necesitan comunicarse con un servidor a través del protocolo HTTP, para descargar o cargar datos y acceder a otros servicios de back-end. Angular proporciona una API HTTP de cliente para aplicaciones Angular, la clase de servicio _"HttpClient"_ en `@angular/common/http`.
+La mayoría de las aplicaciones de front-end necesitan comunicarse con un servidor a través del protocolo HTTP, para descargar o cargar datos y acceder a otros servicios de back-end.
+
+Angular proporciona una API HTTP de cliente para aplicaciones Angular, la clase de servicio _"HttpClient"_ en `@angular/common/http`.
 
 ### [Setting up HttpClient](https://angular.dev/guide/http/setup)
 
