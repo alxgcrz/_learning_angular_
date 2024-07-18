@@ -1764,7 +1764,9 @@ Tanto los formularios reactivos como los basados ​​en plantillas se basan en
 
 ### [Reactive forms](https://angular.dev/guide/forms/reactive-forms)
 
-Para usar controles de formulario reactivos, importe `ReactiveFormsModule` desde el paquete `@angular/forms` en el componente y se añade a `imports[...]`:
+#### [Adding a basic form control](https://angular.dev/guide/forms/reactive-forms#adding-a-basic-form-control)
+
+Para usar controles de formulario reactivos, importar `ReactiveFormsModule` desde el paquete `@angular/forms` en el componente y se añade a `imports[...]`:
 
 ```typescript
 import { Component } from '@angular/core';
@@ -1779,6 +1781,98 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class ReactiveFormsComponent { }
 ```
+
+Importar `FormControl` desde el paquete `@angular/forms`:
+
+```typescript
+import { Component } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-reactive-forms',
+  standalone: true,
+  imports: [ReactiveFormsModule],
+  templateUrl: './reactive-forms.component.html',
+  styleUrl: './reactive-forms.component.css'
+})
+export class ReactiveFormsComponent {
+
+  // Sets initial value
+  name = new FormControl('');
+
+}
+```
+
+Se utiliza el constructor de `FormControl` para establecer un valor inicial, que en el ejemplo sería una cadena vacía.
+
+Al crear estos controles en la clase del componente, se obtiene acceso inmediato para escuchar, actualizar y validar el estado de la entrada del formulario.
+
+Después de crear el control en la clase del componente, debes asociarlo con un elemento de control del formulario en la plantilla utilizando la vinculación `[formControl]` proporcionada por `FormControlDirective`, que también está incluida en el `ReactiveFormsModule`.
+
+```html
+<label for="name">Name: </label>
+<input id="name" type="text" [formControl]="name">
+```
+
+Usando la sintaxis de enlace en la plantilla, el control de formulario ahora está registrado en el elemento de entrada `name` en la plantilla. El control de formulario y el elemento DOM se comunican entre sí: la vista refleja los cambios en el modelo, y el modelo refleja los cambios en la vista.
+
+Puede mostrar el valor de las siguientes maneras:
+
+- A través del observable `valueChanges`, puedes escuchar los cambios en el valor del formulario en la plantilla utilizando `AsyncPipe` o en la clase del componente utilizando el método `subscribe()`.
+
+- Con la propiedad `value`, que le brinda una instantánea del valor actual
+
+```html
+<label for="name">Name: </label>
+<input id="name" type="text" [formControl]="name">
+
+<p>Value: {{ name.value }}</p>
+```
+
+#### [Replacing a form control value](https://angular.dev/guide/forms/reactive-forms#replacing-a-form-control-value)
+
+Los formularios reactivos tienen **métodos para cambiar el valor de un control programáticamente**, lo cual te proporciona la flexibilidad de actualizar el valor sin interacción del usuario.
+
+Una instancia de control de formulario proporciona un método `setValue()` que actualiza el valor del control de formulario y valida la estructura del valor proporcionado con respecto a la estructura del control.
+
+```typescript
+import { Component } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-reactive-forms',
+  standalone: true,
+  imports: [ReactiveFormsModule],
+  templateUrl: './reactive-forms.component.html',
+  styleUrl: './reactive-forms.component.css'
+})
+export class ReactiveFormsComponent {
+
+  // Sets initial value
+  name = new FormControl('');
+
+  updateName() {
+    // Update value
+    this.name.setValue('Nancy');
+  }
+
+}
+```
+
+En la plantilla, un botón simulará una actualización del valor. Al hacer clic en el botón, el valor ingresado en el elemento de control del formulario se refleja como su valor actual.
+
+```html
+<label for="name">Name: </label>
+<input id="name" type="text" [formControl]="name">
+
+<p>Value: {{ name.value }}</p>
+
+<button type="button" (click)="updateName()">Update Name</button>
+```
+
+#### [Grouping form controls](https://angular.dev/guide/forms/reactive-forms#grouping-form-controls)
+
+TODO
 
 ### [Template-driven forms](https://angular.dev/guide/forms/template-driven-forms)
 
