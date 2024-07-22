@@ -1872,9 +1872,152 @@ En la plantilla, un botón simulará una actualización del valor. Al hacer clic
 
 #### [Grouping form controls](https://angular.dev/guide/forms/reactive-forms#grouping-form-controls)
 
-TODO
+Los formularios reactivos proporcionan **dos formas de agrupar múltiples controles** relacionados en un único formulario de entrada:
+
+- **Form group**: define un formulario con un conjunto fijo de controles que pueden administrarse juntos.
+
+- **Form array**: define un formulario dinámico, donde se pueden agregar y eliminar controles en tiempo de ejecución.
+
+Así como una instancia de `FormControl` da control sobre un solo campo de entrada, una instancia de `FormGroup` rastrea el estado del formulario de un grupo de instancias de `FormControl` (por ejemplo, un formulario). Cada control en una instancia de `FormGroup` es **rastreado por nombre** al crear el `FormGroup`.
+
+Lo primero es importar las clases `FormGroup` y `FormControl` de `@angular/forms`:
+
+```typescript
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+```
+
+Lo siguiente es crear una propiedad en la clase del componente y establecer en la propiedad una nueva instancia de `FormGroup`. Para inicializar el `FormGroup`, se proporciona al constructor un objeto de claves con el mismo nombre asignado al control en la plantilla. Cada una de estas claves es un `FormControl` o tal vez otro `FormGroup`.
+
+Además, en este constructor se puede pasar un `Validators` o un array de `Validators` con las validaciones a aplicar en ese control, como por ejemplo `Validators.required`.
+
+```typescript
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { JsonPipe } from '@angular/common';
+
+@Component({
+  selector: 'app-form-group-forms',
+  standalone: true,
+  imports: [ReactiveFormsModule, JsonPipe],
+  templateUrl: './form-group-forms.component.html',
+  styleUrl: './form-group-forms.component.css'
+})
+export class FormGroupFormsComponent {
+
+  profileForm = new FormGroup({
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    address: new FormGroup({
+      street: new FormControl(''),
+      city: new FormControl(''),
+      state: new FormControl(''),
+      zip: new FormControl(''),
+    })
+  });
+
+  onSubmit() {
+    console.log(this.profileForm.value);
+  }
+
+}
+```
+
+En la plantilla, los controles tienen el nombre de las claves en el atributo `formControlName` y el formulario tiene el nombre de la propiedad definida en el componente como en el ejemplo `<form [formGroup]="profileForm" ...>`. Además, si hay grupos anidados, el nombre del grupo anidado se indica en `formGroupName`.
+
+```html
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <label for="first-name">First Name: </label>
+  <input id="first-name" type="text" formControlName="firstName">
+  <label for="last-name">Last Name: </label>
+  <input id="last-name" type="text" formControlName="lastName">
+
+  <div formGroupName="address">
+    <h2>Address</h2>
+    <label for="street">Street: </label>
+    <input id="street" type="text" formControlName="street">
+    <label for="city">City: </label>
+    <input id="city" type="text" formControlName="city">
+    <label for="state">State: </label>
+    <input id="state" type="text" formControlName="state">
+    <label for="zip">Zip Code: </label>
+    <input id="zip" type="text" formControlName="zip">
+  </div>
+
+  <p>Complete the form to enable button.</p>
+  <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+
+  <p>Form Status: {{ profileForm.status }}</p>
+  <p>Form Values: {{ profileForm.value | json }}</p>
+</form>
+```
+
+Un `FormGroup` rastrea el estado y los cambios de cada uno de sus controles, por lo que si uno de los controles cambia, el control principal también emite un nuevo estado o cambio de valor.
+
+La directiva `FormGroup` escucha el evento `submit` emitido por un elemento de formulario como un `button` y emite un evento `ngSubmit` que se puede vincular a una función _"callback"_ de devolución de llamada en el componente como `onSubmit() { ... }`
+
+```html
+<button type="submit" [disabled]="!profileForm.valid">Submit</button>
+```
 
 ### [Template-driven forms](https://angular.dev/guide/forms/template-driven-forms)
+
+Los formularios basados ​​en plantillas o _"Template-drive forms"_ permiten utilizar directivas específicas de formulario en una plantilla Angular.
+
+Los formularios basados ​​en plantillas utilizan enlace de datos bidireccional o [_"two-way data binding"_](#two-way-binding) para actualizar el modelo de datos en el componente a medida que se realizan cambios en la plantilla y viceversa.
+
+Los formularios basados ​​en plantillas se basan en directivas definidas en `FormsModule`.
+
+- [**NgModel**](https://angular.dev/api/forms/NgModel): armoniza los cambios de valor en el elemento del formulario adjunto con los cambios en el modelo de datos, permitiéndote responder a la entrada del usuario con validación de entrada y manejo de errores.
+
+- [**NgForm**](https://angular.dev/api/forms/NgForm): crea una instancia de `FormGroup` de nivel superior y la vincula a un elemento `<form>` para rastrear el valor agregado del formulario y el estado de validación. Tan pronto como se importe `FormsModule`, esta directiva se activa por defecto en todas las etiquetas `<form>`. No se necesita añadir un selector especial.
+
+- [**NgModelGroup**](https://angular.dev/api/forms/NgModelGroup): crea y vincula una instancia de `FormGroup` a un elemento DOM.
+
+Los _"Template-driven forms"_ se configuran de manera declarativa en la plantilla HTML. Esto convierte a este tipo de _forms_ en simples y adecuados para formularios simples y de pequeña a mediana escala.
+
+Utilizan las directivas de Angular como `ngModel`, `ngForm`, y `ngSubmit` para enlazar datos y manejar eventos del formulario.
+
+Los formularios basados en plantillas aprovechan el enlace bidireccional o [_"two-way data binding"_](#two-way-binding) de Angular para sincronizar el modelo de datos con los elementos del formulario. Esto se hace principalmente mediante la directiva `[(ngModel)]`.
+
+Las validaciones se definen en la plantilla utilizando atributos estándar de HTML5 y directivas de Angular. Angular proporciona directivas como `required`, `minlength`, `maxlength` o `pattern` para realizar validaciones.
+
+Para trabajar con formularios basados en plantillas, se necesita importar `FormsModule` en el módulo de la aplicación Angular.
+
+```typescript
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-template-driven-forms',
+  standalone: true,
+  imports: [FormsModule],
+  templateUrl: './template-driven-forms.component.html',
+  styleUrl: './template-driven-forms.component.css'
+})
+export class TemplateDrivenFormsComponent {
+  
+  model = {
+    name: ''
+  };
+
+  onSubmit(form: any) {
+    console.log('Formulario enviado:', form);
+  }
+
+}
+```
+
+Esta es la plantilla HTML de este ejemplo:
+
+```html
+<form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+  <label for="name">Nombre:</label>
+  <input type="text" id="name" name="name" [(ngModel)]="model.name" required>
+  
+  <button type="submit">Enviar</button>
+</form>
+```
 
 TODO
 
