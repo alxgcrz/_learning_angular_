@@ -1106,6 +1106,43 @@ Por último, las _'pipes'_ se pueden **encadenar** de forma que la salida de la 
 <p>The hero's birthday is in {{ birthday | date:'yyyy' | uppercase }}</p>
 ```
 
+### [Understanding template variables](https://angular.dev/guide/templates/reference-variables)
+
+Las variables de plantilla en Angular son una forma de hacer referencia a elementos de la plantilla o a directivas en cualquier otra parte dentro de esa plantilla. Son útiles para acceder a propiedades y métodos de estos elementos desde el contexto de la plantilla.
+
+Se puede hacer referencia a:
+
+- **un elemento DOM dentro de la plantilla**
+
+- **una directiva o componente**
+
+- **un [TemplateRef](https://angular.dev/api/core/TemplateRef) de una [ng-template](https://angular.dev/api/core/ng-template)**
+
+- [**un web component**](https://developer.mozilla.org/docs/Web/Web_Components)
+
+Una variable de plantilla se define en Angular utilizando la sintaxis `#nombreVariable` en el HTML:
+
+```html
+<form #myForm="ngForm">
+  <input #phone placeholder="phone number" />
+  <!-- ... -->
+  
+  <!-- phone refers to the input element; pass its `value` to an event handler -->
+  <button type="button" (click)="callPhone(phone.value)">Call</button>
+
+  <app-child #childComponent></app-child>
+  <button (click)="childComponent.doSomething()">Do Something</button>
+</form>
+```
+
+En este ejemplo, `#myForm` es una variable de plantilla que hace referencia a la instancia del formulario asociado con la directiva `NgForm`, la variable `#phone` hace referencia al campo `<input>` y la variable `#childComponent` se refiere al componente hijo, pudiendo llamar a un método de ese componente.
+
+Por tanto, lo que permite las variables de plantilla es **acceder a cualquier propiedad o método que tenga el elemento** al que hace referencia, ya sea una etiqueta HTML estándar, otra directiva (como `NgForm`), etcétera...
+
+Si la variable especifica un nombre en el lado derecho, como `#var="ngModel"`, la variable se refiere a la directiva o componente del elemento con un nombre `exportAs` coincidente.
+
+Las variables de plantilla **solo están disponibles en el contexto en el que se definen**. No se puede acceder a ellas fuera de su alcance (por ejemplo, en otros componentes o en la lógica del componente TypeScript).
+
 ## [Directives](https://angular.dev/guide/directives)
 
 Las directivas son clases que agregan comportamiento adicional a los elementos de una aplicación Angular.
@@ -2008,7 +2045,7 @@ export class TemplateDrivenFormsComponent {
 }
 ```
 
-Esta es la plantilla HTML de este ejemplo:
+Esta es la plantilla HTML de este ejemplo, con la directiva `ngModel` de `FormsModule` enlazada con las propiedad del modelo de datos:
 
 ```html
 <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
@@ -2019,7 +2056,45 @@ Esta es la plantilla HTML de este ejemplo:
 </form>
 ```
 
-TODO
+Cuando se incluye la directiva usando la sintaxis para el enlace de datos bidireccional o [_"two-way data binding"_](#two-way-binding) `[(ngModel)]`, Angular puede rastrear el valor y la interacción del usuario con el control y mantener la vista sincronizada con el modelo.
+
+#### [Access the overall form status](https://angular.dev/guide/forms/template-driven-forms#access-the-overall-form-status)
+
+Cuando se importa el módulo `FormsModule` en el componente, Angular crea y adjunta automáticamente una directiva `NgForm` al elemento `<form>` en la plantilla (porque `NgForm` tiene el selector `form` que coincide con los elementos `<form>`).
+
+Para obtener acceso a `NgForm` y al estado general del formulario, declare una [variable de referencia de plantilla](#understanding-template-variables).
+
+```html
+<form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+  <!-- ... -->
+</form>
+```
+
+La variable de la plantilla `#myForm` es ahora una referencia a la directiva `NgForm`.
+
+#### [Naming control elements](https://angular.dev/guide/forms/template-driven-forms#naming-control-elements)
+
+Cuando se utiliza `[(ngModel)]` en un elemento en Angular, se debe definir un atributo `name` para ese elemento. Angular utiliza el nombre asignado para registrar el elemento con la directiva `NgForm` que está adjunta al elemento `<form>` padre.
+
+El atributo `name` actúa como un identificador único para cada control en el formulario, lo que permite que Angular mantenga el estado del control (como su valor, validez y estado de modificación) y lo gestione correctamente dentro del contexto del formulario.
+
+Además, cuando se envía el formulario, Angular utiliza los nombres de los controles para recoger los datos del formulario y construir el objeto de datos que se envía al servidor o que se maneja en el componente.
+
+```html
+<form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+  <label for="username">Username:</label>
+  <input id="username" name="username" [(ngModel)]="username" required>
+
+  <label for="email">Email:</label>
+  <input id="email" name="email" [(ngModel)]="email" type="email" required>
+
+  <button type="submit">Submit</button>
+</form>
+```
+
+Cada elemento `<input>` tiene una propiedad de identificación o `id`. Esto lo utiliza el atributo `for` del elemento `<label>` para hacer coincidir la etiqueta con su control de entrada. Esta es una [característica HTML estándar](https://developer.mozilla.org/docs/Web/HTML/Element/label).
+
+Cada elemento `<input>` también tiene la propiedad `name` requerida que Angular usa para registrar el control con el formulario.
 
 ## [HTTP Client](https://angular.dev/guide/http)
 
