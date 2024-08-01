@@ -1,6 +1,6 @@
 # Angular
 
-... **DOCUMENTO EN DESARROLLO** ...
+> :warning: **DOCUMENTO EN DESARROLLO** :warning:
 
 ## Introducción
 
@@ -34,7 +34,7 @@ Angular aprovecha la tecnología de los componentes web o _'web components'_ y e
 
 - **Enrutamiento**: Angular proporciona un módulo de enrutamiento que permite la navegación entre las distintas vistas de la aplicación sin necesidad de recargar la página. Esto es esencial para construir aplicaciones de una sola página (SPA).
 
-> Sección generada por ChatGPT
+:warning: **Introducción generada por ChatGPT**
 
 ## Primeros pasos
 
@@ -572,7 +572,7 @@ Cada plantilla de Angular es una sección de HTML que se incluye como parte de l
 
 Casi toda la sintaxis HTML es sintaxis de plantilla válida. Sin embargo, debido a que una plantilla de Angular es parte de una página web general y no de la página completa, no es necesario incluir elementos como `<html>`, `<body>` o `<base>`.
 
-:warning: NOTA IMPORTANTE: para eliminar el riesgo de ataques de tipo _'script injection'_, Angular **no soporta** la etiqueta `<script>` en las plantillas.
+> :warning: Para eliminar el riesgo de ataques de tipo _'script injection'_, Angular **no soporta** la etiqueta `<script>` en las plantillas.
 
 Cuando se genera una aplicación Angular con la herramienta de Angular CLI, el archivo `app.component.html` es la plantilla **predeterminada** que contiene HTML general.
 
@@ -734,7 +734,7 @@ La sintaxis de vinculación de atributos se parece a la vinculación de propieda
 <p [attr.attribute-you-are-targeting]="expression"></p>
 ```
 
-NOTA: cuando la expresión se resuelve con un `null` o un `undefined`, Angular elimina el atributo.
+> Cuando la expresión se resuelve con un `null` o un `undefined`, Angular elimina el atributo.
 
 Uno de los usos más frecuentes es establecer atributos ['ARIA'](https://developer.mozilla.org/es/docs/Web/Accessibility/ARIA).
 
