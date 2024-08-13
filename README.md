@@ -48,7 +48,7 @@ Para desarrollar en Angular se puede utilizar como lenguaje de programación tan
 
 Para instalar **Typescript** se utiliza la herramienta **_NPM_** ya que también está publicado como paquete.
 
-[Más información sobre las versiones de Angular](https://angular.dev/reference/versions)
+> Cada **versión de Angular** requiere, para funcionar correctamente, **determinadas versiones** de Node.js, TypeScript y RxJS que pueden consultarse en la [siguiente tabla de la documentación oficial](https://angular.dev/reference/versions).
 
 ```sh
 // Comprobar la versión de Node.js
@@ -66,7 +66,7 @@ $ tsc --version
 
 ### Angular CLI
 
-**_'Angular CLI'_** es la herramienta de línea de comandos estándar para crear, depurar construir y publicar aplicaciones Angular.
+[**_'Angular CLI'_**](https://angular.dev/tools/cli) es la herramienta de línea de comandos estándar para crear, depurar construir y publicar aplicaciones Angular.
 
 Esta herramienta está publicada en **_NPM_** como el paquete `@angular/cli` e incluye el binario `ng`:
 
@@ -84,29 +84,26 @@ $ ng help
 $ ng serve --help
 ```
 
-[Más información sobre CLI](https://angular.dev/tools/cli)
-
 #### Puesta en marcha del proyecto
 
-Las aplicaciones Angular se desarrollan en el contexto de una espacio de trabajo o **_'workspace'_**. Un espacio de trabajo puede contener múltiples aplicaciones y bibliotecas.
+Las aplicaciones Angular se desarrollan en el contexto de una espacio de trabajo o [**_'workspace'_**](https://angular.dev/tools/cli/setup-local). Un espacio de trabajo puede contener múltiples aplicaciones y bibliotecas.
 
 Para crear un nuevo espacio de trabajo y una aplicación inicial dentro de este nuevo espacio de trabajo, se utiliza el comando:
 
 ```sh
+// Crear una nueva aplicación en un workspace
 ng new my-app  // Cambiando 'my-app' por el nombre de la nueva aplicación
 ```
 
-Este comando nos solicitará información para configurar la aplicación inicial, pudiendo utilizar la configuración que viene por defecto.
+Este comando nos solicitará **información** para configurar la aplicación inicial, pudiendo utilizar la configuración que viene por defecto.
 
-A continuación se instalarán todas las bibliotecas y dependencias necesarias. Finalmente tendremos una aplicación inicial completamente funcional y las configuraciones necesarias para su depuración, pruebas y ejecución.
+A continuación se instalan todas las bibliotecas y dependencias necesarias. Finalmente obtiene una aplicación inicial completamente funcional y las configuraciones necesarias para su depuración, pruebas y ejecución.
 
 Por defecto la aplicación se crea con el prefijo `app` que se usará en todos los componentes pero puede personalizarse usando el modificador `--prefix`.
 
-[Más información](https://angular.dev/tools/cli/setup-local)
-
 #### Desarrollo del proyecto
 
-**'Angular CLI'** incluye un servidor de desarrollo lo que permite servir la aplicación fácilmente a nivel local.
+**'Angular CLI'** incluye un [servidor de desarrollo](https://angular.dev/tools/cli/serve) lo que permite servir la aplicación fácilmente a nivel local.
 
 El comando `ng serve` inicia el servidor, observa el código fuente, reconstruye automáticamente la aplicación cuando detecta algún cambio en el código y recarga la página en el navegador:
 
@@ -120,7 +117,7 @@ ng serve --open
 
 #### Compilación del proyecto
 
-Para compilar el proyecto se utiliza el comando `ng build`.
+Para [compilar el proyecto](https://angular.dev/tools/cli/build) se utiliza el comando `ng build`.
 
 Se compilará el código TypeScript en código JavaScript, se optimizará el código, se empaquetará y se comprimirán (_'minify'_) los ficheros según sea necesario.
 
@@ -130,32 +127,64 @@ Por defecto, cuando se inicializa la aplicación con `ng new` se utiliza el cons
 
 Existen **4 constructores disponibles**, según el tipo de aplicación que se necesite construir.
 
-[Más información](https://angular.dev/tools/cli/build)
-
 #### Despliegue del proyecto
 
-Una vez la aplicación está lista para su despliegue, se puede realizar de varias formas, tanto manual como automática.
+Una vez la aplicación está lista para su [despliegue](https://angular.dev/tools/cli/deployment), se puede realizar de varias formas, tanto manual como automática.
 
-Para realizar el despliegue **de forma automática**, disponemos del comando `ng deploy`.
+Para realizar el despliegue de **forma automática**, se dispone del comando `ng deploy`.
+
+Un número de desarrolladores _third-party_ implementa capacidades de despliegue en diferentes plataformas. Se pueden añadir cualquiera de ellos al proyecto con `ng add`.
+
+- **Firebase hosting**
+
+- **Vercel**
+
+- **Netlify**
+
+- **Github Pages**
+
+- **Amazon Cloud S3**
+
+Cuando se agrega un paquete con capacidad de despliegue, automáticamente se actualizará la configuración del espacio de trabajo (archivo `angular.json`) con una sección de despliegue para el proyecto seleccionado. Luego, se puede usar el comando `ng deploy` para desplegar ese proyecto.
 
 Por ejemplo, podemos añadir un paquete de terceros para realizar el despliegue en **Firebase**:
 
 ```sh
 # Añade el 'package' en 'angular.json'
 $ ng add @angular/fire
+
 # Ejecuta el despliegue
 $ ng deploy
 ```
 
-[Más información](https://angular.dev/tools/cli/deployment)
+Y esto añadirá la sección en el fichero `angular.json`:
+
+```json
+{
+  "projects": {
+    "my-app": {
+      "architect": {
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "target": "hosting:my-app"
+          }
+        }
+      }
+    }
+  }
+}
+```
 
 ### Estructura de una aplicación Angular
 
-Cuando se ejecuta el comando `ng new` se instalan las bibliotecas y dependencias necesarias en el nuevo espacio de trabajo, además del **esqueleto funcional** de una aplicación dentro de la carpeta `src/`. Esta aplicación se considera la **aplicación principal** o **aplicación raíz**. El directorio raíz del espacio de trabajo contiene todos los ficheros de configuración, etc.. necesarios para construir y servir la aplicación Angular.
+Cuando se ejecuta el comando `ng new` se instalan las bibliotecas y dependencias necesarias en el nuevo espacio de trabajo, además del **esqueleto funcional** de una aplicación dentro de la carpeta `src/`.
+
+Esta aplicación se considera la **aplicación principal** o **aplicación raíz**. El [directorio raíz](https://angular.dev/reference/configs/file-structure) del espacio de trabajo contiene todos los ficheros de configuración, etc.. necesarios para construir y servir la aplicación Angular.
 
 La aplicación inicial creada es la aplicación **por defecto** para todos los comandos lanzados a través de `ng`.
 
-Para un espacio de trabajo que contendrá una sóla aplicación, la subcarpeta `src/` del espacio de trabajo contendrá los ficheros de código (lógica de la aplicación, datos y assets) de la aplicación raíz.
+Para un espacio de trabajo que contiene una única aplicación, la subcarpeta `src/` del espacio de trabajo contendrá los ficheros de código (lógica de la aplicación, datos y assets) de la aplicación raíz.
 
 Para espacios de trabajo de tipo _'multi-project'_ cada proyecto estará en su propia carpeta dentro de la carpeta `projects/`.
 
@@ -200,19 +229,33 @@ Además de las dependencias el fichero `'package.json'` sirve para indicar infor
 
 El fichero `'tsconfig.json'` contiene los parámetros de configuración por defecto de [TypeScript](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
 
-El fichero `angular.json` contiene los valores predeterminados de configuración para todos los proyectos en el área de trabajo, incluidas las opciones de configuración para compilar, servir y probar la aplicación.
+El fichero `angular.json` contiene los [valores predeterminados](https://angular.dev/reference/configs/workspace-config) de configuración para todos los proyectos en el área de trabajo, incluidas las opciones de configuración para compilar, servir y probar la aplicación.
 
 **Los cambios en los ficheros de configuración no se recargan automáticamente**. Hay que parar la servidor y volver a lanzarlo para que se carguen.
 
-[Más información](https://angular.dev/reference/configs/workspace-config)
-
 #### Carpetas y ficheros de la aplicación
+
+La [estructura](https://angular.dev/reference/configs/file-structure#application-project-files) de la aplicación se distribuye en carpetas.
+
+A nivel raíz de la estructura de la aplicación:
+
+- **`src/`**: los archivos fuente para el proyecto de la aplicación a nivel raíz.
+
+- **`public/`**: contiene imágenes y otros archivos servidos de forma estática y que se copiarán tal cual cuando se cree la aplicación.
+
+- **`node_modules/`**: los paquetes **NPM** instalados para todo el espacio de trabajo
+
+- **`package.json`**: configura las [dependencias NPM](https://angular.dev/reference/configs/npm-packages)
+
+- **`angular.json`**: [configuración CLI](https://angular.dev/reference/configs/workspace-config) para todo el espacio de trabajo
+
+- **`tsconfig.json`**: la configuración base de TypeScript para los proyectos en el espacio de trabajo.
+
+Y otros ficheros como `package-lock.json`, `.gitignore`, `.editorconfig` o `README.md`.
 
 Dentro de la carpeta `/src` tenemos:
 
-- **`app/`**: contiene los componentes Angular que componen la aplicación.
-
-- **`assets/`**: contiene imágenes y otros archivos servidos de forma estática y que se copiarán tal cual cuando se cree la aplicación.
+- **`src/app`**: contiene los componentes Angular que componen la aplicación.
 
 - **`index.html`**: la página HTML principal que se sirve cuando alguien visita el sitio. Los archivos JavaScript y CSS se agregan automáticamente al crear la aplicación, por lo que normalmente no se necesita agregar ninguna etiqueta `<script>` o `<link>` manualmente.
 
@@ -220,7 +263,9 @@ Dentro de la carpeta `/src` tenemos:
 
 - **`styles.css`**: los estilos CSS globales de la aplicación
 
-Dentro de la carpeta `src/`, la carpeta `app/` contiene la lógica y los datos de la aplicación:
+- **`favicon.ico`**
+
+Dentro de la carpeta `src/app/` se ubican la lógica y los datos de la aplicación:
   
 - **`app.config.ts`**: define la configuración de la aplicación que informa a Angular sobre cómo debe construir la aplicación. Sólo se genera cuando se usa la opción `--standalone`.
 
@@ -231,8 +276,6 @@ Dentro de la carpeta `src/`, la carpeta `app/` contiene la lógica y los datos d
 - **`app.component.css`**: define la hoja de estilo CSS básica para el componente raíz `AppComponent`.
 
 - **`app.module.ts`**: define el módulo raíz, llamado `AppModule`, que le dice a Angular cómo ensamblar la aplicación. Inicialmente declara solo el `AppComponent`. A medida que agregue más componentes a la aplicación, deberá declararlos aquí. Sólo se genera cuando se utiliza la opción `--standalone false`.
-
-[Más información](https://angular.dev/reference/configs/file-structure#application-project-files)
 
 ## [Components](https://angular.dev/guide/components)
 
