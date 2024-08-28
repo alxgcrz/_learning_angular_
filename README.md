@@ -34,7 +34,7 @@ Angular aprovecha la tecnología de los componentes web o _'web components'_ y e
 
 - **Enrutamiento**: Angular proporciona un módulo de enrutamiento que permite la navegación entre las distintas vistas de la aplicación sin necesidad de recargar la página. Esto es esencial para construir aplicaciones de una sola página (SPA).
 
-:warning: **Introducción generada por ChatGPT**
+:warning: **Sección introductoria generada por ChatGPT** :warning:
 
 ## Primeros pasos
 
@@ -84,11 +84,13 @@ $ ng help
 $ ng serve --help
 ```
 
+Se puede visitar la [documentación oficial](https://angular.dev/cli) para consultar la lista completa de comandos y párametros que ofrece la CLI de Angular.
+
 #### Puesta en marcha del proyecto
 
 Las aplicaciones Angular se desarrollan en el contexto de una espacio de trabajo o [**_'workspace'_**](https://angular.dev/tools/cli/setup-local). Un espacio de trabajo puede contener múltiples aplicaciones y bibliotecas.
 
-Para crear un nuevo espacio de trabajo y una aplicación inicial dentro de este nuevo espacio de trabajo, se utiliza el comando:
+Para crear un nuevo espacio de trabajo y una aplicación inicial dentro de este nuevo espacio de trabajo, se utiliza el comando `ng new`:
 
 ```sh
 // Crear una nueva aplicación en un workspace
@@ -105,7 +107,7 @@ Por defecto la aplicación se crea con el prefijo `app` que se usará en todos l
 
 **'Angular CLI'** incluye un [servidor de desarrollo](https://angular.dev/tools/cli/serve) lo que permite servir la aplicación fácilmente a nivel local.
 
-El comando `ng serve` inicia el servidor, observa el código fuente, reconstruye automáticamente la aplicación cuando detecta algún cambio en el código y recarga la página en el navegador:
+El comando `ng serve` inicia el servidor de desarrollo, observa los cambios en el código fuente, reconstruye automáticamente la aplicación cuando detecta algún cambio en el código y recarga la página en el navegador ("_hot-reloading_"):
 
 ```sh
 // Navegar dentro del espacio de trabajo
@@ -133,7 +135,7 @@ Una vez la aplicación está lista para su [despliegue](https://angular.dev/tool
 
 Para realizar el despliegue de **forma automática**, se dispone del comando `ng deploy`.
 
-Un número de desarrolladores _third-party_ implementa capacidades de despliegue en diferentes plataformas. Se pueden añadir cualquiera de ellos al proyecto con `ng add`.
+Existen desarrolladores _'third-party'_ que implementan capacidades de despliegue en diferentes plataformas. Se pueden añadir cualquiera de ellos al proyecto con `ng add`.
 
 - **Firebase hosting**
 
@@ -157,7 +159,7 @@ $ ng add @angular/fire
 $ ng deploy
 ```
 
-Y esto añadirá la sección en el fichero `angular.json`:
+Y esto añadirá la sección `deploy` en el fichero `angular.json`:
 
 ```json
 {
@@ -182,19 +184,19 @@ Cuando se ejecuta el comando `ng new` se instalan las bibliotecas y dependencias
 
 Esta aplicación se considera la **aplicación principal** o **aplicación raíz**. El [directorio raíz](https://angular.dev/reference/configs/file-structure) del espacio de trabajo contiene todos los ficheros de configuración, etc.. necesarios para construir y servir la aplicación Angular.
 
-La aplicación inicial creada es la aplicación **por defecto** para todos los comandos lanzados a través de `ng`.
+La aplicación inicial creada es la **aplicación por defecto** para todos los comandos lanzados a través de `ng`.
 
-Para un espacio de trabajo que contiene una única aplicación, la subcarpeta `src/` del espacio de trabajo contendrá los ficheros de código (lógica de la aplicación, datos y assets) de la aplicación raíz.
+Para un espacio de trabajo que contiene una única aplicación, la subcarpeta `src/` del espacio de trabajo contendrá los ficheros de código (lógica de la aplicación, datos y _assets_) de la aplicación raíz.
 
-Para espacios de trabajo de tipo _'multi-project'_ cada proyecto estará en su propia carpeta dentro de la carpeta `projects/`.
+Para espacios de trabajo de tipo _'multi-project'_, cada proyecto estará en su propia carpeta dentro de la carpeta `projects/`.
 
 #### Ficheros de configuración
 
-Todos los proyectos dentro del mismo espacio de trabajo o _'workspace'_ comparten los ficheros de configuración que están en la raíz del espacio de trabajo. Estos ficheros de configuración tienen ámbito del espacio de trabajo y por tanto su configuración afecta a todos los proyectos.
+Todos los proyectos dentro del mismo espacio de trabajo o _'workspace'_ comparten los ficheros de configuración que están en la raíz del espacio de trabajo. Estos ficheros de configuración tienen **ámbito del espacio de trabajo** y por tanto su configuración afecta a todos los proyectos.
 
 Los archivos de configuración que están en la raíz del espacio de trabajo son los ficheros de configuración de la aplicación raíz. Para un espacio de trabajo de múltiples proyectos, los archivos de configuración específicos de cada proyecto estarán en la carpeta raíz de cada proyecto, dentro de `projects/project-name`.
 
-El fichero `'package.json'` es el fichero estándar de **_NPM_** donde se almacenan las dependencias de terceros que se utilizará para todos los proyectos del espacio de trabajo. Contiene las bibliotecas que necesita la aplicación para ejecutarse tanto en desarrollo como producción:
+El fichero `'package.json'` es el [fichero estándar](https://docs.npmjs.com/cli/v10/configuring-npm/package-json) de **_NPM_** donde se almacenan las dependencias de terceros que se utilizará para todos los proyectos del espacio de trabajo. Contiene las bibliotecas que necesita la aplicación para ejecutarse tanto en desarrollo como producción:
 
 ```json
 {
@@ -207,7 +209,7 @@ El fichero `'package.json'` es el fichero estándar de **_NPM_** donde se almace
 }
 ```
 
-Además de las dependencias el fichero `'package.json'` sirve para indicar información sobre el proyecto como el nombre, versión, nombre del autor, url del repositorio, etc.. y también como contenedor de scripts para automatizar tareas de operaciones rutinarias:
+Además de las dependencias, el fichero `'package.json'` sirve para indicar información sobre el proyecto como el nombre, versión, nombre del autor, url del repositorio, etc.. y también como contenedor de scripts para automatizar tareas de operaciones rutinarias:
 
 ```json
 {
@@ -229,7 +231,7 @@ Además de las dependencias el fichero `'package.json'` sirve para indicar infor
 
 El fichero `'tsconfig.json'` contiene los parámetros de configuración por defecto de [TypeScript](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
 
-El fichero `angular.json` contiene los [valores predeterminados](https://angular.dev/reference/configs/workspace-config) de configuración para todos los proyectos en el área de trabajo, incluidas las opciones de configuración para compilar, servir y probar la aplicación.
+El fichero `angular.json` contiene los [valores predeterminados](https://angular.dev/reference/configs/workspace-config#general-json-structure) de configuración para todos los proyectos en el área de trabajo, incluidas las opciones de configuración para compilar, servir y probar la aplicación.
 
 **Los cambios en los ficheros de configuración no se recargan automáticamente**. Hay que parar la servidor y volver a lanzarlo para que se carguen.
 
@@ -237,7 +239,7 @@ El fichero `angular.json` contiene los [valores predeterminados](https://angular
 
 La [estructura](https://angular.dev/reference/configs/file-structure#application-project-files) de la aplicación se distribuye en carpetas.
 
-A nivel raíz de la estructura de la aplicación:
+A nivel raíz de la estructura de la aplicación tenemos las siguientes carpetas y ficheros:
 
 - **`src/`**: los archivos fuente para el proyecto de la aplicación a nivel raíz.
 
@@ -279,7 +281,7 @@ Dentro de la carpeta `src/app/` se ubican la lógica y los datos de la aplicaci�
 
 ## [Components](https://angular.dev/guide/components)
 
-En el contexto de Angular, un componente es una **parte fundamental** de la arquitectura de este framework para el desarrollo de aplicaciones web. Angular utiliza una arquitectura basada en componentes, lo que significa que la interfaz de usuario se construye mediante la composición de componentes individuales.
+En el contexto de Angular, un [componente](https://angular.dev/guide/components) es una parte fundamental de la arquitectura de este framework para el desarrollo de aplicaciones web. Angular utiliza una **arquitectura basada en componentes**, lo que significa que la interfaz de usuario se construye mediante la composición de componentes individuales.
 
 Todo componente tiene que tener:
 
@@ -321,13 +323,13 @@ Angular crea una instancia del componente para cada elemento HTML coincidente qu
 
 El DOM representado por un componente, correspondiente a la plantilla de ese componente, se denomina **vista o _view_** de ese componente.
 
-[Más información](https://angular.dev/guide/components)
+Los [componentes](https://angular.dev/cli/generate/component) se generan con `ng generate component [name] [options]`
 
 ### [Importing and using components](https://angular.dev/guide/components/importing)
 
 Angular dispone de **dos formas** de hacer disponible los componentes:
 
-- Mediante los componentes **_'standalone'_**, siendo la forma recomendada
+- Mediante los componentes **_'standalone'_**, siendo la forma recomendada o
 
 - Mediante `@NgModule`
 
@@ -353,6 +355,8 @@ export class ProfilePhoto { }
 })
 export class UserProfile { }
 ```
+
+Para crear un componente **_'standalone'_** se utiliza la opción `ng generate component [name] --standalone`.
 
 ### [Selectors](https://angular.dev/guide/components/selectors)
 
@@ -2714,6 +2718,7 @@ TODO
 - <https://angular.dev>
 - <https://www.typescriptlang.org>
 - <https://www.youtube.com/@Angular>
+- <https://material.angular.io/>
 
 ## Licencia
 
