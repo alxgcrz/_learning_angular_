@@ -285,13 +285,13 @@ En el contexto de Angular, un [componente](https://angular.dev/guide/components)
 
 Todo componente tiene que tener:
 
-- Una **clase** TypeScript que contiene la lógica del componente
+- Una **clase TypeScript** que contiene la lógica y el estado del componente.
 
-- Un **decorador** `@Component` sobre esta clase TypeScript
+- Un **decorador** `@Component` sobre esta clase TypeScript con los metadatos necesarios para la configuración del componente.
 
-- Una **plantilla HTML** que controla lo que se renderiza en el DOM
+- Una **plantilla HTML** que define el marcado que se renderiza en la vista.
 
-- Un **selector CSS** que define como se utiliza ese componente en el HTML
+- Un **selector CSS** que permite usar el componente en otras plantillas HTML.
 
 Opcionalmente puede incluir una lista de estilos CSS que se aplicarán al componente. Por defecto esos estilos **sólo aplican** al componente donde se definen.
 
@@ -304,7 +304,7 @@ Opcionalmente puede incluir una lista de estilos CSS que se aplicarán al compon
 export class ProfilePhoto { }
 ```
 
-Como alternativa, se pueden escribir la plantilla y los estilos en ficheros **separados**:
+Como alternativa, se pueden escribir la plantilla HTML y los estilos CSS en ficheros **separados**:
 
 ```typescript
 @Component({
@@ -321,7 +321,7 @@ El objeto que se pasa al decorador `@Component` son los **metadatos** del compon
 
 Angular crea una instancia del componente para cada elemento HTML coincidente que encuentra. El elemento DOM que coincide con el selector de un componente se denomina elemento **anfitrión o host** de ese componente. El contenido de la plantilla de un componente se representa dentro de su elemento anfitrión.
 
-El DOM representado por un componente, correspondiente a la plantilla de ese componente, se denomina **vista o _view_** de ese componente.
+El DOM representado por un componente, correspondiente a la plantilla de ese componente, se denomina **vista o _'view'_** de ese componente.
 
 Los [componentes](https://angular.dev/cli/generate/component) se generan con `ng generate component [name] [options]`
 
@@ -360,7 +360,7 @@ Para crear un componente **_'standalone'_** se utiliza la opción `ng generate c
 
 ### [Selectors](https://angular.dev/guide/components/selectors)
 
-Los selectores se utilizan para identificar los componentes en el DOM y son esenciales para el mecanismo de plantillas de Angular.
+Los selectores se utilizan para **identificar** los componentes en el DOM y son esenciales para el mecanismo de plantillas de Angular.
 
 Un selector en Angular es una **cadena** que especifica el nombre que se usará para insertar un componente en una plantilla. Los selectores son **_case-sensitive_**.
 
@@ -370,7 +370,7 @@ Angular realiza esta asociación entre selectores y componentes en **tiempo de c
 
 Angular dispone de varios tipos de selectores:
 
-1. **Selectores de etiqueta**. Este es el tipo más común. Utiliza el nombre del selector como una etiqueta HTML.
+1. **Selectores de etiqueta** ➔ este es el tipo más común. Utiliza el nombre del selector como una etiqueta HTML.
 
 ```typescript
 @Component({
@@ -387,7 +387,7 @@ export class MiComponenteComponent { }
 <!-- ... -->
 ```
 
-1. **Selectores de Atributo**. Empareja elementos basándose en la presencia de un atributo HTML y, opcionalmente, un valor exacto para ese atributo.
+1. **Selectores de atributo** ➔ empareja elementos basándose en la presencia de un atributo HTML y, opcionalmente, un valor exacto para ese atributo.
 
 ```typescript
 @Component({
@@ -404,7 +404,7 @@ export class MiComponenteComponent { }
 <!-- ... -->
 ```
 
-1. **Selectores de clase**. Coincide con elementos según la presencia de una clase CSS.
+1. **Selectores de clase** ➔ coincide con elementos según la presencia de una clase CSS.
 
 ```typescript
 @Component({
@@ -443,11 +443,9 @@ export class DropZone { }
 
 Hay que evitar prefijos como `app-` que pueden generar confusión. También hay que evitar el prefijo `ng` ya que es utilizado por Angular.
 
-[Más información](https://angular.dev/guide/components/importing)
-
 ### [Styling](https://angular.dev/guide/components/styling)
 
-Los componentes pueden incluir estilos CSS que se aplicarán a todos los elementos que pueda tener el _template_ del componente:
+Los componentes pueden incluir estilos CSS que se aplicarán a **todos los elementos** que pueda tener el _'template'_ del componente:
 
 ```typescript
 @Component({
@@ -457,6 +455,8 @@ Los componentes pueden incluir estilos CSS que se aplicarán a todos los element
 })
 export class ProfilePhoto { }
 ```
+
+> Por defecto esos estilos **sólo aplican** al componente donde se definen.
 
 Otro modo es escribir los estilos CSS en un fichero separado y referenciado en el decorador:
 
@@ -471,19 +471,19 @@ export class ProfilePhoto { }
 
 Cada componente se puede configurar como el framework aplica los estilos al componente:
 
-- **_ViewEncapsulation.Emulated_**. Este es el modo por defecto. Los estilos sólo aplican al _template_
+- **_ViewEncapsulation.Emulated_ (por defecto)** ➔ Los estilos están aislados y sólo aplican al _'template'_. Compatible con todos los navegadores
 
-- **_ViewEncapsulation.ShadowDom_**
+- **_ViewEncapsulation.ShadowDom_** ➔ Utiliza el Shadow DOM para aislamiento completo de estilos. Compatible con navegadores que soporten Shadow DOM.
 
-- **_ViewEncapsulation.None_**. Desactiva la encapsulación de estilos y se vuelve globales.
+- **_ViewEncapsulation.None_** ➔ Desactiva la encapsulación de estilos y se vuelve globales.
 
-En el _template_ del componente se puede usar `<link>` para referenciar un fichero CSS externo. Además, dentro del CSS se puede utilizar la regla `@import` para referenciar un fichero CSS externo.
+En el _'template'_ del componente se puede usar `<link>` para referenciar un fichero CSS externo. Además, dentro del CSS se puede utilizar la regla `@import` para referenciar un fichero CSS externo.
 
 Estos ficheros externos son tratados por Angular como **estilos externos**, por lo que no se ven afectos por el ámbito de aplicación de los estilos.
 
 ### [Accepting data with input properties](https://angular.dev/guide/components/inputs)
 
-Al crear un componente, puede marcar propiedades de clase específicas como **vinculables** agregando el decorador `@Input` en la propiedad:
+Al crear un componente, se pueden marcar propiedades de clase específicas como **vinculables** agregando el decorador `@Input` en la propiedad:
 
 ```typescript
 import { Component, Input } from '@angular/core';
@@ -496,7 +496,7 @@ import { Component, Input } from '@angular/core';
       <p>{{ description }}</p>
     </div>
   `,
-  styleUrl: ['./card.component.css']
+  styleUrls: ['./card.component.css']
 })
 export class CardComponent {
   @Input() title: string = '';
@@ -504,7 +504,7 @@ export class CardComponent {
 }
 ```
 
-Esto le permite vincularse a la propiedad en una plantilla, permitiendo pasar datos entre componentes:
+Este decorador permite que un componente hijo reciba datos que se le pasan desde su componente contenedor:
 
 ```typescript
 import { Component } from '@angular/core';
@@ -515,7 +515,7 @@ import { Component } from '@angular/core';
     <h1>My Card Example</h1>
     <app-card [title]="cardTitle" [description]="cardDescription"></app-card>
   `,
-  styleUrl: './card.component.css'
+  styleUrls: './card.component.css'
 })
 export class AppComponent {
   cardTitle = 'Card Title';
@@ -523,17 +523,17 @@ export class AppComponent {
 }
 ```
 
-Angular registra los _'input'_ estáticamente en tiempo de compilación. Los _'input'_ no se pueden agregar ni eliminar en tiempo de ejecución.
+Angular registra los `@Input` estáticamente en tiempo de compilación. Por lo tanto no se pueden agregar ni eliminar en tiempo de ejecución. Esto significa que una vez que un componente está compilado, sus propiedades `@Input` están fijadas y no pueden ser modificadas dinámicamente.
 
-Al extender una clase de componente, los _'input'_ son heredados por la clase secundaria.
+Al extender una clase de componente, los `@Input` definidos en la clase base son heredados por la clase derivada. Esto permite reutilizar y extender funcionalidades en componentes hijos.
 
-Los nombres utilizados son _'case-sensitive'_. Por tanto, el nombre de la propiedad en el componente debe coincidir con el nombre de la propiedad en la plantilla.
+Los nombres utilizados en el decorador `@Input` son _"case-sensitive"_. Por lo tanto, el nombre de la propiedad en el componente debe coincidir exactamente con el nombre utilizado en la plantilla para la vinculación de datos.
 
 #### [Customizing inputs](https://angular.dev/guide/components/inputs#customizing-inputs)
 
-El decorador `@Input` acepta un objeto de configuración que permite modificar su comportamiento.
+El decorador `@Input` acepta un objeto de configuración que permite **modificar su comportamiento**.
 
-Se puede especificar la opción `'required'` para exigir que una entrada determinada siempre deba tener un valor. Si no se especifica un _'input'_ requerido, Angular reporta un error en tiempo de compilación:
+Se puede especificar la opción `'required'` para exigir que una entrada determinada siempre deba tener un valor. Si no se especifica un valor, Angular reporta un error en tiempo de compilación:
 
 ```typescript
 @Component({...})
@@ -555,7 +555,7 @@ import { Component, Input } from '@angular/core';
       <p>{{ description }}</p>
     </div>
   `,
-  styleUrl: ['./card.component.css']
+  styleUrls: ['./card.component.css']
 })
 export class CardComponent {
   @Input({transform: upperCaseString}) title: string = '';
@@ -571,13 +571,14 @@ function upperCaseString(value: string | undefined) {
 
 Cuando se especifica una transformación, el tipo de parámetro de la función de transformación determina los tipos de valores que se pueden establecer para la entrada en una plantilla.
 
-Por ejemplo, el _'input'_ acepta un `number` mientras que la propiedad de la clase es un `string`:
+Por ejemplo, el decorador `@Input` acepta un `number` mientras que la propiedad de la clase es un `string`:
 
 ```typescript
 @Component({...})
 export class CustomSlider {
   @Input({transform: appendPx}) widthPx: string = '';
 }
+
 function appendPx(value: number) {
   return `${value}px`;
 }
@@ -585,10 +586,11 @@ function appendPx(value: number) {
 
 #### [Built-in transformations](https://angular.dev/guide/components/inputs#built-in-transformations)
 
-Angular incluye dos funciones de transformación integradas para los dos escenarios más comunes: convertir valores a booleanos y números:
+Angular incluye dos funciones de transformación integradas para los dos escenarios más comunes: **convertir valores a booleanos y números**:
 
 ```typescript
 import {Component, Input, booleanAttribute, numberAttribute} from '@angular/core';
+
 @Component({...})
 export class CustomSlider {
   @Input({transform: booleanAttribute}) disabled = false;
@@ -613,19 +615,29 @@ export class CustomSlider {
 
 ## [Template syntax](https://angular.dev/guide/templates)
 
-En Angular, una _'plantilla'_ es un fragmento de HTML. Se utiliza una **sintaxis especial** dentro de una plantilla para aprovechar muchas de las funciones de Angular.
+En Angular, una plantilla es un **fragmento de HTML** que utiliza una sintaxis especial para aprovechar muchas de las funcionalidades del framework. Estas plantillas son secciones de HTML que se integran en la página que el navegador muestra, representando la vista o interfaz de usuario.
 
-Cada plantilla de Angular es una sección de HTML que se incluye como parte de la página que muestra el navegador. Una plantilla HTML en Angular representa una vista o interfaz de usuario en el navegador, como HTML normal, pero con mucha más funcionalidad.
+Casi toda la sintaxis HTML es **válida** en las plantillas de Angular. Sin embargo, Angular extiende el HTML con una sintaxis especial para funcionalidades avanzadas como por ejemplo la interpolación de cadenas con `{{}}`, el uso de directivas `ngIf` o `ngFor`, etcétera...
 
-Casi toda la sintaxis HTML es sintaxis de plantilla válida. Sin embargo, debido a que una plantilla de Angular es parte de una página web general y no de la página completa, no es necesario incluir elementos como `<html>`, `<body>` o `<base>`.
+Cada plantilla en Angular se incluye como parte de la página que muestra el navegador, representando una vista o interfaz de usuario con funcionalidad adicional en comparación con HTML estático.
 
-> :warning: Para eliminar el riesgo de ataques de tipo _'script injection'_, Angular **no soporta** la etiqueta `<script>` en las plantillas.
+Como una plantilla de Angular es solo una parte de la página completa, no es necesario incluir elementos como `<html>`, `<body>`, o `<base>`. Solo se necesita el contenido relevante para esa sección de la página.
 
-Cuando se genera una aplicación Angular con la herramienta de Angular CLI, el archivo `app.component.html` es la plantilla **predeterminada** que contiene HTML general.
+> :warning: Angular no soporta la etiqueta `<script>` en las plantillas para evitar riesgos de ataques de tipo _'script injection'_. Para manejar contenido dinámico de manera segura, Angular proporciona herramientas como `DomSanitizer`.
+
+Cuando se genera una aplicación Angular con Angular CLI, el archivo `app.component.html` es la **plantilla predeterminada** y contiene el HTML general que define la estructura inicial de la aplicación.
 
 ### [Text interpolation](https://angular.dev/guide/templates/interpolation)
 
-La interpolación se refiere a incrustar expresiones en texto marcado. De forma predeterminada, la interpolación utiliza las llaves dobles `{{` y `}}` como delimitadores:
+La interpolación en Angular permite insertar valores y expresiones directamente en el HTML usando las llaves dobles `{{ }}` como delimitadores. Esto significa que se pueden incluir variables, realizar cálculos, e incluso llamar a métodos del componente.
+
+Por ejemplo:
+
+- Se puede mostrar el resultado de una expresión matemática, como `{{ a + b }}`, donde a y b son variables definidas en el componente.
+
+- También se puede invocar métodos del componente para mostrar el valor que devuelven, como `{{ getVal() }}`, donde _'getVal'_ es un método del componente que retorna un valor.
+
+Esto permite construir plantillas dinámicas que reflejan los datos y la lógica del componente de manera directa y eficaz:
 
 ```typescript
 import {Component} from '@angular/core';
@@ -649,7 +661,7 @@ export class AppComponent {
 }
 ```
 
-Se utiliza la interpolación para mostrar el valor de las variables en la plantilla de componente correspondiente:
+La interpolación se utiliza para mostrar el valor de las variables en la plantilla del componente correspondiente:
 
 ```html
 <div>
@@ -679,6 +691,8 @@ Se utiliza la interpolación para mostrar el valor de las variables en la planti
   </ul>
 </div>
 ```
+
+En Angular, las expresiones dentro de `{{ }}` se evalúan en el contexto del componente y el resultado se inserta en el DOM. Esto permite dinámicamente reflejar el estado de las propiedades del componente en la vista.
 
 ### [Template statements](https://angular.dev/guide/templates/template-statements)
 
