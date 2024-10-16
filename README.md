@@ -48,7 +48,7 @@ Para desarrollar en Angular se puede utilizar como lenguaje de programación tan
 
 Para instalar **Typescript** se utiliza la herramienta **_NPM_** ya que también está publicado como paquete.
 
-> Cada **versión de Angular** requiere, para funcionar correctamente, **determinadas versiones** de Node.js, TypeScript y RxJS que pueden consultarse en la [siguiente tabla de la documentación oficial](https://angular.dev/reference/versions).
+> Para funcionar correctamente, cada **versión de Angular** requiere **determinadas versiones de Node.js, TypeScript y RxJS** que pueden consultarse en la [siguiente tabla de la documentación oficial](https://angular.dev/reference/versions).
 
 ```sh
 // Comprobar la versión de Node.js
@@ -66,9 +66,9 @@ $ tsc --version
 
 ### Angular CLI
 
-[**_'Angular CLI'_**](https://angular.dev/tools/cli) es la herramienta de línea de comandos estándar para crear, depurar construir y publicar aplicaciones Angular.
+[**'Angular CLI'**](https://angular.dev/tools/cli) es la herramienta de línea de comandos estándar para crear, depurar construir y publicar aplicaciones Angular.
 
-Esta herramienta está publicada en **_NPM_** como el paquete `@angular/cli` e incluye el binario `ng`:
+Esta herramienta está publicada en **NPM** como el paquete `@angular/cli` e incluye el binario `ng`:
 
 ```sh
 // Instalación de 'Angular CLI' de forma global
@@ -84,13 +84,13 @@ $ ng help
 $ ng serve --help
 ```
 
-Se puede visitar la [documentación oficial](https://angular.dev/cli) para consultar la lista completa de comandos y párametros que ofrece la CLI de Angular.
+Se puede visitar la [documentación oficial](https://angular.dev/cli) para consultar la lista completa de comandos y párametros que ofrece esta herramienta de Angular.
 
 #### Puesta en marcha del proyecto
 
 Las aplicaciones Angular se desarrollan en el contexto de una espacio de trabajo o [**_'workspace'_**](https://angular.dev/tools/cli/setup-local). Un espacio de trabajo puede contener múltiples aplicaciones y bibliotecas.
 
-Para crear un nuevo espacio de trabajo y una aplicación inicial dentro de este nuevo espacio de trabajo, se utiliza el comando `ng new`:
+Para crear un nuevo espacio de trabajo y una aplicación inicial dentro de este nuevo espacio de trabajo, se utiliza el comando `'ng new'`:
 
 ```sh
 // Crear una nueva aplicación en un workspace
@@ -107,7 +107,7 @@ Por defecto la aplicación se crea con el prefijo `app` que se usará en todos l
 
 **'Angular CLI'** incluye un [servidor de desarrollo](https://angular.dev/tools/cli/serve) lo que permite servir la aplicación fácilmente a nivel local.
 
-El comando `ng serve` inicia el servidor de desarrollo, observa los cambios en el código fuente, reconstruye automáticamente la aplicación cuando detecta algún cambio en el código y recarga la página en el navegador ("_hot-reloading_"):
+El comando `'ng serve'` inicia el servidor de desarrollo, observa los cambios en el código fuente, reconstruye automáticamente la aplicación cuando detecta algún cambio en el código y recarga la página en el navegador ("_hot-reloading_"):
 
 ```sh
 // Navegar dentro del espacio de trabajo
@@ -119,13 +119,13 @@ ng serve --open
 
 #### Compilación del proyecto
 
-Para [compilar el proyecto](https://angular.dev/tools/cli/build) se utiliza el comando `ng build`.
+Para [compilar el proyecto](https://angular.dev/tools/cli/build) se utiliza el comando `'ng build'`.
 
 Se compilará el código TypeScript en código JavaScript, se optimizará el código, se empaquetará y se comprimirán (_'minify'_) los ficheros según sea necesario.
 
 Este comando ejecuta el constructor o _'builder'_ definido en el fichero `angular.json`.
 
-Por defecto, cuando se inicializa la aplicación con `ng new` se utiliza el constructor `@angular-devkit/build-angular:application`.
+Por defecto, cuando se inicializa la aplicación con `'ng new'` se utiliza el constructor `@angular-devkit/build-angular:application`.
 
 Existen **4 constructores disponibles**, según el tipo de aplicación que se necesite construir.
 
@@ -133,9 +133,9 @@ Existen **4 constructores disponibles**, según el tipo de aplicación que se ne
 
 Una vez la aplicación está lista para su [despliegue](https://angular.dev/tools/cli/deployment), se puede realizar de varias formas, tanto manual como automática.
 
-Para realizar el despliegue de **forma automática**, se dispone del comando `ng deploy`.
+Para realizar el despliegue de **forma automática**, se dispone del comando `'ng deploy'`.
 
-Existen desarrolladores _'third-party'_ que implementan capacidades de despliegue en diferentes plataformas. Se pueden añadir cualquiera de ellos al proyecto con `ng add`.
+Existen desarrolladores _'third-party'_ que implementan capacidades de despliegue en diferentes plataformas. Se pueden añadir cualquiera de ellos al proyecto con `'ng add'`.
 
 - **Firebase hosting**
 
@@ -147,7 +147,7 @@ Existen desarrolladores _'third-party'_ que implementan capacidades de despliegu
 
 - **Amazon Cloud S3**
 
-Cuando se agrega un paquete con capacidad de despliegue, automáticamente se actualizará la configuración del espacio de trabajo (archivo `angular.json`) con una sección de despliegue para el proyecto seleccionado. Luego, se puede usar el comando `ng deploy` para desplegar ese proyecto.
+Cuando se agrega un paquete con capacidad de despliegue, automáticamente se actualizará la configuración del espacio de trabajo (archivo `angular.json`) con una sección de despliegue para el proyecto seleccionado. Luego, se puede usar el comando `'ng deploy'` para desplegar ese proyecto.
 
 Por ejemplo, podemos añadir un paquete de terceros para realizar el despliegue en **Firebase**:
 
@@ -180,7 +180,7 @@ Y esto añadirá la sección `deploy` en el fichero `angular.json`:
 
 ### Estructura de una aplicación Angular
 
-Cuando se ejecuta el comando `ng new` se instalan las bibliotecas y dependencias necesarias en el nuevo espacio de trabajo, además del **esqueleto funcional** de una aplicación dentro de la carpeta `src/`.
+Cuando se ejecuta el comando `'ng new'` se instalan las bibliotecas y dependencias necesarias en el nuevo espacio de trabajo, además del **esqueleto funcional** de una aplicación dentro de la carpeta `src/`.
 
 Esta aplicación se considera la **aplicación principal** o **aplicación raíz**. El [directorio raíz](https://angular.dev/reference/configs/file-structure) del espacio de trabajo contiene todos los ficheros de configuración, etc.. necesarios para construir y servir la aplicación Angular.
 
@@ -323,7 +323,9 @@ Angular crea una instancia del componente para cada elemento HTML coincidente qu
 
 El DOM representado por un componente, correspondiente a la plantilla de ese componente, se denomina **vista o _'view'_** de ese componente.
 
-Los [componentes](https://angular.dev/cli/generate/component) se generan con `ng generate component [name] [options]`
+Los [componentes](https://angular.dev/cli/generate/component) se generan con:
+
+> `'ng generate component [name] [options]'`
 
 ### [Importing and using components](https://angular.dev/guide/components/importing)
 
@@ -356,13 +358,15 @@ export class ProfilePhoto { }
 export class UserProfile { }
 ```
 
-Para crear un componente **_'standalone'_** se utiliza la opción `ng generate component [name] --standalone`.
+Para crear un componente **_'standalone'_** se utiliza la opción:
+
+> `'ng generate component [name] --standalone'`.
 
 ### [Selectors](https://angular.dev/guide/components/selectors)
 
 Los selectores se utilizan para **identificar** los componentes en el DOM y son esenciales para el mecanismo de plantillas de Angular.
 
-Un selector en Angular es una **cadena** que especifica el nombre que se usará para insertar un componente en una plantilla. Los selectores son **_case-sensitive_**.
+Un selector en Angular es una **cadena** que especifica el nombre que se usará para insertar un componente en una plantilla. Los selectores son **_"case-sensitive"_**.
 
 Además, un único componente puede coincidir exactamente con un selector. Si varios componentes coinciden con un selector, Angular devuelve un error.
 
@@ -370,7 +374,7 @@ Angular realiza esta asociación entre selectores y componentes en **tiempo de c
 
 Angular dispone de varios tipos de selectores:
 
-1. **Selectores de etiqueta** ➔ este es el tipo más común. Utiliza el nombre del selector como una etiqueta HTML.
+- **Selectores de etiqueta** ➔ este es el tipo más común. Utiliza el nombre del selector como una etiqueta HTML.
 
 ```typescript
 @Component({
@@ -387,7 +391,7 @@ export class MiComponenteComponent { }
 <!-- ... -->
 ```
 
-1. **Selectores de atributo** ➔ empareja elementos basándose en la presencia de un atributo HTML y, opcionalmente, un valor exacto para ese atributo.
+- **Selectores de atributo** ➔ empareja elementos basándose en la presencia de un atributo HTML y, opcionalmente, un valor exacto para ese atributo.
 
 ```typescript
 @Component({
@@ -404,7 +408,7 @@ export class MiComponenteComponent { }
 <!-- ... -->
 ```
 
-1. **Selectores de clase** ➔ coincide con elementos según la presencia de una clase CSS.
+- **Selectores de clase** ➔ coincide con elementos según la presencia de una clase CSS.
 
 ```typescript
 @Component({
@@ -477,7 +481,7 @@ Cada componente se puede configurar como el framework aplica los estilos al comp
 
 - **_ViewEncapsulation.None_** ➔ Desactiva la encapsulación de estilos y se vuelve globales.
 
-En el _'template'_ del componente se puede usar `<link>` para referenciar un fichero CSS externo. Además, dentro del CSS se puede utilizar la regla `@import` para referenciar un fichero CSS externo.
+En la plantilla del componente se puede usar `<link>` para referenciar un fichero CSS externo. Además, dentro del CSS se puede utilizar la regla `@import` para referenciar un fichero CSS externo.
 
 Estos ficheros externos son tratados por Angular como **estilos externos**, por lo que no se ven afectos por el ámbito de aplicación de los estilos.
 
@@ -629,11 +633,11 @@ Cuando se genera una aplicación Angular con Angular CLI, el archivo `app.compon
 
 ### [Text interpolation](https://angular.dev/guide/templates/interpolation)
 
-La interpolación en Angular permite insertar valores y expresiones directamente en el HTML usando las llaves dobles `{{ }}` como delimitadores. Esto significa que se pueden incluir variables, realizar cálculos, e incluso llamar a métodos del componente.
+La **interpolación** en Angular permite insertar valores y expresiones directamente en el HTML usando las llaves dobles `{{ }}` como delimitadores. Esto significa que se pueden incluir variables, realizar cálculos, e incluso llamar a métodos del componente.
 
 Por ejemplo:
 
-- Se puede mostrar el resultado de una expresión matemática, como `{{ a + b }}`, donde a y b son variables definidas en el componente.
+- Se puede mostrar el resultado de una expresión matemática, como `{{ a + b }}`, donde 'a' y 'b' son variables definidas en el componente.
 
 - También se puede invocar métodos del componente para mostrar el valor que devuelven, como `{{ getVal() }}`, donde _'getVal'_ es un método del componente que retorna un valor.
 
@@ -643,6 +647,7 @@ Esto permite construir plantillas dinámicas que reflejan los datos y la lógica
 import {Component} from '@angular/core';
 import {NgFor} from '@angular/common';
 import {CUSTOMERS} from './customers';
+
 @Component({
   standalone: true,
   selector: 'app-root',
@@ -696,7 +701,7 @@ En Angular, las expresiones dentro de `{{ }}` se evalúan en el contexto del com
 
 ### [Template statements](https://angular.dev/guide/templates/template-statements)
 
-Las declaraciones de plantilla o **_'template statements'_** son métodos o propiedades que se pueden utilizar en el HTML para responder a los eventos del usuario:
+Las declaraciones de plantilla (**_"template statements"_**) son métodos o propiedades que se pueden utilizar en el HTML para responder a los eventos del usuario:
 
 ```html
 <button type="button" (click)="deleteHero()">Delete hero</button>
@@ -704,7 +709,7 @@ Las declaraciones de plantilla o **_'template statements'_** son métodos o prop
 
 Cuando el usuario pulsa en el botón _'Delete hero'_, Angular llama al método `deleteHero()`.
 
-Al igual que la interpolación de texto, los _'template statements'_ utilizan un lenguaje que parece JavaScript. Sin embargo, hay algunas diferencias con la interpolación de texto. Concretamente, los _'template statements'_ soportan el uso de la asignación mediante el signo igual `=` y el encadenado de expresiones con el uso de semicolons `;`:
+Al igual que la interpolación de texto, estas declaraciones utilizan un lenguaje que parece JavaScript. Sin embargo, hay algunas diferencias con la interpolación de texto. Concretamente, las declaraciones de plantilla soportan el uso de la asignación mediante el signo igual `=` y el encadenado de expresiones con el uso de semicolons `';'`:
 
 ```html
 <button (click)="mostrarMensaje(); contarClicks()">Haz clic</button>
@@ -740,9 +745,9 @@ El contexto de la declaración también puede hacer referencia a propiedades del
 
 ### [Property binding](https://angular.dev/guide/templates/property-binding)
 
-La vinculación de propiedades o **_'property binding'_** en Angular permite establecer valores para las propiedades de elementos o directivas HTML.
+La vinculación de propiedades (**_"property binding"_**) en Angular permite establecer valores para las propiedades de elementos o directivas HTML.
 
-Este _'property binding'_ mueve el valor en una dirección, desde la propiedad de un **componente** a la propiedad del elemento de destino en el **HTML**.
+Esta vinculación mueve el valor en una dirección, desde la propiedad de un **componente** a la propiedad del elemento de destino en el **HTML**.
 
 ```typescript
 @Component({
@@ -753,13 +758,13 @@ export class ExampleBindingComponent {
 }
 ```
 
-Para vincular la propiedad, se encierra el nombre de la propiedad entre corchetes `[]`. Si no se encierra entre corchetes, Angular interpreta la cadena de forma literal.
+Para **vincular la propiedad**, se encierra el nombre de la propiedad entre corchetes `'[ ]'`. Si no se encierra entre corchetes, Angular interpreta la cadena de forma literal.
 
 ```html
 <img alt="item" [src]="itemImageUrl">
 ```
 
-Para **desactivar** un botón por ejemplo, se puede vincular la propiedad `disabled` del DOM con un booleano en la clase:
+Para desactivar un botón por ejemplo, se puede vincular la propiedad `disabled` del DOM con un booleano en la clase:
 
 ```typescript
 @Component({
@@ -775,7 +780,7 @@ export class ExampleBindingComponent {
 <button type="button" [disabled]="isUnchanged">Disabled Button</button>
 ```
 
-A menudo se puede elegir entre interpolación o _'property binding'_. Los siguientes ejemplos son equivalentes:
+A menudo **se puede elegir entre interpolación o _"property binding"_**. Los siguientes ejemplos son equivalentes:
 
 ```html
 <p><img src="{{itemImageUrl}}"> is the <i>interpolated</i> image.</p>
@@ -787,7 +792,7 @@ A menudo se puede elegir entre interpolación o _'property binding'_. Los siguie
 
 ### [Attribute binding](https://angular.dev/guide/templates/attribute-binding)
 
-La vinculación de atributos o _'attribute binding'_ en Angular permite establecer valores para los atributos directamente.
+La vinculación de atributos (**_"attribute binding"_**) en Angular permite establecer valores para los atributos directamente.
 
 La sintaxis de vinculación de atributos se parece a la vinculación de propiedades, pero en lugar de una propiedad de elemento entre corchetes, se antepone el nombre del atributo con el prefijo `attr`, seguido de un punto. Luego, se establece el valor del atributo con una expresión que se resuelve en una cadena:
 
@@ -930,7 +935,7 @@ export class NavBarComponent {
 
 ### [Event binding](https://angular.dev/guide/templates/event-binding)
 
-La vinculación de eventos o **_'event binding'_** permite escuchar y responder a las acciones del usuario, como pulsaciones de teclas, movimientos del mouse, clics y toques.
+La vinculación de eventos (**_"event binding"_**) permite escuchar y responder a las acciones del usuario, como pulsaciones de teclas, movimientos del mouse, clics y toques.
 
 Para vincularse a un evento, se utiliza la sintaxis de vinculación de eventos Angular:
 
@@ -938,7 +943,7 @@ Para vincularse a un evento, se utiliza la sintaxis de vinculación de eventos A
 <button (click)="onSave()">Save</button>
 ```
 
-La vinculación de eventos "escucha" los eventos de 'click' en el botón e invoca el método `onSave()` del componente cuando este evento se produce.
+La vinculación de eventos "escucha" los eventos de `click` en el botón e invoca el método `onSave()` del componente cuando este evento se produce.
 
 También se pueden realizar vinculaciones de eventos de teclado usando la sintaxis de Angular:
 
@@ -950,11 +955,11 @@ Los campos `key` y `code` son una parte nativa del objeto de evento del teclado 
 
 ### [Two-way binding](https://angular.dev/guide/templates/two-way-binding)
 
-El enlace bidireccional o **_'two-way binding'_** brinda a los componentes de una aplicación una forma de compartir datos. Se utiliza el enlace bidireccional para escuchar eventos y actualizar valores simultáneamente entre los componentes principal y secundario.
+El enlace bidireccional (**_"two-way binding"_**) brinda a los componentes de una aplicación una forma de compartir datos. Se utiliza el enlace bidireccional para escuchar eventos y actualizar valores simultáneamente entre los componentes principal y secundario.
 
-Este tipo de vinculación combina el [_'property binding'_](#property-binding) con el [_'event binding'_](#event-binding).
+Este tipo de vinculación combina el [_"property binding"_](#property-binding) con el [_"event binding"_](#event-binding).
 
-Por tanto la sintaxis del _'two-way binding'_ es una mezcla de ambas sintaxis:
+Por tanto la sintaxis del _"two-way binding"_ es una mezcla de ambas sintaxis:
 
 ```html
 <app-sizer [(size)]="fontSizePx"></app-sizer>
@@ -966,7 +971,7 @@ En los formularios, se utiliza la directiva `ngModel`.
 
 Las plantillas en Angular admiten bloques de flujo de control que le permiten mostrar, ocultar y repetir elementos condicionalmente.
 
-Esta característica se introdujo en Angular en la **v.17** como experimental y en la **v.18** se convirtió en estable. En versiones previas se utilizan directivas estructurales como **NgIf**, **NgFor** o **NgSwitch**.
+Esta característica se introdujo en Angular en la **v.17** como experimental y en la **v.18** se convirtió en estable. En versiones previas se utilizan directivas estructurales como [**NgIf**](#using-ngif), [**NgFor**](#using-ngfor) o [**NgSwitch**](#using-ngswitch).
 
 #### Bloques condicionales
 
@@ -1003,7 +1008,7 @@ El bloque `@if` puede tener uno o más bloques `@else` asociados. Inmediatamente
 }
 ```
 
-El nuevo condicional @if incorporado admite la referencia de resultados de expresiones para mantener una solución para patrones de codificación comunes:
+El nuevo condicional `@if` incorporado admite la referencia de resultados de expresiones para mantener una solución para patrones de codificación comunes:
 
 ```typescript
 // El resultado del pipe 
@@ -1101,7 +1106,7 @@ La sintaxis de `@switch` es muy similar a `@if` y está inspirada en la declarac
 }
 ```
 
-El valor de la expresión condicional se compara con la expresión de caso utilizando el operador '==='.
+El valor de la expresión condicional se compara con la expresión de caso utilizando el operador `===`.
 
 `@switch` no tiene falla, por lo que no necesita un equivalente a una declaración de `break` o `return`.
 
@@ -1109,11 +1114,11 @@ El bloque `@default` es opcional y puede ser omitido. Si ningún bloque `@case` 
 
 ### [Pipes](https://angular.dev/guide/pipes)
 
-Las **_'pipes'_** se utilizan para transformar cadenas, importes de moneda, fechas y otros datos para su visualización.
+Las **_"pipes"_** se utilizan para transformar cadenas, importes de moneda, fechas y otros datos para su visualización.
 
-Las _'pipes'_ son funciones simples de usar en plantillas que aceptan un valor de entrada y devuelven un valor transformado. Son útiles porque se pueden utilizar en toda la aplicación, declarando cada _'pipe'_ sólo una vez.
+Estas _"pipes"_ son funciones simples de usar en plantillas que aceptan un valor de entrada y devuelven un valor transformado. Son útiles porque se pueden utilizar en toda la aplicación, declarando cada _"pipe"_ sólo una vez.
 
-Angular provee de una serie de _'pipes'_ para transformaciones típicas:
+Angular provee de una serie de _"pipes"_ para transformaciones típicas:
 
 - [DatePipe](https://angular.dev/api/common/DatePipe)
 
@@ -1131,11 +1136,12 @@ Angular provee de una serie de _'pipes'_ para transformaciones típicas:
 
 - [JsonPipe](https://angular.dev/api/common/JsonPipe)
 
-Para usar una _'pipe'_ hay que usar el operador `|` tal y como se muestra en el ejemplo. Además, se tiene que importar del paquete `@angular/common`:
+Para usar una _"pipe"_ hay que usar el operador `|` tal y como se muestra en el ejemplo. Además, se tiene que importar del paquete `@angular/common`:
 
 ```typescript
 import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
+
 @Component({
   standalone: true,
   template: `
@@ -1148,19 +1154,19 @@ export class AppComponent {
 }
 ```
 
-Las _'pipes'_ pueden tomar parámetros adicionales que permitan configurar la transformación. Estos parámetros pueden ser **obligatorios** u **opcionales**:
+Las _"pipes"_ pueden tomar parámetros adicionales que permitan configurar la transformación. Estos parámetros pueden ser **obligatorios** u **opcionales**:
 
 ```html
 <p>The hero's birthday is in {{ birthday | date:'yyyy' }}</p>
 ```
 
-Algunas _'pipes'_ pueden tomar múltiples parámetros. Para ello se utiliza el operador `:`:
+Algunas _"pipes"_ pueden tomar múltiples parámetros. Para ello se utiliza el operador `':'`:
 
 ```html
 <p>The current time is: {{ currentTime | date:'hh:mm':'UTC' }}</p>
 ```
 
-Por último, las _'pipes'_ se pueden **encadenar** de forma que la salida de la _'pipe'_ anterior es la entrada de la siguiente:
+Por último, las _"pipes"_ se pueden **encadenar** de forma que la salida de la _"pipe"_ anterior es la entrada de la siguiente:
 
 ```html
 <p>The hero's birthday is {{ birthday | date }}</p>
@@ -1204,27 +1210,27 @@ Si la variable especifica un nombre en el lado derecho, como `#var="ngModel"`, l
 
 Las variables de plantilla **solo están disponibles en el contexto en el que se definen**. No se puede acceder a ellas fuera de su alcance (por ejemplo, en otros componentes o en la lógica del componente TypeScript).
 
-## [Directives](https://angular.dev/guide/directives)
+## Directives
 
-Las directivas son clases que agregan comportamiento adicional a los elementos de una aplicación Angular.
+Las [directivas](https://angular.dev/guide/directives) son clases que agregan **comportamiento adicional** a los elementos de una aplicación Angular.
 
 Angular dispone de tres tipos de directivas:
 
-- **_Components_**: los componentes en Angular son una forma especial de directiva con una plantilla asociada.
+- **_"Components"_**: los componentes en Angular son una forma especial de directiva con una plantilla asociada.
 
-- **_Attributes directives_**: cambiar la apariencia o el comportamiento de un elemento, componente u otra directiva.
+- **_"Attributes directives"_**: cambiar la apariencia o el comportamiento de un elemento, componente u otra directiva.
 
-- **_Structural directives_**: cambiar el diseño DOM agregando y eliminando elementos DOM.
+- **_"Structural directives"_**: cambiar el diseño DOM agregando y eliminando elementos DOM.
 
-### [Built-in attribute directives](https://angular.dev/guide/directives#built-in-attribute-directives)
+### Built-in attribute directives
 
-Las directivas de atributos más comunes son **NgClass**, **NgStyle** y **NgModel**.
+Las directivas de atributos más comunes son [**NgClass**](#ngclass), [**NgStyle**](#ngstyle) y [**NgModel**](#ngmodel).
 
-#### [NgClass](https://angular.dev/guide/directives#adding-and-removing-classes-with-ngclass)
+#### NgClass
 
-Con `NgClass` se pueden añadir o eliminar **múltiples clases CSS** de forma simultánea. Para añadir o eliminar una única clase CSS es mejor utilizar el _'class binding'_.
+Con [la directiva `NgClass`](https://angular.dev/guide/directives#adding-and-removing-classes-with-ngclass) se pueden añadir o eliminar **múltiples clases CSS** de forma simultánea. Para añadir o eliminar una única clase CSS es mejor utilizar el [_"class binding"_](#class-and-style-binding).
 
-En el siguiente ejemplo se muestra el uso de `NgClass` y un _'class binding'_ para una única clase CSS:
+En el siguiente ejemplo se muestra el uso de `NgClass` y un _"class binding"_ para una única clase CSS:
 
 ```typescript
 import { Component } from '@angular/core';
@@ -1257,9 +1263,9 @@ export class MoonComponent {
 }
 ```
 
-#### [NgStyle](https://angular.dev/guide/directives#setting-inline-styles-with-ngstyle)
+#### NgStyle
 
-Con `NgStyle` se pueden aplicar estilos inline a un elemento:
+Con [la directiva `NgStyle`](https://angular.dev/guide/directives#setting-inline-styles-with-ngstyle) se pueden aplicar estilos _inline_ a un elemento:
 
 ```typescript
 import { Component } from '@angular/core';
@@ -1290,9 +1296,9 @@ export class MarsComponent {
 }
 ```
 
-#### [NgModel](https://angular.dev/guide/directives#displaying-and-updating-properties-with-ngmodel)
+#### NgModel
 
-Utilice la directiva `NgModel` para mostrar una propiedad de datos y actualizar esa propiedad cuando el usuario realice cambios:
+Utilice [la directiva `NgModel`](https://angular.dev/guide/directives#displaying-and-updating-properties-with-ngmodel) para mostrar una propiedad de datos y actualizar esa propiedad cuando el usuario realice cambios:
 
 ```typescript
 import { Component } from '@angular/core';
@@ -1313,19 +1319,19 @@ export class VenusComponent {
 }
 ```
 
-Para personalizar su configuración, escriba el formulario ampliado, que separa el enlace de propiedad y evento. Utilice el enlace de propiedad para establecer el enlace de propiedad y evento para responder a los cambios:
+Para personalizar su configuración, escriba el formulario ampliado, que separa el [enlace de propiedad](#property-binding) para establecer el valor y [evento](#event-binding) para responder a los cambios:
 
 ```html
 <input [ngModel]="currentItem.name" (ngModelChange)="setUppercaseName($event)" id="example-uppercase">
 ```
 
-### [Structural directives](https://angular.dev/guide/directives#built-in-structural-directives)
+### Structural directives
 
-Las directivas estructurales son responsables del diseño HTML. Dan forma o remodelan la estructura del DOM, generalmente agregando, eliminando y manipulando los elementos host a los que están adjuntos.
+Las [directivas estructurales](https://angular.dev/guide/directives#built-in-structural-directives) son responsables del **diseño HTML**. Dan forma o remodelan la estructura del DOM, generalmente agregando, eliminando y manipulando los elementos _host_ a los que están adjuntos.
 
-#### [Using NgIf](https://angular.dev/guide/directives#using-ngif)
+#### Using NgIf
 
-Para agregar o eliminar un elemento, vincule `*ngIf` a una expresión de condición, es decir, que se evalúe a verdadero o falso:
+Para agregar o eliminar un elemento, vincule la [directiva `NgIf`](https://angular.dev/guide/directives#using-ngif) a una expresión de condición, es decir, que se evalúe a verdadero o falso:
 
 ```typescript
 import { Component } from '@angular/core';
@@ -1355,11 +1361,11 @@ Si se aplica a un componente, cuando la expresión es verdadera, Angular añade 
 <app-item-detail *ngIf="isActive" [item]="item"></app-item-detail>
 ```
 
-De forma predeterminada, la directiva `NgIf` impide la visualización de un elemento vinculado a un valor nulo.
+De forma predeterminada, la directiva `NgIf` impide la visualización de un elemento vinculado a un **valor nulo**.
 
-### [Using NgFor](https://angular.dev/guide/directives#using-ngfor)
+#### Using NgFor
 
-la directiva `*ngFor` en Angular se utiliza para iterar sobre elementos en una colección, como un array o una lista, y renderizar dinámicamente elementos HTML basados en cada elemento de la colección:
+La [directiva `NgFor`](https://angular.dev/guide/directives#using-ngfor) en Angular se utiliza para **iterar sobre elementos en una colección**, como un array o una lista, y renderizar dinámicamente elementos HTML basados en cada elemento de la colección:
 
 ```typescript
 import { Component } from '@angular/core';
@@ -1389,9 +1395,9 @@ Para repetir un elemento componente, aplique `*ngFor` al selector:
 <app-item-detail *ngFor="let item of items" [item]="item"></app-item-detail>
 ```
 
-### [Using NgSwitch](https://angular.dev/guide/directives#using-ngswitch)
+#### Using NgSwitch
 
-La directiva `NgSwitch` muestra un elemento entre varios elementos posibles, según una condición de cambio. Angular coloca solo el elemento seleccionado en el DOM.
+La [directiva `NgSwitch`](https://angular.dev/guide/directives#using-ngswitch) muestra **un elemento entre varios elementos posibles**, según una condición de cambio. Angular coloca solo el elemento seleccionado en el DOM.
 
 Esta directiva se compone de tres directivas que deberán ser importadas: `NgSwitch`, `NgSwitchCase` and `NgSwitchDefault`.
 
@@ -1406,22 +1412,28 @@ Esta directiva se compone de tres directivas que deberán ser importadas: `NgSwi
 </div>
 ```
 
-### [Hosting a directive without a DOM element](https://angular.dev/guide/directives#hosting-a-directive-without-a-dom-element)
+### Hosting a directive without a DOM element
 
-La directiva de Angular `<ng-container>` es un elemento de agrupación que no interfiere con los estilos o el diseño porque Angular no lo coloca en el DOM.
+La [directiva de Angular `<ng-container>`](https://angular.dev/guide/directives#hosting-a-directive-without-a-dom-element) es un elemento de agrupación que no interfiere con los estilos o el diseño porque Angular no lo añade en el DOM.
 
-Es decir, `<ng-container>` es útil cuando se necesita aplicar directivas estructurales (`*ngIf`, `*ngFor`) a múltiples elementos sin introducir un nodo extra en el DOM final.
+Es decir, `<ng-container>` es útil cuando se necesita aplicar directivas estructurales (`NgIf`, `NgFor`) a múltiples elementos sin introducir un nodo extra en el DOM final.
 
-No se renderiza en el DOM final, por lo que es una herramienta poderosa para controlar la estructura del HTML sin afectar el renderizado.
-
-Por ejemplo, con la directiva `ngIf`. Se condiciona la renderización del mensaje sin agregar elementos HTML adicionales al DOM final según la propiedad booleana:
+Por ejemplo, en el caso de la directiva `NgIf`, si queremos condicionar varias `<p>` con la misma variable, podríamos envolverlas con un `<div>` para no repetir `NgIf` en cada una de ellas:
 
 ```html
-<div>
-  <ng-container *ngIf="showMessage">
-    <p>This is a conditional message.</p>
-  </ng-container>
+<div *ngIf="showMessage">
+  <p>This is the first message.</p>
+  <p>This is the second message.</p>
 </div>
+```
+
+Sin embargo, esta solución introduce un `<div>` innecesario en el DOM. Usando `<ng-container>` podemos agrupar estos elementos sin agregar etiquetas extra al DOM:
+
+```html
+<ng-container *ngIf="showMessage">
+  <p>This is a conditional message.</p>
+  <p>This is the second message.</p>
+</ng-container>
 ```
 
 Otro ejemplo con la directiva `*ngFor`:
@@ -1436,23 +1448,25 @@ Otro ejemplo con la directiva `*ngFor`:
 </ul>
 ```
 
-## [Dependency injection in Angular](https://angular.dev/guide/di)
+Aquí, iteramos sobre una lista de números y solo mostramos los pares, sin agregar un contenedor innecesario alrededor de los `<li>`.
 
-Cuando se desarrolla una parte más pequeña del sistema, como un módulo o una clase, puede ser necesario utilizar funcionalidades de otras clases. Por ejemplo, es posible que se necesite un servicio HTTP para realizar llamadas al backend. La **inyección de dependencias**, o DI, es un patrón de diseño y un mecanismo para crear y proporcionar algunas partes de una aplicación a otras partes que las necesiten. Angular soporta este patrón de diseño y se puede utilizar en las aplicaciones para aumentar la flexibilidad y la modularidad.
+## Dependency injection in Angular
+
+Cuando se desarrolla una parte más pequeña del sistema, como un módulo o una clase, puede ser necesario utilizar funcionalidades de otras clases. Por ejemplo, es posible que se necesite un servicio HTTP para realizar llamadas al backend. La [**inyección de dependencias (DI)**](https://angular.dev/guide/di), es un patrón de diseño y un mecanismo para crear y proporcionar algunas partes de una aplicación a otras partes que las necesiten. Angular soporta este patrón de diseño y se puede utilizar en las aplicaciones para aumentar la flexibilidad y la modularidad.
 
 En Angular, las dependencias suelen ser **servicios**, aunque también pueden ser valores como cadenas o funciones. Un inyector para una aplicación (creado automáticamente durante el arranque) instancia las dependencias cuando son necesarias, utilizando un proveedor configurado del servicio o valor.
 
-### [Understanding dependency injection](https://angular.dev/guide/di/dependency-injection)
+### Understanding dependency injection
 
-La inyección de dependencias, o DI, es uno de los conceptos fundamentales en Angular. La DI está integrada en el marco de Angular y permite a las clases con decoradores de Angular, como **Componentes**, **Directivas**, **Pipes** e **Inyectables**, configurar las dependencias que necesitan.
+La inyección de dependencias (DI), es uno de los conceptos fundamentales en Angular. La DI está integrada en el marco de Angular y permite a las clases con decoradores de Angular, como **Componentes**, **Directivas**, **Pipes** e **Inyectables**, configurar las dependencias que necesitan.
 
 En el sistema de DI existen dos roles principales: el **consumidor** de dependencias y el **proveedor** de dependencias.
 
 Angular facilita la interacción entre los consumidores de dependencias y los proveedores de dependencias utilizando una abstracción llamada _"Injector"_. Cuando se solicita una dependencia, el injector verifica su registro para ver si ya hay una instancia disponible allí. Si no la hay, se crea una nueva instancia y se almacena en el registro.
 
-Angular crea un injector de aplicación a nivel global (también conocido como "root" injector) durante el proceso de inicio de la aplicación. En la mayoría de los casos, no es necesario crear manualmente injectores, pero es importante saber que existe una capa que conecta proveedores y consumidores.
+Angular crea un injector de aplicación a nivel global (también conocido como _"root injector"_) durante el proceso de inicio de la aplicación. En la mayoría de los casos, no es necesario crear manualmente injectores, pero es importante saber que existe una capa que conecta proveedores y consumidores.
 
-#### [Providing a dependency](https://angular.dev/guide/di/dependency-injection#providing-a-dependency)
+#### Providing a dependency
 
 El primer paso es agregar el decorador `@Injectable` para mostrar que la clase se puede inyectar.
 
@@ -1490,7 +1504,7 @@ Cuando se registra un proveedor a nivel de componente, se obtiene una nueva inst
 
 El inconveniente de esta forma es que declarar un servicio de esta manera hace que siempre esté incluido en la aplicación, incluso si el servicio no se utiliza.
 
-#### [Injecting/consuming a dependency](https://angular.dev/guide/di/dependency-injection#injecting-consuming-a-dependency)
+#### Injecting/consuming a dependency
 
 La forma más común de inyectar una dependencia es declararla en el constructor de una clase. Cuando Angular crea una nueva instancia de una clase de componente, directiva o _pipe_, determina qué servicios u otras dependencias necesita esa clase observando los tipos de parámetros del constructor.
 
@@ -1512,9 +1526,9 @@ class HeroListComponent {
 }
 ```
 
-## [Signals](https://angular.dev/guide/signals)
+## Signals
 
-Las _"Signals"_ en Angular es un sistema que rastrea de forma granular cómo y dónde se usa su estado en una aplicación, lo que permite que el framework optimice las actualizaciones de renderizado.
+Las [_"Signals"_](https://angular.dev/guide/signals) en Angular es un sistema que rastrea de forma granular cómo y dónde se usa su estado en una aplicación, lo que permite que el framework optimice las actualizaciones de renderizado.
 
 Una señal es un envoltorio o _"wrapper"_ alrededor de un valor que **notifica a los consumidores interesados ​​cuando ese valor cambia**. Las señales pueden contener cualquier valor, desde primitivos hasta estructuras de datos complejas.
 
@@ -1522,9 +1536,9 @@ El valor de una señal se lee llamando a su función _"getter"_, que permite a A
 
 Las señales pueden ser de escritura (_"writable"_) o de sólo lectura (_"read-only"_).
 
-### [Writable signals](https://angular.dev/guide/signals#writable-signals)
+### Writable signals
 
-Estas señales proporcionan una API para actualizar sus valores directamente. Para crear una señal modificable o  _"writable signal"_ se llama a la función con el valor inicial de la señal:
+Estas señales proporcionan una API para actualizar sus valores directamente. Para crear una [señal modificable (_"writable signal"_)](https://angular.dev/guide/signals#writable-signals) se llama a la función con el valor inicial de la señal:
 
 ```typescript
 const count = signal(0);
@@ -1532,7 +1546,7 @@ const count = signal(0);
 console.log('The count is: ' + count());
 ```
 
-Para modificar el valor de la _"writable signal"_, se hace con la función `.set()`:
+Para modificar el valor, se utiliza la función `.set()`:
 
 ```typescript
 count.set(3);
@@ -1545,26 +1559,26 @@ O para tener en cuenta el valor anterior de la señal, se utiliza la función `.
 count.update(value => value + 1);
 ```
 
-### [Computed Signals](https://angular.dev/guide/signals#computed-signals)
+### Computed Signals
 
-Las señales calculadas o _"computed signals"_ son señales de solo lectura que derivan su valor de otras señales. Las señales calculadas se definen utilizando la función `computed`:
+Las [señales calculadas (_"computed signals"_)](https://angular.dev/guide/signals#computed-signals) son señales de solo lectura que derivan su valor de otras señales. Las señales calculadas se definen utilizando la función `computed()`:
 
 ```typescript
 const count: WritableSignal<number> = signal(0);
 const doubleCount: Signal<number> = computed(() => count() * 2);
 ```
 
-La señal `doubleCount` depende de la señal `count`. Cada vez que se actualiza `count`, Angular sabe que `doubleCount` también debe actualizarse.
+En el ejemplo, la señal `doubleCount` depende de la señal `count`. Cada vez que se actualiza `count`, Angular sabe que `doubleCount` también debe actualizarse.
 
-Las señales calculadas no son señales modificables, es decir, no se puede modificar su valor directamente. Un intento de modificar una señal calculada produce un **error de compilación**:
+Las señales calculadas **no son señales modificables**, es decir, no se puede modificar su valor directamente. Un intento de modificar una señal calculada produce un **error de compilación**:
 
 ```typescript
-doubleCount.set(3);
+doubleCount.set(3); // Error de compilación
 ```
 
-### [Effects](https://angular.dev/guide/signals#effects)
+### Effects
 
-Las señales son útiles porque notifican a los consumidores interesados ​​cuando cambian. Un _"effect"_ es una operación que se ejecuta cada vez que uno o más valores de señal cambian. Se puedes crear un _"effect"_ con la función correspondiente:
+Las señales son útiles porque notifican a los consumidores interesados ​​cuando cambian. Un [_"effect"_](https://angular.dev/guide/signals#effects) es una operación que se ejecuta cada vez que uno o más valores de señal cambian. Se puede crear un _"effect"_ con la función correspondiente:
 
 ```typescript
 effect(() => {
@@ -1576,9 +1590,9 @@ Los _"effect"_ siempre se ejecutan **al menos una vez**. Cuando se ejecuta, rast
 
 Los _"effect"_ siempre se ejecutan de **forma asincrónica**, durante el proceso de detección de cambios.
 
-De forma predeterminada, solo puedes crear un `effect()` dentro de un contexto de inyección (donde se tiene acceso a la función de inyección). La forma más sencilla de satisfacer este requisito es dentro de un componente, directiva o constructor de servicios.
+De forma predeterminada, solo se puede crear un `effect()` dentro de un contexto de inyección (donde se tiene acceso a la función de inyección). La forma más sencilla de satisfacer este requisito es dentro de un componente, directiva o constructor de servicios.
 
-En este ejemplo, se utiliza un _"effect"_ para suscribirse a una señal desde otro componte. Cómo nexo de unión se utiliza un servicio entre ambos componentes:
+En este ejemplo, se utiliza un _"effect"_ para suscribirse a una señal desde otro componente. Cómo nexo de unión se utiliza un servicio entre ambos componentes:
 
 ```typescript
 import { Injectable } from '@angular/core';
@@ -1644,11 +1658,11 @@ export class LoggerComponent {
 }
 ```
 
-Cuando crea un _"effect"_, **se destruye automáticamente cuando se destruye el contexto que lo contiene**. Esto significa que los efectos creados dentro de los componentes se destruyen cuando se destruye el componente. Lo mismo ocurre con los efectos dentro de directivas, servicios, etcétera...
+Un _"effect"_ **se destruye automáticamente cuando se destruye el contexto que lo contiene**. Esto significa que los efectos creados dentro de los componentes se destruyen cuando se destruye el componente. Lo mismo ocurre con los efectos dentro de directivas, servicios, etcétera...
 
-## [Routing](https://angular.dev/guide/routing)
+## Routing
 
-El enrutamiento ayuda a cambiar lo que ve el usuario en **una aplicación de una sola página**.
+El [enrutamiento](https://angular.dev/guide/routing) ayuda a cambiar lo que ve el usuario en **una aplicación de una sola página**.
 
 En una aplicación de una sola página, se cambia lo que ve el usuario mostrando u ocultando partes de la pantalla que corresponden a componentes particulares, en lugar de ir al servidor para obtener una nueva página.
 
@@ -1656,11 +1670,11 @@ A medida que los usuarios realizan tareas en la aplicación, deben poder moverse
 
 Para manejar la navegación de una vista a la siguiente, se utiliza el `Router` en Angular. El enrutador permite la navegación interpretando la URL del navegador como una instrucción para cambiar la vista.
 
-### [Defining a basic route](https://angular.dev/guide/routing/common-router-tasks#defining-a-basic-route)
+### Defining a basic route
 
 Para utilizar el enrutador Angular, una aplicación debe tener al menos **dos componentes** para poder navegar de uno a otro.
 
-Los componentes que se vayan a utilizar en el enrutador, se agregan al fichero `app.routes.ts` y al array `Routes[]`. Si se ha utilizado la CLI de Angular, este fichero ya estará creado y también se habrá generado un array `Routes[]` vacío:
+Los componentes que se vayan a utilizar en el enrutador, se agregan al fichero `app.routes.ts` y al array `Routes[]`. Si se ha utilizado la herramienta de línea de comandos de Angular, este fichero ya estará creado y también se habrá generado un array `Routes[]` vacío:
 
 ```typescript
 import { Routes } from '@angular/router';
@@ -1673,7 +1687,7 @@ export const routes: Routes = [
 ];
 ```
 
-El enrutador y las rutas se deben importar en `app.config.ts`. Las rutas deben añadirse en la función `provideRouter()` y a su vez esta función añadirse a `providers[...]`. Sin emargo, si se ha utilizado la CLI de Angular para generar la aplicación, por defecto ya se habrá creado este fichero y se habrá configurado con el enrutador y las rutas:
+El enrutador y las rutas se deben importar en `app.config.ts`. Las rutas deben añadirse en la función `provideRouter()` y a su vez esta función añadirse a `providers[...]`. Sin embargo, si se ha utilizado la CLI de Angular para generar la aplicación, por defecto ya se habrá creado este fichero y se habrá configurado con el enrutador y las rutas:
 
 ```typescript
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
@@ -1739,11 +1753,11 @@ const routes: Routes = [
 ];
 ```
 
-### [Getting route information](https://angular.dev/guide/routing/common-router-tasks#getting-route-information)
+### Getting route information
 
-A menudo, cuando un usuario navega por la aplicación, desea pasar información de un componente a otro. Por ejemplo, desde una lista de elementos cuando se accede a la edición o al detalle de un elemento concreto. En esa página de detalle se necesita saber que elemento (mediante un id, por ejemplo) ha seleccionado el usuario.
+A menudo, cuando un usuario navega por la aplicación, desea [pasar información](https://angular.dev/guide/routing/common-router-tasks#getting-route-information) de un componente a otro. Por ejemplo, desde una lista de elementos cuando se accede a la edición o al detalle de un elemento concreto. En esa página de detalle se necesita saber que elemento (mediante un 'id', por ejemplo) ha seleccionado el usuario.
 
-Se agrega la característica `withComponentInputBinding` a la función `provideRouter():
+Se agrega la característica `withComponentInputBinding` a la función `provideRouter()`:
 
 ```typescript
 providers: [
@@ -1782,7 +1796,7 @@ export const routes: Routes = [
 ];
 ```
 
-Por último, se añade el parámetro al `routerLink`, por interpolación por ejemplo o por cualquier otro sistema.
+Por último, se añade el parámetro al `routerLink` por interpolación por ejemplo o por cualquier otro sistema.
 
 ```html
 <nav>
@@ -1793,11 +1807,11 @@ Por último, se añade el parámetro al `routerLink`, por interpolación por eje
 </nav>
 ```
 
-### [Setting up wildcard routes](https://angular.dev/guide/routing/common-router-tasks#setting-up-wildcard-routes)
+### Setting up wildcard routes
 
 Una aplicación que funcione bien debería manejar todos los escenarios, como por ejemplo cuando los usuarios intentan navegar a una parte de la aplicación que no existe.
 
-Para agregar esta funcionalidad a la aplicación, se configura una **ruta comodín**. El enrutador Angular selecciona esta ruta cada vez que la URL solicitada no coincide con ninguna ruta del enrutador.
+Para agregar esta funcionalidad a la aplicación, se configura una [**ruta comodín**](https://angular.dev/guide/routing/common-router-tasks#setting-up-wildcard-routes). El enrutador Angular selecciona esta ruta cada vez que la URL solicitada no coincide con ninguna ruta del enrutador.
 
 ```typescript
 const routes: Routes = [
@@ -1812,13 +1826,13 @@ Los dos asteriscos, `**`, indican a Angular que esta definición de ruta es una 
 
 Para la propiedad del componente, se puede definir cualquier componente en la aplicación. Las opciones comunes incluyen un componente específico de la aplicación, cuyo objetivo sea mostrar **una página 404** a los usuarios; o una **redirección al componente principal** de su aplicación.
 
-### [Setting up redirects](https://angular.dev/guide/routing/common-router-tasks#setting-up-redirects)
+### Setting up redirects
 
-En Angular, el concepto de redirección se utiliza para redirigir automáticamente a una ruta diferente cuando se accede a una ruta específica. Para ello se utiliza `redirectTo` para indicar la redirección y `pathMatch: 'full'` para indicar que la ruta debe coincidir exactamente con el camino especificado o `pathMatch: 'prefix'` cuando cualquier prefijo del camino puede coincidir.
+En Angular, el concepto de [redirección](https://angular.dev/guide/routing/common-router-tasks#setting-up-redirects) se utiliza para redirigir automáticamente a una ruta diferente cuando se accede a una ruta específica. Para ello se utiliza `redirectTo` para indicar la redirección y `pathMatch: 'full'` para indicar que la ruta debe coincidir exactamente con el camino especificado o `pathMatch: 'prefix'` cuando cualquier prefijo del camino puede coincidir.
 
-La redirección puede ser útil en varios escenarios.
+La redirección puede ser útil en varios escenarios:
 
-- Cuando los usuarios acceden a la raíz de la aplicación (/), pueden ser redirigidos a una ruta predeterminada, como una página de inicio o un dashboard.
+- Cuando los usuarios acceden a la raíz de la aplicación (`/`), pueden ser redirigidos a una ruta predeterminada, como una página de inicio o un dashboard.
 
 ```typescript
 const routes: Routes = [
@@ -1844,9 +1858,9 @@ const routes: Routes = [
 ];
 ```
 
-## [Forms in Angular](https://angular.dev/guide/forms)
+## Forms in Angular
 
-Manejar la entrada del usuario con formularios es la piedra angular de muchas aplicaciones comunes.
+La [gestión de formularios](https://angular.dev/guide/forms) es esencial para procesar la entrada del usuario en la mayoría de las aplicaciones.
 
 Angular proporciona dos enfoques diferentes para manejar la entrada del usuario a través de formularios: **reactivo** y **basado en plantillas**. Ambos capturan eventos de entrada del usuario desde la vista, validan la entrada del usuario, crean un modelo de formulario y un modelo de datos para actualizar y proporcionan una forma de realizar un seguimiento de los cambios.
 
