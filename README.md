@@ -279,7 +279,7 @@ Dentro de la carpeta `src/app/` se ubican la lógica y los datos de la aplicaci�
 
 - **`app.module.ts`**: define el módulo raíz, llamado `AppModule`, que le dice a Angular cómo ensamblar la aplicación. Inicialmente declara solo el `AppComponent`. A medida que agregue más componentes a la aplicación, deberá declararlos aquí. Sólo se genera cuando se utiliza la opción `--standalone false`.
 
-## [Components](https://angular.dev/guide/components)
+## Components
 
 En el contexto de Angular, un [componente](https://angular.dev/guide/components) es una parte fundamental de la arquitectura de este framework para el desarrollo de aplicaciones web. Angular utiliza una **arquitectura basada en componentes**, lo que significa que la interfaz de usuario se construye mediante la composición de componentes individuales.
 
@@ -327,7 +327,7 @@ Los [componentes](https://angular.dev/cli/generate/component) se generan con:
 
 > `'ng generate component [name] [options]'`
 
-### [Importing and using components](https://angular.dev/guide/components/importing)
+### Importing and using components
 
 Angular dispone de **dos formas** de hacer disponible los componentes:
 
@@ -362,9 +362,9 @@ Para crear un componente **_'standalone'_** se utiliza la opción:
 
 > `'ng generate component [name] --standalone'`.
 
-### [Selectors](https://angular.dev/guide/components/selectors)
+### Selectors
 
-Los selectores se utilizan para **identificar** los componentes en el DOM y son esenciales para el mecanismo de plantillas de Angular.
+Los [selectores](https://angular.dev/guide/components/selectors) se utilizan para **identificar** los componentes en el DOM y son esenciales para el mecanismo de plantillas de Angular.
 
 Un selector en Angular es una **cadena** que especifica el nombre que se usará para insertar un componente en una plantilla. Los selectores son **_"case-sensitive"_**.
 
@@ -447,9 +447,9 @@ export class DropZone { }
 
 Hay que evitar prefijos como `app-` que pueden generar confusión. También hay que evitar el prefijo `ng` ya que es utilizado por Angular.
 
-### [Styling](https://angular.dev/guide/components/styling)
+### Styling
 
-Los componentes pueden incluir estilos CSS que se aplicarán a **todos los elementos** que pueda tener el _'template'_ del componente:
+Los componentes pueden incluir [estilos CSS](https://angular.dev/guide/components/styling) que se aplicarán a **todos los elementos** que pueda tener la plantilla del componente:
 
 ```typescript
 @Component({
@@ -485,9 +485,9 @@ En la plantilla del componente se puede usar `<link>` para referenciar un ficher
 
 Estos ficheros externos son tratados por Angular como **estilos externos**, por lo que no se ven afectos por el ámbito de aplicación de los estilos.
 
-### [Accepting data with input properties](https://angular.dev/guide/components/inputs)
+### Accepting data with input properties
 
-Al crear un componente, se pueden marcar propiedades de clase específicas como **vinculables** agregando el decorador `@Input` en la propiedad:
+Al crear un componente, se pueden marcar [propiedades de clase específicas como vinculables](https://angular.dev/guide/components/inputs) agregando el decorador `@Input` en la propiedad:
 
 ```typescript
 import { Component, Input } from '@angular/core';
@@ -533,9 +533,9 @@ Al extender una clase de componente, los `@Input` definidos en la clase base son
 
 Los nombres utilizados en el decorador `@Input` son _"case-sensitive"_. Por lo tanto, el nombre de la propiedad en el componente debe coincidir exactamente con el nombre utilizado en la plantilla para la vinculación de datos.
 
-#### [Customizing inputs](https://angular.dev/guide/components/inputs#customizing-inputs)
+#### Customizing inputs
 
-El decorador `@Input` acepta un objeto de configuración que permite **modificar su comportamiento**.
+El decorador `@Input` acepta un objeto de [configuración](https://angular.dev/guide/components/inputs#customizing-inputs) que permite **modificar su comportamiento**.
 
 Se puede especificar la opción `'required'` para exigir que una entrada determinada siempre deba tener un valor. Si no se especifica un valor, Angular reporta un error en tiempo de compilación:
 
@@ -571,9 +571,9 @@ function upperCaseString(value: string | undefined) {
 }
 ```
 
-#### [Type checking](https://angular.dev/guide/components/inputs#type-checking)
+#### Type checking
 
-Cuando se especifica una transformación, el tipo de parámetro de la función de transformación determina los tipos de valores que se pueden establecer para la entrada en una plantilla.
+Cuando se especifica una transformación, el [tipo de parámetro](https://angular.dev/guide/components/inputs#type-checking) de la función de transformación determina los tipos de valores que se pueden establecer para la entrada en una plantilla.
 
 Por ejemplo, el decorador `@Input` acepta un `number` mientras que la propiedad de la clase es un `string`:
 
@@ -588,9 +588,9 @@ function appendPx(value: number) {
 }
 ```
 
-#### [Built-in transformations](https://angular.dev/guide/components/inputs#built-in-transformations)
+#### Built-in transformations
 
-Angular incluye dos funciones de transformación integradas para los dos escenarios más comunes: **convertir valores a booleanos y números**:
+Angular incluye [funciones de transformación integradas](https://angular.dev/guide/components/inputs#built-in-transformations) para los dos escenarios más comunes: **convertir valores a booleanos y números**:
 
 ```typescript
 import {Component, Input, booleanAttribute, numberAttribute} from '@angular/core';
@@ -602,9 +602,9 @@ export class CustomSlider {
 }
 ```
 
-#### [Inputs aliases](https://angular.dev/guide/components/inputs#input-aliases)
+#### Inputs aliases
 
-Se puede especificar un alias opcional para cambiar el nombre de una entrada en las plantillas:
+Se puede especificar un [alias opcional](https://angular.dev/guide/components/inputs#input-aliases) para cambiar el nombre de una entrada en las plantillas:
 
 ```typescript
 @Component({...})
@@ -617,9 +617,9 @@ export class CustomSlider {
 <custom-slider [sliderValue]="50" />
 ```
 
-## [Template syntax](https://angular.dev/guide/templates)
+## Template syntax
 
-En Angular, una plantilla es un **fragmento de HTML** que utiliza una sintaxis especial para aprovechar muchas de las funcionalidades del framework. Estas plantillas son secciones de HTML que se integran en la página que el navegador muestra, representando la vista o interfaz de usuario.
+En Angular, una [plantilla](https://angular.dev/guide/templates) es un **fragmento de HTML** que utiliza una sintaxis especial para aprovechar muchas de las funcionalidades del framework. Estas plantillas son secciones de HTML que se integran en la página que el navegador muestra, representando la vista o interfaz de usuario.
 
 Casi toda la sintaxis HTML es **válida** en las plantillas de Angular. Sin embargo, Angular extiende el HTML con una sintaxis especial para funcionalidades avanzadas como por ejemplo la interpolación de cadenas con `{{}}`, el uso de directivas `ngIf` o `ngFor`, etcétera...
 
@@ -631,9 +631,9 @@ Como una plantilla de Angular es solo una parte de la página completa, no es ne
 
 Cuando se genera una aplicación Angular con Angular CLI, el archivo `app.component.html` es la **plantilla predeterminada** y contiene el HTML general que define la estructura inicial de la aplicación.
 
-### [Text interpolation](https://angular.dev/guide/templates/interpolation)
+### Text interpolation
 
-La **interpolación** en Angular permite insertar valores y expresiones directamente en el HTML usando las llaves dobles `{{ }}` como delimitadores. Esto significa que se pueden incluir variables, realizar cálculos, e incluso llamar a métodos del componente.
+La [interpolación](https://angular.dev/guide/templates/interpolation) en Angular permite insertar valores y expresiones directamente en el HTML usando las llaves dobles `{{ }}` como delimitadores. Esto significa que se pueden incluir variables, realizar cálculos, e incluso llamar a métodos del componente.
 
 Por ejemplo:
 
@@ -699,9 +699,9 @@ La interpolación se utiliza para mostrar el valor de las variables en la planti
 
 En Angular, las expresiones dentro de `{{ }}` se evalúan en el contexto del componente y el resultado se inserta en el DOM. Esto permite dinámicamente reflejar el estado de las propiedades del componente en la vista.
 
-### [Template statements](https://angular.dev/guide/templates/template-statements)
+### Template statements
 
-Las declaraciones de plantilla (**_"template statements"_**) son métodos o propiedades que se pueden utilizar en el HTML para responder a los eventos del usuario:
+Las [declaraciones de plantilla (_"template statements"_)](https://angular.dev/guide/templates/template-statements) son métodos o propiedades que se pueden utilizar en el HTML para responder a los eventos del usuario:
 
 ```html
 <button type="button" (click)="deleteHero()">Delete hero</button>
@@ -743,9 +743,9 @@ El contexto de la declaración también puede hacer referencia a propiedades del
 <button type="button" (click)="onSave($event)">Save</button>
 ```
 
-### [Property binding](https://angular.dev/guide/templates/property-binding)
+### Property binding
 
-La vinculación de propiedades (**_"property binding"_**) en Angular permite establecer valores para las propiedades de elementos o directivas HTML.
+La [vinculación de propiedades (_"property binding"_)](https://angular.dev/guide/templates/property-binding) en Angular permite establecer valores para las propiedades de elementos o directivas HTML.
 
 Esta vinculación mueve el valor en una dirección, desde la propiedad de un **componente** a la propiedad del elemento de destino en el **HTML**.
 
@@ -790,9 +790,9 @@ A menudo **se puede elegir entre interpolación o _"property binding"_**. Los si
 <p>"<span [innerHTML]="propertyTitle"></span>" is the <i>property bound</i> title.</p>
 ```
 
-### [Attribute binding](https://angular.dev/guide/templates/attribute-binding)
+### [Attribute binding]
 
-La vinculación de atributos (**_"attribute binding"_**) en Angular permite establecer valores para los atributos directamente.
+La [vinculación de atributos (_"attribute binding"_)](https://angular.dev/guide/templates/attribute-binding) en Angular permite establecer valores para los atributos directamente.
 
 La sintaxis de vinculación de atributos se parece a la vinculación de propiedades, pero en lugar de una propiedad de elemento entre corchetes, se antepone el nombre del atributo con el prefijo `attr`, seguido de un punto. Luego, se establece el valor del atributo con una expresión que se resuelve en una cadena:
 
@@ -816,9 +816,9 @@ Otro uso podría ser establecer el atributo `colspan` de una tabla HTML, lo que 
 <tr><td [attr.colspan]="1 + 1">One-Two</td></tr>
 ```
 
-### [Class and style binding](https://angular.dev/guide/templates/class-binding)
+### Class and style binding
 
-La vinculación de clases y estilos permite agregar y eliminar nombres de clases CSS del atributo de clase de un elemento o establecer estilos dinámicamente.
+La [vinculación de clases y estilos](https://angular.dev/guide/templates/class-binding) permite agregar y eliminar nombres de clases CSS del atributo de clase de un elemento o establecer estilos dinámicamente.
 
 #### Binding to a single CSS class
 
@@ -933,9 +933,9 @@ export class NavBarComponent {
 }
 ```
 
-### [Event binding](https://angular.dev/guide/templates/event-binding)
+### Event binding
 
-La vinculación de eventos (**_"event binding"_**) permite escuchar y responder a las acciones del usuario, como pulsaciones de teclas, movimientos del mouse, clics y toques.
+La [vinculación de eventos (_"event binding"_)](https://angular.dev/guide/templates/event-binding) permite escuchar y responder a las acciones del usuario, como pulsaciones de teclas, movimientos del mouse, clics y toques.
 
 Para vincularse a un evento, se utiliza la sintaxis de vinculación de eventos Angular:
 
@@ -953,9 +953,9 @@ También se pueden realizar vinculaciones de eventos de teclado usando la sintax
 
 Los campos `key` y `code` son una parte nativa del objeto de evento del teclado del navegador.
 
-### [Two-way binding](https://angular.dev/guide/templates/two-way-binding)
+### Two-way binding
 
-El enlace bidireccional (**_"two-way binding"_**) brinda a los componentes de una aplicación una forma de compartir datos. Se utiliza el enlace bidireccional para escuchar eventos y actualizar valores simultáneamente entre los componentes principal y secundario.
+El [enlace bidireccional (_"two-way binding"_)](https://angular.dev/guide/templates/two-way-binding) brinda a los componentes de una aplicación una forma de compartir datos. Se utiliza el enlace bidireccional para escuchar eventos y actualizar valores simultáneamente entre los componentes principal y secundario.
 
 Este tipo de vinculación combina el [_"property binding"_](#property-binding) con el [_"event binding"_](#event-binding).
 
@@ -967,9 +967,9 @@ Por tanto la sintaxis del _"two-way binding"_ es una mezcla de ambas sintaxis:
 
 En los formularios, se utiliza la directiva `ngModel`.
 
-### [Control flow](https://angular.dev/guide/templates/control-flow)
+### Control flow
 
-Las plantillas en Angular admiten bloques de flujo de control que le permiten mostrar, ocultar y repetir elementos condicionalmente.
+Las plantillas en Angular admiten [bloques de flujo de control](https://angular.dev/guide/templates/control-flow) que le permiten mostrar, ocultar y repetir elementos condicionalmente.
 
 Esta característica se introdujo en Angular en la **v.17** como experimental y en la **v.18** se convirtió en estable. En versiones previas se utilizan directivas estructurales como [**NgIf**](#using-ngif), [**NgFor**](#using-ngfor) o [**NgSwitch**](#using-ngswitch).
 
@@ -1112,9 +1112,9 @@ El valor de la expresión condicional se compara con la expresión de caso utili
 
 El bloque `@default` es opcional y puede ser omitido. Si ningún bloque `@case` coincide con la expresión evaluada y no hay un bloque `@default`, no se mostrará nada.
 
-### [Pipes](https://angular.dev/guide/pipes)
+### Pipes
 
-Las **_"pipes"_** se utilizan para transformar cadenas, importes de moneda, fechas y otros datos para su visualización.
+Las [_"pipes"_](https://angular.dev/guide/pipes) se utilizan para transformar cadenas, importes de moneda, fechas y otros datos para su visualización.
 
 Estas _"pipes"_ son funciones simples de usar en plantillas que aceptan un valor de entrada y devuelven un valor transformado. Son útiles porque se pueden utilizar en toda la aplicación, declarando cada _"pipe"_ sólo una vez.
 
@@ -1173,9 +1173,9 @@ Por último, las _"pipes"_ se pueden **encadenar** de forma que la salida de la 
 <p>The hero's birthday is in {{ birthday | date:'yyyy' | uppercase }}</p>
 ```
 
-### [Understanding template variables](https://angular.dev/guide/templates/reference-variables)
+### Understanding template variables
 
-Las variables de plantilla en Angular son una forma de hacer referencia a elementos de la plantilla o a directivas en cualquier otra parte dentro de esa plantilla. Son útiles para acceder a propiedades y métodos de estos elementos desde el contexto de la plantilla.
+Las [variables de plantilla](https://angular.dev/guide/templates/reference-variables) en Angular son una forma de hacer referencia a elementos de la plantilla o a directivas en cualquier otra parte dentro de esa plantilla. Son útiles para acceder a propiedades y métodos de estos elementos desde el contexto de la plantilla.
 
 Se puede hacer referencia a:
 
@@ -1864,21 +1864,23 @@ La [gestión de formularios](https://angular.dev/guide/forms) es esencial para p
 
 Angular proporciona dos enfoques diferentes para manejar la entrada del usuario a través de formularios: **reactivo** y **basado en plantillas**. Ambos capturan eventos de entrada del usuario desde la vista, validan la entrada del usuario, crean un modelo de formulario y un modelo de datos para actualizar y proporcionan una forma de realizar un seguimiento de los cambios.
 
-Los **formularios reactivos** proporcionan acceso directo y explícito al modelo de objetos del formulario subyacente. Son más sólidos, más escalables, reutilizables y testeables. Si los formularios son una parte clave de la aplicación, o si ya se está utilizando patrones reactivos para crear la aplicación, los formularios reactivos son la mejor opción.
+Los [**formularios reactivos**](https://angular.dev/guide/forms/reactive-forms) proporcionan acceso directo y explícito al modelo de objetos del formulario subyacente. Son más sólidos, más escalables, reutilizables y testeables. Si los formularios son una parte clave de la aplicación, o si ya se está utilizando patrones reactivos para crear la aplicación, los formularios reactivos son la mejor opción.
 
 Además, utilizan un **flujo de datos síncrono** entre la vista y el modelo de datos, lo que facilita la creación de formularios a gran escala. Los formularios reactivos requieren menos configuración para las pruebas, y las pruebas no requieren una comprensión profunda de la detección de cambios para probar adecuadamente las actualizaciones y validación de los formularios.
 
-Los **formularios basados en plantillas** son útiles para agregar un formulario simple a una aplicación, como un formulario de registro en una lista de correo electrónico. Son fáciles de agregar a una aplicación, pero no escalan tan bien como los formularios reactivos. Si tiene requisitos de formulario muy básicos y una lógica que se puede administrar únicamente en la plantilla, los formularios basados ​​en plantillas podrían ser una buena opción.
+Los [**formularios basados en plantillas**](https://angular.dev/guide/forms/template-driven-forms) son útiles para agregar un formulario simple a una aplicación, como un formulario de registro en una lista de correo electrónico. Son fáciles de agregar a una aplicación, pero no escalan tan bien como los formularios reactivos. Si tiene requisitos de formulario muy básicos y una lógica que se puede administrar únicamente en la plantilla, los formularios basados ​​en plantillas podrían ser una buena opción.
 
 Además, utilizan un **flujo de datos asíncrono** entre la vista y el modelo de datos. La abstracción de formularios basados ​​en plantillas también afecta las pruebas. Las pruebas dependen en gran medida de la ejecución manual de detección de cambios para ejecutarse correctamente y requieren más configuración.
 
 Tanto los formularios reactivos como los basados ​​en plantillas se basan en las siguientes clases base **_FormControl_**, **_FormGroup_**, **_FormArray_** y **_ControlValueAccessor_**.
 
-### [Reactive forms](https://angular.dev/guide/forms/reactive-forms)
+### Reactive forms
 
-#### [Adding a basic form control](https://angular.dev/guide/forms/reactive-forms#adding-a-basic-form-control)
+Los [**formularios reactivos**](https://angular.dev/guide/forms/reactive-forms) utilizan un enfoque explícito e inmutable para gestionar el estado de un formulario en un momento dado. Cada cambio en el estado del formulario genera un nuevo estado, lo que garantiza la integridad del modelo entre los cambios. Los formularios reactivos se construyen en torno a flujos observables, donde los inputs y valores del formulario se proporcionan como flujos de valores, que pueden ser accedidos de manera sincrónica.
 
-Para usar controles de formulario reactivos, importar `ReactiveFormsModule` desde el paquete `@angular/forms` en el componente y se añade a `imports[...]`:
+#### Adding a basic form control
+
+Para [usar controles de formulario reactivos](https://angular.dev/guide/forms/reactive-forms#adding-a-basic-form-control), importar `ReactiveFormsModule` desde el paquete `@angular/forms` en el componente y se añade a `imports[...]`:
 
 ```typescript
 import { Component } from '@angular/core';
@@ -1894,7 +1896,24 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class ReactiveFormsComponent { }
 ```
 
-Importar `FormControl` desde el paquete `@angular/forms`:
+Si se está [importando los componentes](#importing-and-using-components) mediante `NgModules`, se añade `ReactiveFormsModule` en el `imports[...]` de `@NgModule`:
+
+```typescript
+import {ReactiveFormsModule} from '@angular/forms';
+...
+@NgModule({
+// ...
+  imports: [
+// ...
+    // other imports ...
+    ReactiveFormsModule,
+  ],
+// ...
+})
+export class AppModule {}
+```
+
+Luego hay que importar `FormControl` desde el paquete `@angular/forms`:
 
 ```typescript
 import { Component } from '@angular/core';
@@ -1919,20 +1938,20 @@ Se utiliza el constructor de `FormControl` para establecer un valor inicial, que
 
 Al crear estos controles en la clase del componente, se obtiene acceso inmediato para escuchar, actualizar y validar el estado de la entrada del formulario.
 
-Después de crear el control en la clase del componente, debes asociarlo con un elemento de control del formulario en la plantilla utilizando la vinculación `[formControl]` proporcionada por `FormControlDirective`, que también está incluida en el `ReactiveFormsModule`.
+Después de crear el control en la clase del componente, se debe asociar con un elemento de control del formulario en la plantilla utilizando la vinculación `[formControl]` proporcionada por `FormControlDirective`, que también está incluida en el `ReactiveFormsModule`.
 
 ```html
 <label for="name">Name: </label>
 <input id="name" type="text" [formControl]="name">
 ```
 
-Usando la sintaxis de enlace en la plantilla, el control de formulario ahora está registrado en el elemento de entrada `name` en la plantilla. El control de formulario y el elemento DOM se comunican entre sí: la vista refleja los cambios en el modelo, y el modelo refleja los cambios en la vista.
+Usando la sintaxis de [enlace en la plantilla](#property-binding), el control de formulario ahora está registrado en el elemento de entrada `name` en la plantilla. El control de formulario y el elemento DOM se comunican entre sí: la vista refleja los cambios en el modelo, y el modelo refleja los cambios en la vista.
 
-Puede mostrar el valor de las siguientes maneras:
+El valor se puede mostrar de varias maneras:
 
 - A través del observable `valueChanges`, puedes escuchar los cambios en el valor del formulario en la plantilla utilizando `AsyncPipe` o en la clase del componente utilizando el método `subscribe()`.
 
-- Con la propiedad `value`, que le brinda una instantánea del valor actual
+- Con la propiedad `value`, que brinda una instantánea del valor actual. Mediante la [interpolación](#text-interpolation) se puede mostrar el valor actual:
 
 ```html
 <label for="name">Name: </label>
@@ -1941,11 +1960,11 @@ Puede mostrar el valor de las siguientes maneras:
 <p>Value: {{ name.value }}</p>
 ```
 
-#### [Replacing a form control value](https://angular.dev/guide/forms/reactive-forms#replacing-a-form-control-value)
+#### Replacing a form control value
 
-Los formularios reactivos tienen **métodos para cambiar el valor de un control programáticamente**, lo cual te proporciona la flexibilidad de actualizar el valor sin interacción del usuario.
+Los formularios reactivos tienen métodos para [cambiar el valor de un control](https://angular.dev/guide/forms/reactive-forms#replacing-a-form-control-value) programáticamente, lo cual proporciona la flexibilidad de actualizar el valor sin interacción del usuario.
 
-Una instancia de control de formulario proporciona un método `setValue()` que actualiza el valor del control de formulario y valida la estructura del valor proporcionado con respecto a la estructura del control.
+Una instancia de control de formulario proporciona un método `setValue()` que actualiza el valor del control de formulario y valida la estructura del valor proporcionado con respecto a la estructura del control. Por ejemplo, al recuperar datos de un formulario desde una API o servicio de backend, se utiliza el método `setValue()` para actualizar el control con su nuevo valor, reemplazando completamente el valor anterior.
 
 ```typescript
 import { Component } from '@angular/core';
@@ -1971,7 +1990,7 @@ export class ReactiveFormsComponent {
 }
 ```
 
-En la plantilla, un botón simulará una actualización del valor. Al hacer clic en el botón, el valor ingresado en el elemento de control del formulario se refleja como su valor actual.
+Como ejemplo, un botón en la plantilla simulará una actualización del valor. Al hacer clic en el botón, el valor ingresado en el elemento de control del formulario se refleja como su valor actual.
 
 ```html
 <label for="name">Name: </label>
@@ -1982,13 +2001,13 @@ En la plantilla, un botón simulará una actualización del valor. Al hacer clic
 <button type="button" (click)="updateName()">Update Name</button>
 ```
 
-#### [Grouping form controls](https://angular.dev/guide/forms/reactive-forms#grouping-form-controls)
+#### Grouping form controls
 
-Los formularios reactivos proporcionan **dos formas de agrupar múltiples controles** relacionados en un único formulario de entrada:
+Los formularios reactivos proporcionan dos formas de [agrupar múltiples controles](https://angular.dev/guide/forms/reactive-forms#grouping-form-controls) relacionados en un único formulario de entrada:
 
-- **Form group**: define un formulario con un conjunto fijo de controles que pueden administrarse juntos.
+- [**_"Form group"_**](https://angular.dev/guide/forms/reactive-forms#grouping-form-controls): define un formulario con un conjunto fijo de controles que pueden administrarse juntos.
 
-- **Form array**: define un formulario dinámico, donde se pueden agregar y eliminar controles en tiempo de ejecución.
+- [**_"Form array"_**](https://angular.dev/guide/forms/reactive-forms#creating-dynamic-forms): define un formulario dinámico, donde se pueden agregar y eliminar controles en tiempo de ejecución.
 
 Así como una instancia de `FormControl` da control sobre un solo campo de entrada, una instancia de `FormGroup` rastrea el estado del formulario de un grupo de instancias de `FormControl` (por ejemplo, un formulario). Cada control en una instancia de `FormGroup` es **rastreado por nombre** al crear el `FormGroup`.
 
@@ -1999,9 +2018,11 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 ```
 
-Lo siguiente es crear una propiedad en la clase del componente y establecer en la propiedad una nueva instancia de `FormGroup`. Para inicializar el `FormGroup`, se proporciona al constructor un objeto de claves con el mismo nombre asignado al control en la plantilla. Cada una de estas claves es un `FormControl` o tal vez otro `FormGroup`.
+Lo siguiente es crear una propiedad (`profileForm` en el ejemplo) en la clase del componente y establecer en la propiedad una nueva instancia de `FormGroup`. Para inicializar el `FormGroup`, se proporciona al constructor un objeto de claves con el mismo nombre asignado a cada control en la plantilla. Cada una de estas claves es un `FormControl` o tal vez otro `FormGroup`.
 
 Además, en este constructor se puede pasar un `Validators` o un array de `Validators` con las validaciones a aplicar en ese control, como por ejemplo `Validators.required`.
+
+Los controles individuales del formulario ahora se agrupan dentro de un conjunto. Una instancia de `FormGroup` proporciona su valor de modelo como un objeto, compuesto a partir de los valores de cada control dentro del grupo. Una instancia de `FormGroup` posee las mismas propiedades (como `value` y `untouched`) y métodos (como `setValue()`) que una instancia de control de formulario (`FormControl`).
 
 ```typescript
 import { Component } from '@angular/core';
@@ -2035,7 +2056,9 @@ export class FormGroupFormsComponent {
 }
 ```
 
-En la plantilla, los controles tienen el nombre de las claves en el atributo `formControlName` y el formulario tiene el nombre de la propiedad definida en el componente como en el ejemplo `<form [formGroup]="profileForm" ...>`. Además, si hay grupos anidados, el nombre del grupo anidado se indica en `formGroupName`.
+En la plantilla, los controles tienen el nombre de las claves en el atributo `formControlName` y el formulario tiene el nombre de la propiedad definida en el componente (en el ejemplo `<form [formGroup]="profileForm" ...>`).
+
+Además, si hay [grupos anidados](https://angular.dev/guide/forms/reactive-forms#creating-nested-form-groups), el nombre del grupo anidado se indica en `formGroupName` (en el ejemplo `<div formGroupName="address">`).
 
 ```html
 <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
@@ -2064,19 +2087,88 @@ En la plantilla, los controles tienen el nombre de las claves en el atributo `fo
 </form>
 ```
 
-Un `FormGroup` rastrea el estado y los cambios de cada uno de sus controles, por lo que si uno de los controles cambia, el control principal también emite un nuevo estado o cambio de valor.
+Un `FormGroup` rastrea el estado y los cambios de cada uno de sus controles, por lo que si uno de los controles cambia, el control principal también emite un nuevo estado o cambio de valor. El modelo del grupo se mantiene a partir de sus miembros.
 
 La directiva `FormGroup` escucha el evento `submit` emitido por un elemento de formulario como un `button` y emite un evento `ngSubmit` que se puede vincular a una función _"callback"_ de devolución de llamada en el componente como `onSubmit() { ... }`
 
 ```html
-<button type="submit" [disabled]="!profileForm.valid">Submit</button>
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <!-- ... -->
+</form>
 ```
 
-### [Template-driven forms](https://angular.dev/guide/forms/template-driven-forms)
+El método `onSubmit()` en el componente captura el valor actual del formulario (en el ejemplo `profileForm`). Utiliza `EventEmitter` para mantener el formulario encapsulado y proporcionar el valor del formulario fuera del componente.
 
-Los formularios basados ​​en plantillas o _"Template-drive forms"_ permiten utilizar directivas específicas de formulario en una plantilla Angular.
+```typescript
+onSubmit() {
+  // TODO: Use EventEmitter with form value
+  console.warn(this.profileForm.value);
+}
+```
 
-Los formularios basados ​​en plantillas utilizan enlace de datos bidireccional o [_"two-way data binding"_](#two-way-binding) para actualizar el modelo de datos en el componente a medida que se realizan cambios en la plantilla y viceversa.
+`FormGroup` en Angular es similar a la etiqueta `<form>` en HTML, ya que permite agrupar varios controles de formulario para que Angular sea "consciente" de que forman parte de un mismo formulario. Al agrupar los controles, `FormGroup` facilita el seguimiento del estado y las validaciones a nivel de todo el formulario, permitiendo gestionar los datos como un objeto y emitir eventos cuando cualquier control del grupo cambia. Esto proporciona un control más preciso sobre los valores y el estado de los controles desde el código TypeScript.
+
+#### Validating form input
+
+La [validación de formularios](https://angular.dev/guide/forms/reactive-forms#validating-form-input) se utiliza para garantizar que la entrada del usuario sea completa y correcta.  La validación de formularios se trata de manera más extensa en la [guía correspondiente](https://angular.dev/guide/forms/form-validation).
+
+Una validación bastante común en formularios es hacer que un control del formulario sea obligatorio (_"required"_).
+
+Los formularios reactivos incluyen un conjunto de funciones validadoras para casos de uso comunes. Estas funciones reciben un control para validar y devuelven un objeto de error o un valor `null`, según el resultado de la validación.
+
+Lo primero es importar la clase `Validators` desde el paquete `@angular/forms`:
+
+```typescript
+import { Validators } from '@angular/forms';
+```
+
+Se añade el método estático `Validators.required` a la instancia de `FormGroup`:
+
+```typescript
+// ...
+export class FormGroupFormsComponent {
+
+  profileForm = new FormGroup({
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    address: new FormGroup({
+      street: new FormControl(''),
+      city: new FormControl(''),
+      state: new FormControl(''),
+      zip: new FormControl(''),
+    })
+  });
+
+}
+```
+
+Cuando se añade un campo obligatorio al control de formulario, su estado inicial es inválido. Este estado inválido se propaga al elemento del grupo de formulario padre, lo que hace que su estado también sea inválido. Se puede acceder al estado actual de la instancia del grupo de formulario a través de su propiedad `status`.
+
+```html
+<p>Form Status: {{ profileForm.status }}</p>
+
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <label for="first-name">First Name: </label>
+  <input id="first-name" type="text" formControlName="firstName">
+  <label for="last-name">Last Name: </label>
+  <input id="last-name" type="text" formControlName="lastName">
+
+  <!-- ... -->
+
+  <p>Complete the form to enable button.</p>
+  <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+
+  <p>Form Status: {{ profileForm.status }}</p>
+</form>
+```
+
+En el ejemplo, el botón utilizado para enviar el formulario está deshabilitado porque `profileForm` es inválido debido a que el control de formulario `firstName`, que es obligatorio. El modelo del `FormGroup` se mantiene a partir del modelo de todos sus miembros. Cuando se complete el campo de entrada, el formulario se vuelve válido y el botón se habilita.
+
+### Template-driven forms
+
+Los [formularios basados ​​en plantillas (_"Template-drive forms"_)](https://angular.dev/guide/forms/template-driven-forms) permiten utilizar directivas específicas de formulario en una plantilla Angular.
+
+Los formularios basados ​​en plantillas utilizan [enlace de datos bidireccional (_"two-way data binding"_)](#two-way-binding) para actualizar el modelo de datos en el componente a medida que se realizan cambios en la plantilla y viceversa.
 
 Los formularios basados ​​en plantillas se basan en directivas definidas en `FormsModule`.
 
@@ -2086,11 +2178,11 @@ Los formularios basados ​​en plantillas se basan en directivas definidas en 
 
 - [**NgModelGroup**](https://angular.dev/api/forms/NgModelGroup): crea y vincula una instancia de `FormGroup` a un elemento DOM.
 
-Los _"Template-driven forms"_ se configuran de manera declarativa en la plantilla HTML. Esto convierte a este tipo de _forms_ en simples y adecuados para formularios simples y de pequeña a mediana escala.
+Este tipo de formularios se configuran de manera declarativa en la plantilla HTML. Esto convierte a este tipo de _forms_ en simples y adecuados para formularios simples y de pequeña a mediana escala.
 
 Utilizan las directivas de Angular como `ngModel`, `ngForm`, y `ngSubmit` para enlazar datos y manejar eventos del formulario.
 
-Los formularios basados en plantillas aprovechan el enlace bidireccional o [_"two-way data binding"_](#two-way-binding) de Angular para sincronizar el modelo de datos con los elementos del formulario. Esto se hace principalmente mediante la directiva `[(ngModel)]`.
+Los formularios basados en plantillas aprovechan el [enlace bidireccional (_"two-way data binding"_)](#two-way-binding) de Angular para sincronizar el modelo de datos con los elementos del formulario. Esto se hace principalmente mediante la directiva `[(ngModel)]`.
 
 Las validaciones se definen en la plantilla utilizando atributos estándar de HTML5 y directivas de Angular. Angular proporciona directivas como `required`, `minlength`, `maxlength` o `pattern` para realizar validaciones.
 
