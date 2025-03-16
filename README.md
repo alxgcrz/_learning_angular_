@@ -4,19 +4,15 @@
 
 ## Introducción
 
-**Angular es un framework** de desarrollo de aplicaciones web desarrollado y mantenido por Google. Angular está basado en el lenguaje de programación **TypeScript** y sigue el patrón de diseño de arquitectura MVC (Modelo-Vista-Controlador), específicamente la variante MVVM (Modelo-Vista-VistaModelo).
+**Angular** es un framework de desarrollo front-end, mantenido por Google, que permite crear aplicaciones web dinámicas y escalables utilizando TypeScript. Está diseñado para construir aplicaciones de una sola página (SPA) y sigue una arquitectura basada en componentes.
 
-**AngularJS** fue desarrollado en 2009 por Misko Hevery y Adams Abrons. Posteriormente fue liberado el proyecto como una biblioteca de código abierto. Adams Abrons abandonó el proyecto pero Misko Hevery, como empleado de Google, continuó con el desarrollo y mantenimiento del proyecto.
+Angular tiene sus raíces en **AngularJS**, lanzado en 2009 por Misko Hevery y Adam Abrons. En 2016, Google lanzó una versión completamente reescrita, **Angular 2**, basada en TypeScript. Desde entonces, Angular ha evolucionado como un framework moderno, mientras que AngularJS se mantiene como un proyecto separado con soporte limitado.
 
-A partir de la versión **2.0**, anunciada en Septiembre de 2014, AngularJS fue reescrito utilizando el lenguaje TypeScript y se rediseñó por completo todo el framework. Esta nueva versión pasó a llamarse únicamente **Angular**. Ambas versiones conviven, aunque AngularJS ha quedado acotada en versiones 1.X.Y mientras que Angular continúa su evolución. Ambos proyectos tiene ciclos de vida independientes.
-
-**Angular** se utiliza para construir aplicaciones web de una sola página (SPA) y facilita la creación de interfaces de usuario dinámicas y interactivas.
-
-Las aplicaciones de una sola página, conocidas como **SPAs** (_Single Page Applications_), representan un enfoque revolucionario en el desarrollo web al ofrecer una experiencia de usuario más fluida y dinámica. A diferencia de las aplicaciones tradicionales, donde la navegación implica cargar páginas completas, las SPAs cargan una única página HTML inicial y actualizan dinámicamente el contenido según las interacciones del usuario.
+Las **aplicaciones de una sola página** (_SPA_, por sus siglas en inglés) representan un enfoque moderno en el desarrollo web. A diferencia de las aplicaciones web tradicionales, donde cada interacción del usuario requiere cargar una nueva página desde el servidor, las SPAs cargan una única página HTML inicial. A partir de ahí, la aplicación actualiza dinámicamente el contenido en la misma página, utilizando JavaScript para interactuar con el servidor y manipular el DOM. Esto proporciona una experiencia de usuario más fluida y rápida, similar a la de una aplicación de escritorio o móvil. Angular está especialmente diseñado para facilitar la creación de SPAs, ofreciendo herramientas integradas para el enrutamiento, la gestión de estados y la actualización dinámica de la interfaz.
 
 Las principales **características** de Angular incluyen la vinculación bidireccional de datos, que permite la sincronización automática entre la vista y el modelo de datos; inyección de dependencias, que promueve la modularidad y la reutilización de código; y un conjunto de herramientas y bibliotecas que simplifican tareas comunes como la manipulación del DOM, la gestión de eventos y la realización de peticiones HTTP.
 
-Angular aprovecha la tecnología de los componentes web o _'web components'_ y el _'Shadow DOM'_ para apoyar el desarrollo impulsado por componentes. La **arquitectura** de Angular puede resumirse en:
+Angular aprovecha la tecnología de los componentes web o [_"Web Components"_](https://developer.mozilla.org/es/docs/Web/API/Web_components) y el [_"Shadow DOM"_](https://developer.mozilla.org/es/docs/Web/API/Web_components/Using_shadow_DOM) para apoyar el desarrollo impulsado por componentes. La **arquitectura** de Angular puede resumirse en:
 
 - **Módulos**: Angular organiza la aplicación en módulos, que son conjuntos lógicos de componentes, servicios, directivas y otros artefactos relacionados. Los módulos ayudan a estructurar y organizar la aplicación, facilitando la carga y gestión de diferentes partes de la misma.
 
@@ -34,21 +30,23 @@ Angular aprovecha la tecnología de los componentes web o _'web components'_ y e
 
 - **Enrutamiento**: Angular proporciona un módulo de enrutamiento que permite la navegación entre las distintas vistas de la aplicación sin necesidad de recargar la página. Esto es esencial para construir aplicaciones de una sola página (SPA).
 
-:warning: **Sección introductoria generada por ChatGPT** :warning:
+Angular es ideal para proyectos grandes y complejos gracias a su arquitectura modular, su potente sistema de herramientas y su integración con TypeScript, que mejora la calidad y mantenibilidad del código. En resumen, Angular es una herramienta poderosa y versátil para desarrollar aplicaciones web modernas.
+
+:warning: **Sección introductoria generada por ChatGPT y mejorada por DeepSeek** :warning:
 
 ## Primeros pasos
 
 ### Instalación
 
-Angular requiere **Node.js** que se instala descargándolo de su [página oficial](https://nodejs.org/).
+Angular requiere **Node.js**, que se instala descargándolo de su [página oficial](https://nodejs.org/).
 
-Cuando se instala **Node.js** también se instala **_NPM_** (_Node Package Manager_) que nos permite, entre otras cosas, gestionar las dependencias de un proyecto.
+Cuando se instala **Node.js** también se instala **NPM** (_Node Package Manager_) que nos permite, entre otras cosas, gestionar las dependencias de un proyecto.
 
 Para desarrollar en Angular se puede utilizar como lenguaje de programación tanto **Javascript** como **TypeScript**, pero dado que **Angular está implementado con TypeScript**, se recomienda usar este lenguaje.
 
-Para instalar **Typescript** se utiliza la herramienta **_NPM_** ya que también está publicado como paquete.
+Para instalar **Typescript** se utiliza la herramienta **NPM** ya que también está publicado como paquete.
 
-> Para funcionar correctamente, cada **versión de Angular** requiere **determinadas versiones de Node.js, TypeScript y RxJS** que pueden consultarse en la [siguiente tabla de la documentación oficial](https://angular.dev/reference/versions).
+> :point_right: Para funcionar correctamente, cada **versión de Angular** requiere **una determinada versión de Node.js, TypeScript y RxJS**. Estas versiones pueden consultarse en esta [tabla de la documentación oficial](https://angular.dev/reference/versions).
 
 ```sh
 // Comprobar la versión de Node.js
@@ -63,6 +61,44 @@ $ npm install -g typescript
 // Comprobar la versión de TypeScript
 $ tsc --version
 ```
+
+### DevTools
+
+Las **_Angular DevTools_** son una extensión para navegadores web (como [Chrome](https://chrome.google.com/webstore/detail/angular-developer-tools/ienfalfjdbdpebioblfackkekamfmbnh) o [Firefox](https://addons.mozilla.org/firefox/addon/angular-devtools/)) diseñada específicamente para ayudar a los desarrolladores a depurar, analizar y optimizar aplicaciones Angular. Esta herramienta es desarrollada y mantenida por el equipo de Angular en Google, y se integra directamente en las **"Herramientas para desarrolladores"** del navegador (_DevTools_).
+
+Se accede a estas herramientas (_DevTools_) de Chrome o Firefox en cualquier página web presionando `F12` o `Ctrl+Shift+I` (en Windows o Linux) y `Fn+F12` o `Cmd+Option+I` (en Mac). Una vez que las _DevTools_ del navegador estén abiertas, la extensión se encuentra en la pestaña "Angular".
+
+Las principales características de la extensión incluyen:
+
+- Árbol de componentes:
+
+  - Permite visualizar la jerarquía de componentes de una aplicación Angular en tiempo real.
+
+  - Muestra las propiedades (@Input) y estados de cada componente.
+
+  - Facilita la identificación de relaciones entre componentes.
+
+- Profiler de rendimiento:
+
+  - Ofrece una herramienta para analizar el rendimiento de la aplicación.
+
+  - Muestra el tiempo de detección de cambios (change detection) y cómo afecta al rendimiento.
+
+  - Ayuda a identificar cuellos de botella y componentes que pueden estar causando problemas de rendimiento.
+
+- Depuración de Inyección de Dependencias:
+
+  - Permite inspeccionar los servicios inyectados en cada componente.
+
+  - Muestra la jerarquía de inyección de dependencias y los proveedores asociados.
+
+- Estado de la aplicación:
+
+  - Facilita la visualización del estado de la aplicación, especialmente cuando se utiliza librerías como NgRx o Akita.
+
+  - Permite rastrear cambios en el estado y cómo afectan a los componentes.
+
+Más información en la [página de la extensión](https://angular.dev/tools/devtools).  
 
 ### Angular CLI
 
@@ -84,7 +120,7 @@ $ ng help
 $ ng serve --help
 ```
 
-Se puede visitar la [documentación oficial](https://angular.dev/cli) para consultar la lista completa de comandos y párametros que ofrece esta herramienta de Angular.
+En la [documentación oficial](https://angular.dev/cli) para consultarse la lista completa de comandos y párametros que ofrece esta herramienta de Angular.
 
 #### Puesta en marcha del proyecto
 
@@ -177,6 +213,47 @@ Y esto añadirá la sección `deploy` en el fichero `angular.json`:
   }
 }
 ```
+
+#### Schematics
+
+Los [**_schematics_**](https://angular.dev/tools/cli/schematics) en Angular son una herramienta poderosa que permite automatizar tareas repetitivas en el desarrollo de aplicaciones, como la creación de componentes, servicios, módulos y otros elementos de la arquitectura de Angular. Básicamente, son plantillas o generadores de código que siguen un conjunto de reglas predefinidas para crear o modificar archivos en un proyecto Angular.
+
+Los _schematics_ forman parte del ecosistema de Angular. Se pueden modificar estos _schematics_ o definir otros nuevos para, por ejemplo, actualizar el código y corregir cambios importantes en una dependencia, o añadir una nueva opción de configuración o un nuevo framework a un proyecto existente.
+
+Los _schematics_ incluidos en la colección `@schematics/angular` se ejecutan de forma predeterminada mediante los comandos `ng generate` y `ng add`. Se puede usar la forma abreviada o la forma larga. La forma larga es útil en _schematics_ personalizados o colecciones de _schematics_:
+
+```sh
+# FORMA ABREVIADA (usa el schematic 'component' de '@schematics/angular')
+$ ng generate component
+
+# FORMA LARGA
+$ ng generate @schematics/angular:component
+```
+
+Algunos de los _schematics_ que pueden usarse:
+
+- [`app-shell`](https://angular.dev/cli/generate/app-shell)
+- [`application`](https://angular.dev/cli/generate/application)
+- [`class`](https://angular.dev/cli/generate/class)
+- [`component`](https://angular.dev/cli/generate/component)
+- [`config`](https://angular.dev/cli/generate/config)
+- [`directive`](https://angular.dev/cli/generate/directive)
+- [`enum`](https://angular.dev/cli/generate/enum)
+- [`environments`](https://angular.dev/cli/generate/environments)
+- [`guard`](https://angular.dev/cli/generate/guard)
+- [`interceptor`](https://angular.dev/cli/generate/interceptor)
+- [`interface`](https://angular.dev/cli/generate/interface)
+- [`library`](https://angular.dev/cli/generate/library)
+- [`module`](https://angular.dev/cli/generate/module)
+- [`pipe`](https://angular.dev/cli/generate/pipe)
+- [`resolver`](https://angular.dev/cli/generate/resolver)
+- [`service`](https://angular.dev/cli/generate/service)
+- [`service-worker`](https://angular.dev/cli/generate/service-worker)
+- [`web-worker`](https://angular.dev/cli/generate/web-worker)
+
+#### Builders
+
+TODO
 
 ### Estructura de una aplicación Angular
 
@@ -790,7 +867,7 @@ A menudo **se puede elegir entre interpolación o _"property binding"_**. Los si
 <p>"<span [innerHTML]="propertyTitle"></span>" is the <i>property bound</i> title.</p>
 ```
 
-### [Attribute binding]
+### Attribute binding
 
 La [vinculación de atributos (_"attribute binding"_)](https://angular.dev/guide/templates/attribute-binding) en Angular permite establecer valores para los atributos directamente.
 
@@ -2828,6 +2905,10 @@ const data$ = http.get('/sensitive/data', {
 ```
 
 ## [Testing](https://angular.dev/guide/testing)
+
+TODO
+
+## [Internationalization](https://angular.dev/guide/i18n)
 
 TODO
 
