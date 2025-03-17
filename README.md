@@ -2908,7 +2908,102 @@ const data$ = http.get('/sensitive/data', {
 
 TODO
 
-## [Internationalization](https://angular.dev/guide/i18n)
+## Internationalization
+
+[**Internacionalización**](https://angular.dev/guide/i18n), a veces referida como **i18n**, es el proceso de diseñar y preparar un proyecto para su uso en diferentes localizaciones (locales) alrededor del mundo. **Localización** es el proceso de crear versiones del proyecto para diferentes localizaciones. El proceso de localización incluye las siguientes acciones:
+
+- Extraer texto para su traducción a diferentes idiomas.
+
+- Formatear datos para una localización específica.
+
+Una localización (_Locale_) identifica una región en la que las personas hablan un idioma o variante lingüística particular. Las regiones posibles incluyen países y áreas geográficas. Una localización determina el formato y análisis de los siguientes detalles:
+
+- Unidades de medida, incluyendo fecha y hora, números y monedas.
+
+- Nombres traducidos, incluyendo zonas horarias, idiomas y países.
+
+Un **_Locale_** es un identificador que combina un idioma y una región (por ejemplo, es-ES para español de España o en-US para inglés de Estados Unidos).
+
+### Add the localize package
+
+Para añadir la localización al proyecto, podemos usar los comandos:
+
+```sh
+# Mejor opción
+$ ng add @angular/localize
+
+# Otra opción
+$ npm install @angular/localize --save
+```
+
+Cuando se instala `@angular/localize` con el comando `ng add` en el proyecto de Angular, este paquete realiza varias configuraciones automáticas para habilitar la funcionalidad de internacionalización (_i18n_). Entre estas configuraciones, se incluyen:
+
+- El paquete añade `@angular/localize` en la propiedad _types_ del archivo de configuración de TypeScript (`tsconfig.json` o `tsconfig.app.json`). Esto permite que TypeScript reconozca las definiciones de tipos proporcionadas por `@angular/localize` y así usar el autocompletado y verificación de tipos.
+
+```json
+{
+  "compilerOptions": {
+    "types": ["@angular/localize"]
+  }
+}
+```
+
+- El paquete también agrega la línea `/// <reference types="@angular/localize" />` al inicio del archivo `main.ts` (o el archivo principal de la aplicación). Esta línea es una referencia **_triple-slash_** que le indica a TypeScript dónde encontrar las definiciones de tipos para `@angular/localize`. Esto es necesario para que el compilador de TypeScript reconozca las funciones y utilidades relacionadas con la internacionalización.
+
+```ts
+/// <reference types="@angular/localize" />
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/app.module';
+import { environment } from './environments/environment';
+
+if (environment.production) {
+  enableProdMode();
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule)
+  .catch(err => console.error(err));
+```
+
+Si `@angular/localize` no está instalado y se intenta construir una versión localizada del proyecto (por ejemplo, al usar atributos `i18n` en las plantillas), la Angular CLI generará un error. Este error incluirá los pasos a seguir para habilitar la internacionalización (_i18n_) en el proyecto.
+
+### Refer to locales by ID
+
+Angular utiliza el identificador de localización Unicode (**_Unicode locale ID_**) para encontrar los datos de localización correctos para la internacionalización de cadenas de texto.
+
+Un _"locale ID"_ especifica el idioma, el país y un código opcional para variantes o subdivisiones adicionales. Consta de un identificador de idioma (por ejemplo, `es` para español, `en` para inglés), un carácter de guion (-) y una extensión de localización que especifica el país o región.
+
+Algunos ejemplos de _"locale IDs"_:
+
+- **es-ES**: Español de España.
+
+- **en-US**: Inglés de Estados Unidos.
+
+- **fr-CA**: Francés de Canadá.
+
+- **de-DE**: Alemán de Alemania.
+
+- **pt-BR**: Portugués de Brasil.
+
+Para configurar una aplicación de Angular para admitir múltiples idiomas, se especifican los _locale IDs_ en el archivo de configuración `angular.json`:
+
+```json
+"projects": {
+  "my-app": {
+    "i18n": {
+      "sourceLocale": "en-US", // Idioma y región predeterminados
+      "locales": {
+        "es-ES": "src/locale/messages.es.xlf", // Español de España
+        "fr-CA": "src/locale/messages.fr.xlf"  // Francés de Canadá
+      }
+    }
+  }
+}
+```
+
+Por defecto, Angular utiliza `en-US` como _Locale_ predeterminado.
+
+### Format data based on locale
 
 TODO
 
