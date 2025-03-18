@@ -3003,7 +3003,161 @@ Para configurar una aplicación de Angular para admitir múltiples idiomas, se e
 
 Por defecto, Angular utiliza `en-US` como _Locale_ predeterminado.
 
+#### Compilación de la aplicación
+
+Cuando se configura la internacionalización (_i18n_) en `angular.json`, Angular permite generar versiones específicas de la aplicación para cada idioma mediante el comando:
+
+```sh
+ng build --localize
+```
+
+Este comando compila la aplicación en todos los idiomas definidos en la configuración. Si se han especificado los locales `es-ES` y `fr-CA`, Angular generará múltiples carpetas de salida en `dist/` con cada versión localizada, como:
+
+```lua
+dist/
+  my-app/
+    es-ES/   <-- Aplicación en español
+    fr-CA/   <-- Aplicación en francés canadiense
+    en-US/   <-- Aplicación en inglés (si está definida)
+```
+
+Cada carpeta contendrá una versión de la aplicación con los textos traducidos y formateados correctamente según la configuración regional.
+
+#### Compilación para un idioma específico
+
+Si solo se necesita compilar la aplicación para un idioma concreto, se puede usar el flag `--configuration`:
+
+```sh
+# Esto generará solo la versión en español ('es-ES')
+ng build --configuration=es-ES
+```
+
+Cuando una aplicación Angular se construye con `--localize`, cada versión localizada se sirve desde una **URL específica**. Generalmente, el servidor se configura para redirigir a la carpeta correspondiente según el idioma del usuario o su configuración de navegador.
+
+Para cambiar el idioma dinámicamente en tiempo de ejecución sin recompilar, se suele usar la librería `ngx-translate`, ya que la internacionalización de Angular (_i18n_) solo permite seleccionar el idioma en compilación.
+
 ### Format data based on locale
+
+Angular proporciona [_pipes_](https://angular.dev/guide/templates/pipes) integrados para la transformación de datos, y todos ellos utilizan el token [_"LOCALE_ID"_](https://angular.dev/api/core/LOCALE_ID) para formatear la salida según la configuración regional definida en la aplicación.
+
+- [_DatePipe_](https://angular.dev/api/common/DatePipe) -> permite formatear fechas según un formato personalizado o el de la configuración regional.
+
+```html
+<!-- Si 'LOCALE_ID' está en 'en-US', podría devolver: "Monday, March 18, 2025". -->
+{{ today | date:'fullDate' }}
+```
+
+- [_CurrencyPipe_](https://angular.dev/api/common/CurrencyPipe) -> convierte un número en un formato de moneda.
+
+```html
+<!-- Si 'LOCALE_ID' está en 'es-ES', devuelve: "1.500,00 €". -->
+{{ 1500 | currency:'EUR' }}
+```
+
+- [_DecimalPipe_](https://angular.dev/api/common/DecimalPipe) -> formatea números con separación de miles y decimales según la configuración regional.
+
+```html
+<!-- Con 'LOCALE_ID' = 'fr-FR', devuelve: "1 234 567,89". -->
+{{ 1234567.89 | number:'1.2-2' }}
+```
+
+- [_PercentPipe_](https://angular.dev/api/common/PercentPipe) -> convierte un número en porcentaje.
+
+```html
+<!-- En 'en-US', devuelve "25%". -->
+{{ 0.25 | percent }}
+```
+
+Si solo necesitas que los pipes (`DatePipe`, `CurrencyPipe`, etc.) usen una localización específica sin activar la internacionalización completa (_i18n_), se puede definir el idioma en el módulo de la aplicación (`app.module.ts`).
+
+Cada idioma tiene su propio conjunto de datos de localización que Angular necesita para formatear correctamente las fechas, monedas y números.
+
+```typescript
+import { NgModule, LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es'; // Importa el idioma deseado
+
+registerLocaleData(localeEs); // Registra los datos de localización
+
+@NgModule({
+  providers: [
+    { provide: LOCALE_ID, useValue: 'es-ES' } // Define 'es-ES' como idioma por defecto para los pipes
+  ]
+})
+export class AppModule { }
+```
+
+Con esto, los _pipes_ integrados usarán `es-ES` como localización sin necesidad de configurar `angular.json` ni realizar compilaciones adicionales con `ng build --localize`.
+
+#### Cambiar la localización en tiempo de ejecución
+
+Para cambiar el "LOCALE_ID" dinámicamente (sin redesplegar ni regenerar la aplicación), se puede utilizar un servicio personalizado en lugar de definir un valor fijo en `providers`.
+
+```typescript
+import { Injectable } from '@angular/core';
+import { LOCALE_ID } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LocaleService {
+  private locale = 'es-ES';
+
+  getLocale() {
+    return this.locale;
+  }
+
+  setLocale(newLocale: string) {
+    this.locale = newLocale;
+  }
+}
+
+@NgModule({
+  providers: [
+    { provide: LOCALE_ID, useFactory: (localeService: LocaleService) => localeService.getLocale(), deps: [LocaleService] }
+  ]
+})
+export class AppModule { }
+```
+
+Ahora se podría cambiar la localización llamando a `setLocale('fr-FR')`. Sin embargo, esto no cambiará la localización de los _pipes_ en ejecución.
+
+Para conseguir esta recarga, se podría usar el `setLocale()` y hacer un **redirect a la misma ruta**, de forma que la aplicación se reinicia con el nuevo _'locale'_:
+
+```typescript
+import { Component } from '@angular/core';
+import { LocaleService } from './locale.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <p>Precio: {{ 1500 | currency:'EUR' }}</p>
+    <button (click)="changeLocale('fr-FR')">Cambiar a Francés</button>
+  `
+})
+export class AppComponent {
+  constructor(private localeService: LocaleService, private router: Router) {}
+
+  changeLocale(newLocale: string) {
+    this.localeService.setLocale(newLocale);
+    this.router.navigateByUrl('/', { skipLocationChange: false }); // Recarga la página
+  }
+}
+```
+
+`this.router.navigateByUrl('/')` redirige a la página de inicio, causando una recarga y aplicando el nuevo _'locale'_. Sin embargo, con `this.router.navigateByUrl(this.router.url);` se puede redirigir a la misma página.
+
+Otra alternativa, si no se utiliza _'Angular Router'_, es hacer una recarga forzada de la página con `window.location.reload()`:
+
+```typescript
+changeLocale(newLocale: string) {
+  this.localeService.setLocale(newLocale);
+  window.location.reload(); // Fuerza la recarga
+}
+```
+
+### Prepare component for translation
 
 TODO
 
