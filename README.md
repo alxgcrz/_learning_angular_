@@ -2910,13 +2910,9 @@ TODO
 
 ## Internationalization
 
-[**Internacionalización**](https://angular.dev/guide/i18n), a veces referida como **i18n**, es el proceso de diseñar y preparar un proyecto para su uso en diferentes localizaciones (locales) alrededor del mundo. **Localización** es el proceso de crear versiones del proyecto para diferentes localizaciones. El proceso de localización incluye las siguientes acciones:
+[**Internacionalización**](https://angular.dev/guide/i18n), a veces referida como **i18n**, es el proceso de diseñar y preparar un proyecto para su uso en diferentes localizaciones (_"locales"_) alrededor del mundo. Esto incluye separar y extraer el contenido de la aplicación para su posterior traducción.
 
-- Extraer texto para su traducción a diferentes idiomas.
-
-- Formatear datos para una localización específica.
-
-Una localización (_Locale_) identifica una región en la que las personas hablan un idioma o variante lingüística particular. Las regiones posibles incluyen países y áreas geográficas. Una localización determina el formato y análisis de los siguientes detalles:
+**Localización** es el proceso de crear versiones del proyecto para diferentes localizaciones. Una localización (_"locale"_) identifica una región en la que las personas hablan un idioma o variante lingüística particular. Las regiones posibles incluyen países y áreas geográficas. Una localización determina el formato y análisis de los siguientes detalles:
 
 - Unidades de medida, incluyendo fecha y hora, números y monedas.
 
@@ -2926,7 +2922,7 @@ Un **_Locale_** es un identificador que combina un idioma y una región (por eje
 
 ### Add the localize package
 
-Para añadir la localización al proyecto, podemos usar los comandos:
+Para añadir la localización al proyecto, podemos usar los comandos para añadir el paquete:
 
 ```sh
 # Mejor opción
@@ -2938,7 +2934,7 @@ $ npm install @angular/localize --save
 
 Cuando se instala `@angular/localize` con el comando `ng add` en el proyecto de Angular, este paquete realiza varias configuraciones automáticas para habilitar la funcionalidad de internacionalización (_i18n_). Entre estas configuraciones, se incluyen:
 
-- El paquete añade `@angular/localize` en la propiedad _types_ del archivo de configuración de TypeScript (`tsconfig.json` o `tsconfig.app.json`). Esto permite que TypeScript reconozca las definiciones de tipos proporcionadas por `@angular/localize` y así usar el autocompletado y verificación de tipos.
+- El paquete añade la cadena `@angular/localize` en la propiedad _"types"_ del archivo de configuración de TypeScript (`tsconfig.json` o `tsconfig.app.json`). Esto habilita a  TypeScript para que reconozca las definiciones de tipos proporcionadas por `@angular/localize` y de esta forma poder usar el autocompletado y la verificación de tipos.
 
 ```json
 {
@@ -2948,7 +2944,7 @@ Cuando se instala `@angular/localize` con el comando `ng add` en el proyecto de 
 }
 ```
 
-- El paquete también agrega la línea `/// <reference types="@angular/localize" />` al inicio del archivo `main.ts` (o el archivo principal de la aplicación). Esta línea es una referencia **_triple-slash_** que le indica a TypeScript dónde encontrar las definiciones de tipos para `@angular/localize`. Esto es necesario para que el compilador de TypeScript reconozca las funciones y utilidades relacionadas con la internacionalización.
+- El paquete también agrega la línea `/// <reference types="@angular/localize" />` al inicio del archivo `main.ts` (o el archivo principal de la aplicación). Esta línea es una referencia **_'triple-slash'_** que le indica a TypeScript dónde encontrar las definiciones de tipos para `@angular/localize`. Esto es necesario para que el compilador de TypeScript reconozca las funciones y utilidades relacionadas con la internacionalización.
 
 ```ts
 /// <reference types="@angular/localize" />
@@ -2985,7 +2981,7 @@ Algunos ejemplos de _"locale IDs"_:
 
 - **pt-BR**: Portugués de Brasil.
 
-Para configurar una aplicación de Angular para admitir múltiples idiomas, se especifican los _locale IDs_ en el archivo de configuración `angular.json`:
+Para configurar una aplicación de Angular para admitir múltiples idiomas, se especifican los _"locale IDs"_ en el archivo de configuración `angular.json`:
 
 ```json
 "projects": {
@@ -3001,7 +2997,7 @@ Para configurar una aplicación de Angular para admitir múltiples idiomas, se e
 }
 ```
 
-Por defecto, Angular utiliza `en-US` como _Locale_ predeterminado.
+Por defecto, Angular utiliza `en-US` como _"locale"_ predeterminado.
 
 #### Compilación de la aplicación
 
@@ -3038,34 +3034,138 @@ Para cambiar el idioma dinámicamente en tiempo de ejecución sin recompilar, se
 
 ### Format data based on locale
 
-Angular proporciona [_pipes_](https://angular.dev/guide/templates/pipes) integrados para la transformación de datos, y todos ellos utilizan el token [_"LOCALE_ID"_](https://angular.dev/api/core/LOCALE_ID) para formatear la salida según la configuración regional definida en la aplicación.
+Angular proporciona [_pipes_](https://angular.dev/guide/templates/pipes) integrados para la transformación de datos, y todos ellos utilizan el token [**"LOCALE_ID"**](https://angular.dev/api/core/LOCALE_ID) para formatear la salida según la configuración regional definida en la aplicación.
 
-- [_DatePipe_](https://angular.dev/api/common/DatePipe) -> permite formatear fechas según un formato personalizado o el de la configuración regional.
+- [_DatePipe_](https://angular.dev/api/common/DatePipe) -> permite formatear fechas según un formato personalizado o el de la configuración regional. En la documentación hay ejemplos de formatos de fecha predefinidos y/o ejemplos de formatos de fecha personalizados:
 
-```html
-<!-- Si 'LOCALE_ID' está en 'en-US', podría devolver: "Monday, March 18, 2025". -->
-{{ today | date:'fullDate' }}
+```typescript
+import { Component } from '@angular/core';
+
+// LOCALE_ID = 'es-ES'
+@Component({
+  selector: 'date-pipe',
+  template: `<div>
+    <!-- 18/3/2025 -->
+    <p>Default format: {{ today | date }}</p> 
+
+    <!-- martes, 18 de marzo de 2025 -->
+    <p>Full date: {{ today | date:'fullDate' }}</p> 
+
+    <!-- 18/3/25 -->
+    <p>Short date: {{ today | date:'shortDate' }}</p> 
+
+    <!-- 18 mar 2025 -->
+    <p>Medium date: {{ today | date:'mediumDate' }}</p> 
+
+    <!-- 18 de marzo de 2025 -->
+    <p>Long date: {{ today | date:'longDate' }}</p> 
+
+    <!-- 3:45 p. m. CET -->
+    <p>Time only: {{ today | date:'h:mm a z' }}</p> 
+
+    <!-- 18/03/2025 -->
+    <p>Custom format (dd/MM/yyyy): {{ today | date:'dd/MM/yyyy' }}</p> 
+
+    <!-- output is 'Jun 15, 2015 at 09:43 PM' -->
+    <p>{{ dateObj | date:"MMM dd, yyyy 'at' hh:mm a" }}</p>
+  </div>`
+})
+export class DatePipeComponent {
+  today: number = Date.now();
+}
 ```
 
-- [_CurrencyPipe_](https://angular.dev/api/common/CurrencyPipe) -> convierte un número en un formato de moneda.
+- [_CurrencyPipe_](https://angular.dev/api/common/CurrencyPipe) -> convierte un número en un formato de moneda. Se puede añadir un _"locale"_ como parámetro a la _"pipe"_ para sobreescribir el "LOCALE_ID":
 
-```html
-<!-- Si 'LOCALE_ID' está en 'es-ES', devuelve: "1.500,00 €". -->
-{{ 1500 | currency:'EUR' }}
+```typescript
+// LOCALE_ID = 'en-US'
+@Component({
+  selector: 'currency-pipe',
+  template: `<div>
+    <!--output '$0.26'-->
+    <p>A: {{ a | currency }}</p>
+    
+    <!-- Pasar un "locale" como parámetro
+    <!-- output '0.26€'-->
+    <p>A: {{ a | currency: 'EUR' }}</p>
+    
+    <!--output 'CAD0.26'-->
+    <p>A: {{ a | currency: 'CAD' : 'code' }}</p>
+    
+    <!--output 'CA$0,001.35'-->
+    <p>B: {{ b | currency: 'CAD' : 'symbol' : '4.2-2' }}</p>
+    
+    <!--output '$0,001.35'-->
+    <p>B: {{ b | currency: 'CAD' : 'symbol-narrow' : '4.2-2' }}</p>
+    
+    <!--output '0 001,35 CA$'-->
+    <p>B: {{ b | currency: 'CAD' : 'symbol' : '4.2-2' : 'fr' }}</p>
+    
+    <!--output 'CLP1' because CLP has no cents-->
+    <p>B: {{ b | currency: 'CLP' }}</p>
+  </div>`,
+  standalone: false,
+})
+export class CurrencyPipeComponent {
+  a: number = 0.259;
+  b: number = 1.3495;
+}
 ```
 
 - [_DecimalPipe_](https://angular.dev/api/common/DecimalPipe) -> formatea números con separación de miles y decimales según la configuración regional.
 
-```html
-<!-- Con 'LOCALE_ID' = 'fr-FR', devuelve: "1 234 567,89". -->
-{{ 1234567.89 | number:'1.2-2' }}
+```typescript
+// LOCALE_ID = 'en-US'
+@Component({
+  selector: 'number-pipe',
+  template: `<div>
+    <p>
+      No specified formatting:
+      {{ pi | number }}
+      <!--output: '3.142'-->
+    </p>
+    
+    <p>
+      With digitsInfo parameter specified:
+      {{ pi | number: '4.1-5' }}
+      <!--output: '0,003.14159'-->
+    </p>
+    
+    <p>
+      With digitsInfo and locale parameters specified:
+      {{ pi | number: '4.1-5' : 'fr' }}
+      <!--output: '0 003,14159'-->
+    </p>
+  </div>`,
+  standalone: false,
+})
+export class NumberPipeComponent {
+  pi: number = 3.14159265359;
+}
 ```
 
 - [_PercentPipe_](https://angular.dev/api/common/PercentPipe) -> convierte un número en porcentaje.
 
-```html
-<!-- En 'en-US', devuelve "25%". -->
-{{ 0.25 | percent }}
+```typescript
+// LOCALE_ID = 'en-US'
+@Component({
+  selector: 'percent-pipe',
+  template: `<div>
+    <!--output '26%'-->
+    <p>A: {{ a | percent }}</p>
+    
+    <!--output '0,134.950%'-->
+    <p>B: {{ b | percent: '4.3-5' }}</p>
+    
+    <!--output '0 134,950 %'-->
+    <p>B: {{ b | percent: '4.3-5' : 'fr' }}</p>
+  </div>`,
+  standalone: false,
+})
+export class PercentPipeComponent {
+  a: number = 0.259;
+  b: number = 1.3495;
+}
 ```
 
 Si solo necesitas que los pipes (`DatePipe`, `CurrencyPipe`, etc.) usen una localización específica sin activar la internacionalización completa (_i18n_), se puede definir el idioma en el módulo de la aplicación (`app.module.ts`).
@@ -3158,6 +3258,45 @@ changeLocale(newLocale: string) {
 ```
 
 ### Prepare component for translation
+
+Estos son los pasos básicos para preparar un proyecto Angular para la internacionalización (_i18n_):
+
+1. Usar el atributo `i18n` en las plantillas de componentes
+
+2. Usar `i18n-` para atributos de elementos
+
+3. Usar `$localize` en el código del componente
+
+#### Mark text in component template
+
+El atributo `i18n` se usa para marcar el texto dentro de los templates de los componentes:
+
+```html
+<element i18n="{i18n_metadata}">{string_to_translate}</element>
+```
+
+Por ejemplo, marcamos una etiqueta `<p>` para su traducción:
+
+```html
+<!-- Ejemplo -->
+<p i18n>Bienvenido a nuestra aplicación</p>
+```
+
+Si se ejecuta el comando para extraer traducciones (`ng extract-i18n`), este texto aparecerá en el archivo de mensajes de traducción (`messages.xlf`).
+
+Para traducir texto en línea sin elemento HTML se usa el elemento `<ng-container>`. Cada elemento HTML crea un nuevo elemento DOM. Para evitar la creación de un nuevo elemento DOM, se usa un elemento `<ng-container>`:
+
+```html
+<h1 i18n="User welcome|An introduction header for this sample@@introductionHeader">
+  Hello i18n!
+</h1>
+<br />
+<ng-container i18n>I don't output any element</ng-container>
+<br />
+<img [src]="logo" i18n-title title="Angular logo" alt="Angular logo"/>
+```
+
+#### Mark element attributes for translations
 
 TODO
 
