@@ -3269,7 +3269,7 @@ Estos son los pasos básicos para preparar un proyecto Angular para la internaci
 
 #### Mark text in component template
 
-El atributo `i18n` se usa para marcar el texto dentro de los templates de los componentes:
+El atributo `i18n` se usa para marcar el texto dentro de los templates de los componentes. Este atributo es un atributo personalizado que las herramientas y compiladores de Angular reconocen:
 
 ```html
 <element i18n="{i18n_metadata}">{string_to_translate}</element>
@@ -3278,7 +3278,6 @@ El atributo `i18n` se usa para marcar el texto dentro de los templates de los co
 Por ejemplo, marcamos una etiqueta `<p>` para su traducción:
 
 ```html
-<!-- Ejemplo -->
 <p i18n>Bienvenido a nuestra aplicación</p>
 ```
 
@@ -3297,6 +3296,102 @@ Para traducir texto en línea sin elemento HTML se usa el elemento `<ng-containe
 ```
 
 #### Mark element attributes for translations
+
+En una plantilla de componente, se pueden traducir no solo los textos visibles dentro de los elementos HTML, sino también los valores de los atributos. Para ello, Angular proporciona la sintaxis `i18n-{nombre_del_atributo}`.
+
+```html
+<elemento i18n-{nombre_del_atributo}="{significado}|{descripción}@@{id_personalizado}" {nombre_del_atributo}="{valor_por_defecto}" />
+```
+
+- `i18n-{nombre_del_atributo}` → Indica que el atributo debe ser traducido.
+
+- `{significado}` (opcional) → Explica el contexto de la cadena.
+
+- `{descripción}` (opcional) → Información adicional para los traductores.
+
+- `@@{id_personalizado}` (opcional) → Identificador único de la traducción. Angular generará automáticamente IDs para las traducciones si no se proporciona uno personalizado.
+
+- `{nombre_del_atributo}` → Nombre del atributo que contiene texto traducible.
+
+- `{valor_por_defecto}` → Texto original que será traducido.
+
+En este código de ejemplo, tenemos dos `<input>` con el atributo `placeholder` para traducir, uno con metadatos y otro sin metadatos. Se pueden omitir los metadatos cuando la traducción es simple y el contexto es obvio:
+
+```html
+<input type="text" i18n-placeholder="Texto de ejemplo para el campo de nombre@@campoNombrePlaceholder" placeholder="Introduce tu nombre">
+
+<input type="text" i18n-placeholder placeholder="Escribe tu apellido" />
+```
+
+En este ejemplo, el botón tiene un title traducible con información extra:
+
+```html
+<button i18n-title="Botón de envío|Aparece en formularios@@submitButton" title="Enviar">
+  Enviar
+</button>
+```
+
+En este ejemplo, se visualiza una imagen con un atributo `title` y el atributo `alt` (con id personalizado) para su traducción:
+
+```html
+<img [src]="logo" i18n-title title="Angular logo" i18n-alt="@@imagenLogoAlt" alt="Angular logo"/>
+```
+
+#### Mark text in component code
+
+En el código del componente, el texto fuente para la traducción y los metadatos están rodeados por caracteres de acento grave (`).
+
+Utilice la cadena de mensaje etiquetada `$localize` para marcar una cadena en el código para su traducción. Esta etiqueta se puede usar tanto en el código del componente como en la plantilla:
+
+```typescript
+$localize`string_to_translate`;
+```
+
+Los metadatos _i18n_ se envuelven con los dos puntos (:) y se añaden delante del texto:
+
+```typescript
+$localize`:{i18n_metadata}:string_to_translate`;
+```
+
+Se puede usar la interpolación para añadir variables a la cadena:
+
+```typescript
+$localize`string_to_translate ${variable_name}`;
+```
+
+Se puede usar una sintaxis condicional en las traducciones:
+
+```typescript
+return this.show ? $localize`Show Tabs` : $localize`Hide tabs`;
+```
+
+En este ejemplo de componente, se usa la cadena tanto en el código como en la plantilla con interpolación:
+
+```ts
+import { Component } from '@angular/core';
+import {$localize} from '@angular/localize/init';
+
+@Component({
+  selector: 'app-mi-componente',
+  styleUrls: ['./mi-componente.component.css']
+  template: `
+    <p> {{textoTraducido}} </p>
+
+    <!-- imprime 'Hola Angular' -->
+    <p>$localize`Hola ${name}`</p>
+  `
+})
+export class MiComponenteComponent {
+  textoTraducido: string;
+  name: string = 'Angular';
+
+  constructor() {
+    this.textoTraducido = $localize`:An introduction header for this sample:Hello i18n!`;
+  }
+}
+```
+
+#### ICU expressions
 
 TODO
 
