@@ -3393,6 +3393,154 @@ export class MiComponenteComponent {
 
 #### ICU expressions
 
+Las expresiones ICU ayudan a marcar texto alternativo en las plantillas de componentes para cumplir las condiciones. Una expresión ICU incluye una propiedad de componente, una cláusula ICU y las sentencias case, todo ello entre llaves de apertura (`{`) y de cierre (`}`).
+
+```typescript
+{ component_property, icu_clause, case_statements }
+```
+
+- El **"component_property"** define la variable.
+
+- La **"icu_clause"** define el tipo de texto condicional.
+
+  - `plural` marca el uso de números plurales.
+
+  - `select` marca las opciones para texto alternativo según los valores de cadena definidos.
+
+> Las cláusulas ICU se adhieren al [formato de mensaje ICU](https://unicode-org.github.io/icu/userguide/format_parse/messages) especificado en las [reglas de pluralización CLDR](http://cldr.unicode.org/index/cldr-spec/plural-rules).
+
+##### Mark plurals
+
+Los diferentes idiomas tienen reglas de pluralización distintas, lo que aumenta la dificultad de la traducción. Dado que otras configuraciones regionales expresan la cardinalidad de manera diferente, es posible que se necesite establecer categorías de pluralización que no se alineen con el inglés. Para ello se utiliza la cláusula `plural` para marcar las expresiones que podrían no tener sentido si se traducen literalmente.
+
+```typescript
+{ component_property, plural, pluralization_categories }
+```
+
+Después de la categoría de pluralización, se escribe el texto predeterminado (inglés) rodeado por caracteres de llave de apertura (`{`) y llave de cierre (`}`).
+
+```typescript
+pluralization_category { }
+```
+
+Las siguientes categorías están disponibles para el [inglés](https://www.unicode.org/cldr/charts/47/supplemental/language_plural_rules.html#en), y pueden variar para otros [idiomas](https://www.unicode.org/cldr/charts/47/supplemental/language_plural_rules.htm):
+
+- `zero { ... }` o `=0 { ... }` cuando la cantidad es 0
+
+- `one { ... }` o `=1 { ... }` cuando la cantidad es 1
+
+- `two { ... }` o `=2 { ... }` cuando la cantidad es 2
+
+- `few { ... }` cuando la cantidad es 2 o más
+
+- `many { ... }` cuando la cantidad es un número elevado
+
+- `other { ... }` la cantidad por defecto
+
+Si ninguna de estas categorías coincide, Angular utiliza `other { default_quantity }` para que coincida con la alternativa estándar para una categoría faltante.
+
+En este ejemplo, se utiliza una expresión ICU para un plural:
+
+```html
+<p i18n>
+  { mensajes.length, plural,
+    zero {No hay mensajes}
+    one {1 mensaje}
+    other {mensajes.length mensajes}
+  }
+</p>
+```
+
+- `mensajes.length` es la variable que contiene la cantidad de mensajes.
+
+- `plural` indica que se va a utilizar la pluralización.
+
+- `zero {...}`, `one {...}` y `other {...}` son las categorías
+
+- `{No hay mensajes}`, `{1 mensaje}` y `{mensajes.length mensajes}` son los textos que se mostrarán para cada categoría.
+
+Cuando se extraen las cadenas con el comando `ng extract-i18n`, las expresiones ICU se incluyen en el archivo de traducción. Este sería por ejemplo, el fichero del ejemplo anterior:
+
+```xml
+<trans-unit id="messagesCount" datatype="plural">
+  <source>{ mensajes.length, plural, zero {No hay mensajes} one {1 mensaje} other {mensajes.length mensajes} }</source>
+  <target>{ messages.length, plural, zero {No messages} one {1 message} other {messages.length messages} }</target>
+</trans-unit>
+```
+
+Otro ejemplo típico es mostrar un texto en función del tiempo, como por ejemplo "updated x minutes ago", "updated just now" o "updated one minute ago":
+
+```html
+<span i18n>Updated {minutes, plural, =0 {just now} =1 {one minute ago} other {{{ minutes }} minutes ago}}</span>
+```
+
+- `minutes` es la variable que contiene la cantidad de minutos.
+
+- `plural` indica que se va a utilizar la pluralización.
+
+- `=0 {...}`, `=1 {...}` y `other {...}` son las categorías
+
+- `{just now}`, `{one minute ago}` y `{{{ minutes }} minutes ago}}` son los textos que se mostrarán para cada categoría. `{{ minutes }}` es un texto interpolado.
+
+##### Mark alternates and nested expressions
+
+Las expresiones ICU para `select` permiten mostrar diferentes textos en función del valor de una variable, lo que resulta muy útil para la internacionalización y la personalización de la interfaz de usuario:
+
+```typescript
+{ component_property, select, selection_categories }
+```
+
+La sintaxis general de una expresión ICU `select` es la siguiente:
+
+```typescript
+{ variable, select,
+  valor1 {texto1}
+  valor2 {texto2}
+  ...
+  other {texto_por_defecto}
+}
+```
+
+- `variable`: Es la variable cuyo valor se va a comparar.
+
+- `select`: Indica que se va a utilizar la selección.
+
+- `valor1`, `valor2`, etc.: Son los valores que se van a comparar con la variable.
+
+- `texto1`, `texto2`, etc.: Son los textos que se mostrarán si la variable coincide con el valor correspondiente.
+
+- `other:` Es un valor especial que se utiliza para especificar el texto que se mostrará si la variable no coincide con ninguno de los valores anteriores.
+
+Como ejemplo, supongamos que tenemos una variable llamada `gender`, que es una propiedad del componente, y que puede tener los valores "male", "female" o "other". Podemos utilizar una expresión ICU `select` para mostrar un saludo diferente según el género:
+
+```html
+<p i18n>
+  { gender, select,
+    male {Bienvenido, señor}
+    female {Bienvenida, señora}
+    other {Bienvenido/a}
+  }
+</p>
+```
+
+También se puede usar para construir una frase con otro texto:
+
+```html
+<span i18n>The author is {gender, select, male {male} female {female} other {other}}</span>
+```
+
+Por último, indicar que las diferentes cláusulas vistas hasta ahora (`plural` y `select`) se pueden combinar:
+
+```html
+<span i18n>Updated: {minutes, plural,
+  =0 {just now}
+  =1 {one minute ago}
+  other {{{ minutes }} minutes ago by {gender, select, male {male} female {female} other {other}}}}
+</span>
+```
+
+### Work with translation files
+
 TODO
 
 ---
