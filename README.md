@@ -3541,6 +3541,167 @@ Por último, indicar que las diferentes cláusulas vistas hasta ahora (`plural` 
 
 ### Work with translation files
 
+Para crear y actualizar los archivos de traducción de un proyecto en Angular:
+
+- [Extraer el archivo de idioma fuente](#extract-the-source-language-file).
+  - Opcionalmente, cambia la ubicación, el formato y el nombre del archivo.
+- [Crear un archivo de traducción para cada idioma](#create-a-translation-file-for-each-language).
+- Traduce cada archivo de traducción.
+- Traduce los plurales y expresiones alternativas por separado:
+  - [Traduce los plurales](#translate-plurals).
+  - [Traduce las expresiones alternativas](#translate-alternate-expressions).
+  - Traduce las expresiones anidadas.
+
+#### Extract the source language file
+
+Para extraer el archivo del idioma fuente se utiliza el comando [`ng extract-i18n`](https://angular.dev/cli/extract-i18n) con las siguientes opciones:
+
+- `--format`: establece el formato del archivo de salida (.arb, .json, .xlf, .xmb)
+
+- `--out-file`: establece el nombre del archivo de salida
+
+- `--output-path`: establece la ruta del directorio de salida
+
+El comando `extract-i18n` crea un archivo de idioma fuente llamado `messages.xlf` en el directorio raíz del proyecto, en un formato de archivo de intercambio de localización XML ([XLIFF](https://en.wikipedia.org/wiki/XLIFF), versión 1.2).
+
+#### Create a translation file for each language
+
+Una vez extraido y creado el fichero del idioma fuente:
+
+- Hacer una copia de este fichero fuente para crear un archivo de traducción para cada idioma.
+- Renombrar el fichero de traducción para añadir el _"locale"_ `messages.xlf --> messages.{locale}.xlf`
+- Crear un directorio en la raíz del proyecto llamado `src/locale`
+- Mover los archivos de traducción a este nuevo directorio
+- Realizar la traducción.
+
+Este es un ejemplo de un fragmento de un fichero de traducción al francés llamado `messages.fr.xlf`. Una `<trans-unit>` es una unidad de traducción, también conocido como nodo de texto, y que corresponde con un elemento marcado para su traducción, como por ejemplo una etiqueta `<h1>`:
+
+```xml
+<trans-unit id="introductionHeader" datatype="html">
+  <source>Hello i18n!</source>
+  <note priority="1" from="description">An introduction header for this sample</note>
+  <note priority="1" from="meaning">User welcome</note>
+</trans-unit>
+```
+
+El `id="introductionHeader"` es el id personalizado pero sin `@@`, prefijo obligatorio en el HTML.
+
+Para realizar la traducción, se duplica la etiqueta `<source>....</source>` en el nodo de texto, se renombra como `<target>....</target>` y se reemplaza el texto por su traducción al idioma, que en el ejemplo es el francés.
+
+```xml
+<trans-unit id="introductionHeader" datatype="html">
+  <source>Hello i18n!</source>
+  <target>Bonjour i18n !</target>
+  <note priority="1" from="description">An introduction header for this sample</note>
+  <note priority="1" from="meaning">User welcome</note>
+</trans-unit>
+```
+
+En una traducción más compleja, la descripción y el contexto en los elementos `description` y `meaning` sirven para elegir las palabras adecuadas para la traducción.
+
+#### Translate plurals
+
+Los plurales se traducen siguiendo el mismo procedimiento:
+
+```xml
+<trans-unit id="5a134dee893586d02bffc9611056b9cadf9abfad" datatype="html">
+  <source>{VAR_PLURAL, plural, =0 {just now} =1 {one minute ago} other {<x id="INTERPOLATION" equiv-text="{{minutes}}"/> minutes ago} }</source>
+  <target>{VAR_PLURAL, plural, =0 {à l'instant} =1 {il y a une minute} other {il y a <x id="INTERPOLATION" equiv-text="{{minutes}}"/> minutes} }</target>
+</trans-unit>
+```
+
+#### Translate alternate expressions
+
+Angular también extrae expresiones ICU alternativas de los `select` como unidades de traducción independientes.
+
+Dado el siguiente elemento con una expresión ICU:
+
+```html
+<span i18n>The author is {gender, select, male {male} female {female} other {other}}</span>
+```
+
+Angular extrae la expresión en dos unidades de traducción. La primera contiene el texto fuera de la cláusula `select` y utiliza un marcador de posición para el `select` (`<x id="ICU">`):
+
+```xml
+<trans-unit id="f99f34ac9bd4606345071bd813858dec29f3b7d1" datatype="html">
+  <source>The author is <x id="ICU" equiv-text="{gender, select, male {...} female {...} other {...}}"/></source>
+  <target>L'auteur est <x id="ICU" equiv-text="{gender, select, male {...} female {...} other {...}}"/></target>
+</trans-unit>
+```
+
+Al traducir el texto, se puede mover el marcador si es necesario, pero no eliminarlo. Si se elimina, la expresión ICU se eliminará de la aplicación traducida.
+
+El siguiente ejemplo muestra la segunda unidad de traducción que contiene la sentencia `select`:
+
+```xml
+<trans-unit id="eff74b75ab7364b6fa888f1cbfae901aaaf02295" datatype="html">
+  <source>{VAR_SELECT, select, male {male} female {female} other {other} }</source>
+  <target>{VAR_SELECT, select, male {un homme} female {une femme} other {autre} }</target>
+</trans-unit>
+```
+
+### Merge translations into the application
+
+Para fusionar las traducciones completadas en la aplicación, realiza las siguientes acciones:  
+
+1. Usa Angular CLI para compilar una copia de los archivos distribuibles de tu proyecto.  
+2. Utiliza la opción `"localize"` para reemplazar todos los mensajes de i18n con las traducciones válidas y generar una variante localizada de la aplicación. Una variante de la aplicación es una copia completa de los archivos distribuibles de tu aplicación traducida para un único idioma.  
+3. Después de fusionar las traducciones, sirve cada copia distribuible de la aplicación utilizando detección de idioma en el servidor o diferentes subdirectorios.
+
+#### Define locales in the build configuration
+
+Se utiliza la opción `i18n` en la sección `projects` en el archivo de configuración de compilación del espacio de trabajo `angular.json` del proyecto para definir las configuraciones regionales de un proyecto.
+
+```json
+"projects": {
+  "angular.io-example": {
+    "i18n": {
+      "sourceLocale": "en-US",
+      "locales": {
+        "fr": {
+          "translation": "src/locale/messages.fr.xlf",
+        },
+        "es": {
+          "translation": "src/locale/messages.es.xlf"
+        }
+      }
+    },
+    "architect": {
+    }
+  }
+}
+```
+
+- `sourceLocale`: la configuración regional que se utiliza dentro del código fuente de la aplicación
+
+- `locales`: un mapa de identificadores locales para archivos de traducción
+
+#### Generate application variants for each locale
+
+Una vez definidas las configuraciones regionales en el archivo `angular.json`, dentro de la configuración de compilación en `angular.json`, establecer la propiedad `"localize": true` para generar las variantes de la aplicación para todas las configuraciones regionales definidas:
+
+```json
+{
+  "projects": {
+    "your-project-name": {
+      "architect": {
+        "build": {
+          "options": {
+            "localize": true
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+Esto indica al Angular CLI que compile versiones de la aplicación para cada idioma especificado.
+
+El comando `ng build --localize` también genera copias de la aplicación traducidas para cada configuración regional definida, colocándolas en directorios específicos para mantenerlas separadas.
+
+#### Apply specific build options for just one locale
+
 TODO
 
 ---
