@@ -3678,7 +3678,7 @@ Se utiliza la opción `i18n` en la sección `projects` en el archivo de configur
 
 #### Generate application variants for each locale
 
-Una vez definidas las configuraciones regionales en el archivo `angular.json`, dentro de la configuración de compilación en `angular.json`, establecer la propiedad `"localize": true` para generar las variantes de la aplicación para todas las configuraciones regionales definidas:
+Una vez definidas las configuraciones regionales en el archivo `angular.json`, dentro de la configuración de compilación en `angular.json`, establecer la propiedad `"localize": true` para que se generen las variantes de la aplicación para todas las configuraciones regionales definidas:
 
 ```json
 {
@@ -3686,6 +3686,7 @@ Una vez definidas las configuraciones regionales en el archivo `angular.json`, d
     "your-project-name": {
       "architect": {
         "build": {
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "localize": true
           }
@@ -3696,13 +3697,99 @@ Una vez definidas las configuraciones regionales en el archivo `angular.json`, d
 }
 ```
 
-Esto indica al Angular CLI que compile versiones de la aplicación para cada idioma especificado.
+Esto indica al Angular CLI que compile versiones de la aplicación para cada idioma especificado en la construcción.
 
-El comando `ng build --localize` también genera copias de la aplicación traducidas para cada configuración regional definida, colocándolas en directorios específicos para mantenerlas separadas.
+La opción de `--localize` en el comando `ng build --localize` también genera copias de la aplicación traducidas para cada configuración regional definida, colocándolas en directorios específicos para mantenerlas separadas. Es similar a cuando se establece la opción `"localize": true`.
 
 #### Apply specific build options for just one locale
 
-TODO
+Para aplicar opciones de compilación específicas a una sola configuración regional, se especifica una sola configuración regional para crear una configuración regional personalizada específica.
+
+```json
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "mi-proyecto": {
+      "projectType": "application",
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "es": {
+            "translation": "src/locale/messages.es.xlf",
+            "subPath": "es"
+          },
+          "fr": {
+            "translation": "src/locale/messages.fr.xlf",
+            "subPath": "fr"
+          }
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/mi-proyecto",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json"
+          },
+          "configurations": {
+            "production": {
+              // ... configuración de producción ...
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "es": {
+              "browserTarget": "mi-proyecto:build:es"
+            },
+            "fr": {
+              "browserTarget": "mi-proyecto:build:fr"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+El siguiente comando muestra como servir la aplicación en francés:
+
+```sh
+ng serve --configuration=fr
+```
+
+Angular CLI permite combinar múltiples configuraciones al utilizar una coma (,) como separador:
+
+```sh
+ng build --configuration=production,fr
+```
+
+#### Report missing translations
+
+Cuando falta una traducción, la compilación se ejecuta correctamente, pero genera una advertencia como `Missing translation for message "{translation_text}"` (por defecto está en nivel `warning`). Para configurar el nivel de advertencia que genera el compilador de Angular, especifique uno de los siguientes niveles:
+
+- `error`: Se produce un error y la compilación falla.
+
+- `ignore`: No hace nada.
+
+- `warning`: Muestra la advertencia predeterminada en la consola o shell.
+
+Se especifica el nivel de advertencia en la sección de `options` para el objetivo de `build` de su archivo de configuración de compilación del espacio de trabajo `angular.json` mediante la forma `"i18nMissingTranslation": "error"` o el nivel de advertencia deseado.
+
+### Deploy multiple locales
+
+Si `myapp` es el directorio que contiene los archivos distribuibles de un proyecto, normalmente se hace disponibles diferentes versiones para diferentes _"locales"_ en directorios de _"locales"_. Por ejemplo, la versión en francés se encuentra en el directorio `myapp/fr` mientras que la versión en español se encuentra en el directorio `myapp/es`.
+
+La etiqueta HTML `base` con el atributo `href` especifica la URI base, o URL, para los enlaces relativos. Si se configura la opción `"localize": true` en el archivo `angular.json` o a un array de IDs de locales, la CLI ajusta el `href` base para cada versión de la aplicación. Para ajustar el `href` base para cada versión de la aplicación, la CLI añade el local al `subPath` configurado.
+
+El despliegue típico de múltiples idiomas sirve cada idioma desde un subdirectorio diferente. Los usuarios son redirigidos al idioma preferido definido en el navegador utilizando la cabecera HTTP `Accept-Language`. Si el usuario no ha definido un idioma preferido, o si el idioma preferido no está disponible, entonces el servidor recurre al idioma predeterminado. Para cambiar el idioma, se cambia la ubicación actual a otro subdirectorio. El cambio de subdirectorio a menudo ocurre utilizando un menú implementado en la aplicación.
 
 ---
 
