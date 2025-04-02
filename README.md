@@ -2906,6 +2906,51 @@ const data$ = http.get('/sensitive/data', {
 
 ## [Testing](https://angular.dev/guide/testing)
 
+La CLI de Angular descarga e instala todo lo que necesita para probar una aplicación Angular con el [framework de prueba Jasmine](https://jasmine.github.io/).
+
+Cuando se crea un proyecto con la CLI de Angular, está listo para probarse inmediatamente con el comando `ng test`. Este comando construye la aplicación en **_'watch mode'_** e inicia el [ejecutor de pruebas Karma](https://karma-runner.github.io/). En este modo, cualquier cambio en el código hará que se ejecuten de nuevo las pruebas.
+
+La salida de la consola se ve como en el siguiente ejemplo, donde la última línea muestra que **Karma** ejecutó tres pruebas y todas pasaron:
+
+```sh
+02 11 2022 09:08:28.605:INFO [karma-server]: Karma v6.4.1 server started at http://localhost:9876/
+02 11 2022 09:08:28.607:INFO [launcher]: Launching browsers Chrome with concurrency unlimited
+02 11 2022 09:08:28.620:INFO [launcher]: Starting browser Chrome
+02 11 2022 09:08:31.312:INFO [Chrome]: Connected on socket -LaEYvD2R7MdcS0-AAAB with id 31534482
+Chrome: Executed 3 of 3 SUCCESS (0.193 secs / 0.172 secs)
+TOTAL: 3 SUCCESS
+```
+
+La salida de la prueba (en `http://localhost:9876/`) se muestra en el navegador mediante el [Karma Jasmine HTML Reporter](https://github.com/dfederm/karma-jasmine-html-reporter).
+
+La CLI de Angular se encarga de la configuración de _Jasmine_ y _Karma_. Construye la configuración completa en memoria, basándose en las opciones especificadas en el archivo `angular.json`.
+
+Para personalizar _Karma_, con el comando `ng generate config karma` se crea un fichero `karma.conf.js`. Las opciones que pueden incluirse en este fichero pueden consultarse en la [documentación oficial](http://karma-runner.github.io/6.4/config/configuration-file.html).
+
+La extensión del archivo de prueba debe ser `.spec.ts` para que las herramientas puedan identificarlo como un archivo con pruebas (también conocido como archivo de especificaciones).
+
+Además, es recomendable **colocar los ficheros de prueba junto a los ficheros que prueban**:
+
+- Tales pruebas son fáciles de encontrar.
+- Se puede ver de un vistazo si una parte de la aplicación carece de pruebas.
+- Las pruebas cercanas pueden revelar cómo funciona una parte en contexto.
+- Cuando se mueve el código fuente (inevitable), es más fácil recordar de mover también la prueba.
+- Cuando se cambia el nombre del archivo de código fuente (inevitable), es un indicativo de cambiar el nombre del archivo de prueba.
+
+Los servidores de **Integración Continua** (CI) permiten configurar el repositorio de un proyecto de Angular para que las pruebas se ejecuten en cada _commit_ y _pull request_. Para probar una aplicación Angular en Integración Continua (CI), se ejecuta el siguiente comando:
+
+```sh
+ng test --no-watch --no-progress --browsers=ChromeHeadless
+```
+
+Cuando se genera un componente mediante la CLI de Angular, también se genera un fichero de pruebas para ese componente. Este fichero de pruebas contiene una estructura básica de pruebas. En caso de borrado de este fichero, puede **generarse más adelante** con este comando:
+
+```sh
+ng generate spec {carpeta}/nombre-del-componente
+```
+
+### Code Coverage
+
 TODO
 
 ## Internationalization
@@ -2918,7 +2963,7 @@ TODO
 
 - Nombres traducidos, incluyendo zonas horarias, idiomas y países.
 
-Un **_Locale_** es un identificador que combina un idioma y una región (por ejemplo, es-ES para español de España o en-US para inglés de Estados Unidos).
+Un **_Locale_** es un identificador que combina un idioma y una región (por ejemplo, 'es-ES' para español de España o 'en-US' para inglés de Estados Unidos).
 
 ### Add the localize package
 
