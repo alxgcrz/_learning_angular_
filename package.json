@@ -8,9 +8,9 @@
   "license": "CC-BY-4.0",
   "homepage": "https://alxgcrz.com/angular.html",
   "engines": {
-  "pandoc": "required",
-  "mdpdf": "required",
-  "live-server": "required"
+    "pandoc": "required",
+    "mdpdf": "required",
+    "live-server": "required"
   },
   "config": {
     "html": "angular.html",
